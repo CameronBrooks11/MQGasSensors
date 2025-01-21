@@ -13,7 +13,7 @@
   modified 26 March 2020
   by Miguel Califa 
   Wiring:
-  https://github.com/miguel5612/MQGasSensors_Docs/blob/master/static/img/MQ_Arduino.PNG
+  https://github.com/CameronBrooks11/MQGasSensors_Docs/blob/master/static/img/MQ_Arduino.PNG
 
  This example code is in the public domain.
 

@@ -17,7 +17,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 ## Review of pull request
 
 Pull request will be check by three main authors who are linked in
-[REAMDE.md](https://github.com/miguel5612/MQGasSensors/README.md) and they determine to merge to
+[REAMDE.md](https://github.com/CameronBrooks11/MQGasSensors/README.md) and they determine to merge to
 master branch. Later than assessment and debbuging procedures was completed, the contribution
 will be released.
 

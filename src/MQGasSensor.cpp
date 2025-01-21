@@ -150,7 +150,7 @@ float MQGasSensor::readSensor(bool isMQ303A, float correctionFactor, bool inject
   if(!injected) _ratio = _RS_Calc / this->_R0;   // Get ratio RS_gas/RS_air
   _ratio += correctionFactor;
   if(_ratio <= 0)  _ratio = 0; //No negative values accepted or upper datasheet recomendation.
-  if(_regressionMethod == 1) _PPM= _a*pow(_ratio, _b); // <- Source excel analisis https://github.com/miguel5612/MQGasSensors_Docs/tree/master/Internal_design_documents
+  if(_regressionMethod == 1) _PPM= _a*pow(_ratio, _b); // <- Source excel analisis https://github.com/CameronBrooks11/MQGasSensors_Docs/tree/master/Internal_design_documents
   else 
   {
     // https://jayconsystems.com/blog/understanding-a-gas-sensor <- Source of linear ecuation
@@ -166,9 +166,9 @@ float MQGasSensor::readSensorR0Rs()
   //More explained in: https://jayconsystems.com/blog/understanding-a-gas-sensor
   _RS_Calc = ((_VOLT_RESOLUTION*_RL)/_sensor_volt)-_RL; //Get value of RS in a gas
   if(_RS_Calc < 0)  _RS_Calc = 0; //No negative values accepted.
-  _ratio = this->_R0/_RS_Calc;   // Get ratio RS_air/RS_gas <- INVERTED for MQ-131 issue 28 https://github.com/miguel5612/MQGasSensors/issues/28
+  _ratio = this->_R0/_RS_Calc;   // Get ratio RS_air/RS_gas <- INVERTED for MQ-131 issue 28 https://github.com/CameronBrooks11/MQGasSensors/issues/28
   if(_ratio <= 0)  _ratio = 0; //No negative values accepted or upper datasheet recomendation.
-  if(_regressionMethod == 1) _PPM= _a*pow(_ratio, _b); // <- Source excel analisis https://github.com/miguel5612/MQGasSensors_Docs/tree/master/Internal_design_documents
+  if(_regressionMethod == 1) _PPM= _a*pow(_ratio, _b); // <- Source excel analisis https://github.com/CameronBrooks11/MQGasSensors_Docs/tree/master/Internal_design_documents
   else 
   {
     // https://jayconsystems.com/blog/understanding-a-gas-sensor <- Source of linear ecuation
