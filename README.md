@@ -23,25 +23,33 @@ A robust Arduino library for interfacing with MQ-series gas sensors, enabling ac
 - Calculate sensor resistance (Rs) and baseline resistance (R0).
 - Derive gas concentration (PPM) using datasheet-provided regression models.
 - Support for multiple MQ-series sensors (e.g., MQ-2, MQ-7, MQ-135).
-  Works with Arduino, Genuino, ESP8266, ESP-32 boards whose references are MQ2, MQ3, MQ4, MQ5, MQ6, MQ7, MQ8, MQ9, MQ131, MQ135, MQ303A, MQ309A.
 
 <!-- TABLE OF CONTENTS -->
 
 ## Table of Contents
 
-- [Getting Started](#Getting-Started)
-- [Wiring](#Wiring)
-  - [Sensor](#Sensor)
-  - [Arduino](#Arduino)
-  - [ESP8266 or ESP-32](#ESP8266-ESP32)
-- [User Manual](#Manuals)
-- [Sensor manufacturers](#Sensor-manufacturers)
-- [Contributing](#Contributing)
-- [Authors](#Authors)
+- [MQGasSensors](#mqgassensors)
+  - [Features](#features)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+  - [Library Usage](#library-usage)
+    - [Supported Hardware](#supported-hardware)
+    - [Serial Debugging](#serial-debugging)
+  - [Hardware Setup](#hardware-setup)
+    - [Sensor Considerations](#sensor-considerations)
+    - [Wiring Hookup](#wiring-hookup)
+      - [MQ-7 / MQ-309A](#mq-7--mq-309a)
+      - [ESP Wiring](#esp-wiring)
+      - [ESP32 WROOM 32D](#esp32-wroom-32d)
+  - [Sensor Manufacturers](#sensor-manufacturers)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Acknowledgment](#acknowledgment)
+    - [Attribution](#attribution)
 
 ## Getting Started
 
-```
+```c++
 //Include the library
 #include <MQGasSensor.h>
 /************************Hardware Related Macros************************************/
@@ -65,7 +73,54 @@ MQ4.update();
 float ppmCH4 = MQ4.readSensor();
 ```
 
-## Usage
+## Library Usage
+
+Once you've completed your [hardware setup](#hardware-setup), start by cloning this repository to your computer:
+
+```
+git clone https://github.com/CameronBrooks11/MQGasSensors
+```
+
+under your Arduino libraries folder or download the '.zip'.
+
+### Supported Hardware
+
+This library is compatible with various development boards, including **Arduino**, **Genuino**, **ESP8266**, and **ESP32**, facilitating integration into diverse projects. It supports the following MQ-series gas sensors:
+
+- **MQ-2**: Detects LPG, i-butane, propane, methane, alcohol, hydrogen, and smoke.
+- **MQ-3**: Sensitive to alcohol vapor; commonly used in breathalyzers.
+- **MQ-4**: High sensitivity to methane; suitable for natural gas detection.
+- **MQ-5**: Detects natural gas and LPG; suitable for gas leakage detection.
+- **MQ-6**: Sensitive to LPG and butane gas; used for gas leak detection.
+- **MQ-7**: High sensitivity to carbon monoxide; used in CO detectors.
+- **MQ-8**: Detects hydrogen gas; suitable for hydrogen leak detection.
+- **MQ-9**: Sensitive to carbon monoxide and combustible gases; used in gas detecting equipment.
+- **MQ-131**: High sensitivity to ozone; also responsive to chlorine and nitrogen dioxide.
+- **MQ-135**: Detects air quality by sensing NH₃, NOₓ, alcohol, benzene, smoke, and CO₂.
+- **MQ-136**: Sensitive to hydrogen sulfide (H₂S); used for detecting H₂S gas.
+- **MQ-137**: High sensitivity to ammonia (NH₃); suitable for ammonia gas detection.
+
+This comprehensive support allows for the development of applications such as air quality monitors, gas leak detectors, and other sensor-based systems.
+
+### Serial Debugging
+
+If your sensor is an **MQ2** (Same for others sensors):
+
+- To enable on setup wrote
+
+```c++
+MQ2.serialDebug(true);
+```
+
+- And on Loop Wrote
+
+```c++
+MQ2.serialDebug();
+```
+
+- Result:
+
+![Serial debug output](docs/static/img/Serial_Mon_Explanation.jpeg)
 
 ## Hardware Setup
 
@@ -91,7 +146,6 @@ Sensor characteristics:
 
 ![Graph from datasheet](docs/static/img/Graph_Explanation.jpeg)
 
-
 ![Arduino_Wiring_MQSensor](docs/static/img/MQ_Arduino.PNG)
 
 ### Wiring Hookup
@@ -109,26 +163,6 @@ Sensor characteristics:
 #### ESP32 WROOM 32D
 
 The ESP32 WROOM 32D does not need an external power supply. A0 goes to PIN36, Vcc to 3v3 and GND to any GND port on the board. Check the **ESP2/ESP32_WROOM_32** folder to fixing the measuring issue when connecting to wifi.
-
-## Serial debug (optional)
-
-If your sensor is an **MQ2** (Same for others sensors):
-
-- To enable on setup wrote
-
-```
-MQ2.serialDebug(true);
-```
-
-- And on Loop Wrote
-
-```
-MQ2.serialDebug();
-```
-
-- Result:
-
-![Serial debug output](https://github.com/CameronBrooks11/MQGasSensors_Docs/blob/master/static/img/Serial_Mon_Explanation.jpeg?raw=true)
 
 ## Sensor Manufacturers
 
@@ -148,41 +182,7 @@ MQ2.serialDebug();
 | MQ-303A | HANWEI Electronics | [datasheet](http://www.kosmodrom.com.ua/pdf/MQ303A.pdf)                                                         |
 | MQ-309A | HANWEI Electronics | [datasheet](http://www.sensorica.ru/pdf/MQ-309A.pdf)                                                            |
 
-
-Review WPDigitalizer [folder](docs/WPDigitalizer/README.md) [website](https://automeris.io/WebPlotDigitizer/)
-
-### Installing
-
-Clone this repository into your desktop machine
-
-```
-git clone https://github.com/CameronBrooks11/MQGasSensors
-```
-
-## Running the tests
-
-Use calibration systems if you have several sensors that read the same gas.
-
-### Break down into end to end tests
-
-These tests can re-adjust values defined previously and you can contribute to improve conditions or features obtained from particular scenes.
-
-```
-Examples/MQ-3
-```
-
-### And coding style tests
-
-These tests may generate statistics validation using descriptive tools for quantitative variables.
-
-```
-Examples/MQ-board.ino
-```
-
-## Built With
-
-- [Data sheets](https://github.com/CameronBrooks11/MQGasSensors_Docs/tree/master/Datasheets) - Curves and behavior for each sensor, using logarithmic graphs.
-- [Main purpose](https://github.com/CameronBrooks11/MQGasSensors_Docs/blob/master/static/img/bg.jpg) - Every sensor has high sensibility for a specific gas or material.
+Review WPDigitalizer [folder](docs/WPDigitalizer/README.md) for details on how graphs from datasheet were processed. WPDigitalizer can be found [here](https://automeris.io/WebPlotDigitizer/).
 
 ## Contributing
 
