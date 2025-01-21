@@ -14,7 +14,7 @@
   Added ESP8266 example 
   29.03.2020
   Wiring:
-  https://github.com/CameronBrooks11/MQGasSensors_Docs/blob/master/static/img/MQ_ESP8266.PNG
+  https://github.com/CameronBrooks11/MQGasSensors_Docs/blob/master/docs/img/MQ_ESP8266.PNG
 
  This example code is in the public domain.
 

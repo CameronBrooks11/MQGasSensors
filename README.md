@@ -120,7 +120,7 @@ MQ2.serialDebug();
 
 - Result:
 
-![Serial debug output](docs/static/img/Serial_Mon_Explanation.jpeg)
+![Serial debug output](docs/docs/img/Serial_Mon_Explanation.jpeg)
 
 ## Hardware Setup
 
@@ -134,7 +134,7 @@ Sensor pins:
 - GND -> GND Ground (-) wire
 - AO -> Analog Output of the sensor
 
-![Wiring_MQSensor](docs/static/img/Points_explanation.jpeg)
+![Wiring_MQSensor](docs/docs/img/Points_explanation.jpeg)
 
 Sensor characteristics:
 
@@ -144,9 +144,9 @@ Sensor characteristics:
   - Note: RS/R0 is equal to Ratio variable on the program
   - From datasheet of your sensor
 
-![Graph from datasheet](docs/static/img/Graph_Explanation.jpeg)
+![Graph from datasheet](docs/docs/img/Graph_Explanation.jpeg)
 
-![Arduino_Wiring_MQSensor](docs/static/img/MQ_Arduino.PNG)
+![Arduino_Wiring_MQSensor](docs/docs/img/MQ_Arduino.PNG)
 
 ### Wiring Hookup
 
@@ -154,11 +154,11 @@ Sensor characteristics:
 
 **Note**: MQ-7 and MQ-309 needs two different voltages for heater, they can be supplied by PWM and DC Signal controlled by your controller, another option is to use two different power sources, you should use the best option for you, next i will show the PWM option and on the examples this will be the way.
 
-![MQ-7_MQ-309](docs/static/img/MQ-309_MQ-7.PNG)
+![MQ-7_MQ-309](docs/docs/img/MQ-309_MQ-7.PNG)
 
 #### ESP Wiring
 
-![ESP8266_Wiring_MQSensor](docs/static/img/MQ_ESP8266.PNG)
+![ESP8266_Wiring_MQSensor](docs/docs/img/MQ_ESP8266.PNG)
 
 #### ESP32 WROOM 32D
 
