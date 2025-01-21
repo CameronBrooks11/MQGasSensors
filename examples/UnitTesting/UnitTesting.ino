@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - testing library
+  MQGasSensor Library - testing library
 
   Library originally added 01 may 2019
   by Miguel A Califa, Yersson Carrillo, Ghiordy Contreras, Mario Rodriguez
@@ -13,7 +13,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 #line 2 "basic.ino"
 #include <ArduinoUnit.h>
 
@@ -48,19 +48,19 @@
 #define         Type                      ("Arduino Mega 2560") //Board used
 /*****************************Globals***********************************************/
 //Declare Sensor
-MQUnifiedsensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin2, Type);
-MQUnifiedsensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin3, Type);
-MQUnifiedsensor MQ4(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin4, Type);
-MQUnifiedsensor MQ5(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin5, Type);
-MQUnifiedsensor MQ6(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin6, Type);
-MQUnifiedsensor MQ7(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin7, Type);
-MQUnifiedsensor MQ8(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin8, Type);
-MQUnifiedsensor MQ9(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin9, Type);
-MQUnifiedsensor MQ131(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin10, Type); //mq131
-MQUnifiedsensor MQ135(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin11, Type); //mq135
-MQUnifiedsensor MQ136(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin12, Type); //mq136
-MQUnifiedsensor MQ303A(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin13, Type); //mq303
-MQUnifiedsensor MQ309A(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin14, Type); //mq309
+MQGasSensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin2, Type);
+MQGasSensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin3, Type);
+MQGasSensor MQ4(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin4, Type);
+MQGasSensor MQ5(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin5, Type);
+MQGasSensor MQ6(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin6, Type);
+MQGasSensor MQ7(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin7, Type);
+MQGasSensor MQ8(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin8, Type);
+MQGasSensor MQ9(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin9, Type);
+MQGasSensor MQ131(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin10, Type); //mq131
+MQGasSensor MQ135(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin11, Type); //mq135
+MQGasSensor MQ136(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin12, Type); //mq136
+MQGasSensor MQ303A(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin13, Type); //mq303
+MQGasSensor MQ309A(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin14, Type); //mq309
 
 
 test(adcMaxValue)

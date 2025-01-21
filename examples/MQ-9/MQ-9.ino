@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - reading an MQ9
+  MQGasSensor Library - reading an MQ9
 
   Demonstrates the use a MQ9 sensor.
   Library originally added 01 may 2019
@@ -22,7 +22,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 /************************Hardware Related Macros************************************/
 #define         Board                   ("Arduino UNO")
 #define         Pin                     (A0)  //Analog input 4 of your arduino
@@ -35,7 +35,7 @@
 #define         PreaheatControlPin14      (4) // Preaheat pin to control with 1.4 volts
 /*****************************Globals***********************************************/
 //Declare Sensor
-MQUnifiedsensor MQ9(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
+MQGasSensor MQ9(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 
 void setup() {
   //Init the serial port communication - to debug the library

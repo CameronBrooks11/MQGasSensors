@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - reading an MQ2
+  MQGasSensor Library - reading an MQ2
 
   Demonstrates the use a MQ2 sensor.
   Library originally added 01 may 2019
@@ -21,7 +21,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 /************************Hardware Related Macros************************************/
 #define         Board                   ("Arduino UNO")
 #define         Pin                     (A2)  //Analog input 3 of your arduino
@@ -32,7 +32,7 @@
 #define         RatioMQ2CleanAir        (9.83) //RS / R0 = 9.83 ppm 
 
 /*****************************Globals***********************************************/
-MQUnifiedsensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
+MQGasSensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 /*****************************Globals***********************************************/
 
 void setup() {

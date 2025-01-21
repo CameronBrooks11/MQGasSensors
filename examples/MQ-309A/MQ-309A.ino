@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - reading an MQ309
+  MQGasSensor Library - reading an MQ309
 
   Demonstrates the use a MQ309 sensor.
   Library originally added 01 may 2019
@@ -22,7 +22,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 
 //Definitions
 #define placa "Arduino UNO"
@@ -34,7 +34,7 @@
 #define PWMPin 5 // Pin connected to mosfet
 
 //Declare Sensor
-MQUnifiedsensor MQ309(placa, Voltage_Resolution, ADC_Bit_Resolution, pin, type);
+MQGasSensor MQ309(placa, Voltage_Resolution, ADC_Bit_Resolution, pin, type);
 unsigned long oldTime = 0;
 
 void setup() {

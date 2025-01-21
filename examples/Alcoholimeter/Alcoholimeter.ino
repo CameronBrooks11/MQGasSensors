@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - reading an MQ3
+  MQGasSensor Library - reading an MQ3
 
   Demonstrates the use a MQ3 sensor.
   Library originally added 01 may 2019
@@ -22,7 +22,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 /************************Hardware Related Macros************************************/
 #define         Board                   ("Arduino UNO")
 #define         Pin                     (A3)  //Analog input 3 of your arduino
@@ -34,7 +34,7 @@
 /*****************************Globals***********************************************/
 double          alcoholPPM          =   (0);
 /**************************Object_Sensor********************************************/
-MQUnifiedsensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
+MQGasSensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 
 void setup() {
   //Init the serial port communication - to debug the library

@@ -33,7 +33,7 @@
 #include <WiFi.h>
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 /************************Hardware Related Macros************************************/
 #define         Board                   ("ESP-32") // Wemos ESP-32 or other board, whatever have ESP32 core.
 
@@ -46,7 +46,7 @@
 #define         ADC_Bit_Resolution      (12) // ESP-32 bit resolution. Source: https://randomnerdtutorials.com/esp32-adc-analog-read-arduino-ide/
 #define         RatioMQ2CleanAir        (9.83) //RS / R0 = 9.83 ppm
 /*****************************Globals***********************************************/
-MQUnifiedsensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
+MQGasSensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 /*****************************Globals***********************************************/
 
 const char* ssid     = "your-ssid";

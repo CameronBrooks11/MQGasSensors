@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - reading an MQ135
+  MQGasSensor Library - reading an MQ135
   Demonstrates the use a MQ135 sensor.
   Library originally added 01 may 2019
   by Miguel A Califa, Yersson Carrillo, Ghiordy Contreras, Mario Rodriguez
@@ -18,7 +18,7 @@
 #include <Wire.h>
 #include <Adafruit_ADS1X15.h>
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 //Definitions
 #define placa "Arduino UNO"
 #define type "MQ-135" //MQ135
@@ -26,7 +26,7 @@
 float factorEscala = 0.1875F;
 //#define calibration_button 13 //Pin to calibrate your sensor
 //Declare Sensor
-MQUnifiedsensor MQ135(placa, type);
+MQGasSensor MQ135(placa, type);
 
  
 // Crear objeto de la clase

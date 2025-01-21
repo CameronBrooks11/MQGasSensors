@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - reading an MQ136
+  MQGasSensor Library - reading an MQ136
 
   Demonstrates the use a MQ136 sensor.
   Library originally added 01 may 2019
@@ -18,7 +18,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 
 //Definitions
 #define placa "Arduino UNO"
@@ -30,7 +30,7 @@
 //#define calibration_button 13 //Pin to calibrate your sensor
 
 //Declare Sensor
-MQUnifiedsensor MQ136(placa, Voltage_Resolution, ADC_Bit_Resolution, pin, type);
+MQGasSensor MQ136(placa, Voltage_Resolution, ADC_Bit_Resolution, pin, type);
 
 void setup() {
   //Init the serial port communication - to debug the library

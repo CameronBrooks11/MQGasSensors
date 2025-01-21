@@ -5,7 +5,7 @@
 // this {{URL}}
 
 /*
-  MQUnifiedsensor Library - reading an MQSensor using ESP8266 board
+  MQGasSensor Library - reading an MQSensor using ESP8266 board
 
   For this example wi will demonstrates the use a MQ3 sensor.
   Library originally added 01 may 2019
@@ -21,7 +21,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 /************************Hardware Related Macros************************************/
 #define         Board                   ("ESP8266")
 #define         Pin                     (A0)  //Analog input 3 of your arduino
@@ -31,7 +31,7 @@
 #define         ADC_Bit_Resolution      (10) // For ESP8266
 #define         RatioMQ3CleanAir        (60)
 /*****************************Globals***********************************************/
-MQUnifiedsensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
+MQGasSensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 /*****************************Globals***********************************************/
 
 void setup() {

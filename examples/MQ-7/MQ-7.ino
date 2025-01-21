@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - reading an MQ7
+  MQGasSensor Library - reading an MQ7
 
   Demonstrates the use a MQ7 sensor.
   Library originally added 01 may 2019
@@ -26,7 +26,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 
 //Definitions
 #define placa "Arduino UNO"
@@ -38,7 +38,7 @@
 #define PWMPin 5 // Pin connected to mosfet
 
 //Declare Sensor
-MQUnifiedsensor MQ7(placa, Voltage_Resolution, ADC_Bit_Resolution, pin, type);
+MQGasSensor MQ7(placa, Voltage_Resolution, ADC_Bit_Resolution, pin, type);
 unsigned long oldTime = 0;
 
 void setup() {

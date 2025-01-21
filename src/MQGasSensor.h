@@ -1,16 +1,16 @@
-#ifndef MQUnifiedsensor_H
-  #define MQUnifiedsensor_H
+#ifndef MQGasSensor_H
+  #define MQGasSensor_H
 
 #include <Arduino.h>
 #include <stdint.h>
 
 /***********************Software Related Macros************************************/
 
-class MQUnifiedsensor
+class MQGasSensor
 {
   public:
-    MQUnifiedsensor(String Placa = "Arduino", float Voltage_Resolution =  5, int ADC_Bit_Resolution = 10, int pin = 1, String type = "CUSTOM MQ");
-    MQUnifiedsensor(String Placa = "Arduino", String type = "CUSTOM MQ");
+    MQGasSensor(String Placa = "Arduino", float Voltage_Resolution =  5, int ADC_Bit_Resolution = 10, int pin = 1, String type = "CUSTOM MQ");
+    MQGasSensor(String Placa = "Arduino", String type = "CUSTOM MQ");
     
     //Functions to set values
     void init();
@@ -62,4 +62,4 @@ class MQUnifiedsensor
     char _placa[20]; 
 };
 
-#endif //MQUnifiedsensor_H
+#endif //MQGasSensor_H

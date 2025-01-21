@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - reading an MQ3 using digital input
+  MQGasSensor Library - reading an MQ3 using digital input
 
   Demonstrates the use a MQ3 sensor.
   Library originally added 01 may 2019

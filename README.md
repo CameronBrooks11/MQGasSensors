@@ -37,7 +37,7 @@ We present a unified library for MQ sensors, this library allows to read MQ sign
 
 ```
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 /************************Hardware Related Macros************************************/
 #define         Board                   ("Arduino UNO")
 #define         Pin                     (A4)  //Analog input 4 of your arduino
@@ -48,7 +48,7 @@ We present a unified library for MQ sensors, this library allows to read MQ sign
 #define         RatioMQ4CleanAir        (4.4) //RS / R0 = 60 ppm 
 /*****************************Globals***********************************************/
 //Declare Sensor
-MQUnifiedsensor MQ4(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
+MQGasSensor MQ4(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 // Setup
 MQ4.setRegressionMethod("Exponential"); //_PPM =  a*ratio^b
 MQ4.setA(1012.7); MQ4.setB(-2.786); // Configure the equation to to calculate CH4 concentration

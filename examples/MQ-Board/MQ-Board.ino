@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - calibrating an MQ2 to MQ9
+  MQGasSensor Library - calibrating an MQ2 to MQ9
 
   Demonstrates the use a MQ2 sensor.
   Library originally added 01 may 2019
@@ -18,7 +18,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 /************************Hardware Related Macros************************************/
 #define         Board                   ("Arduino Mega")
 #define         Pin2                     (A2)  //Analog input 2 of your arduino
@@ -44,14 +44,14 @@
 #define         Type                      ("Arduino Mega 2560") //Board used
 /*****************************Globals***********************************************/
 //Declare Sensor
-MQUnifiedsensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin2, Type);
-MQUnifiedsensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin3, Type);
-MQUnifiedsensor MQ4(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin4, Type);
-MQUnifiedsensor MQ5(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin5, Type);
-MQUnifiedsensor MQ6(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin6, Type);
-MQUnifiedsensor MQ7(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin7, Type);
-MQUnifiedsensor MQ8(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin8, Type);
-MQUnifiedsensor MQ9(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin9, Type);
+MQGasSensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin2, Type);
+MQGasSensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin3, Type);
+MQGasSensor MQ4(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin4, Type);
+MQGasSensor MQ5(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin5, Type);
+MQGasSensor MQ6(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin6, Type);
+MQGasSensor MQ7(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin7, Type);
+MQGasSensor MQ8(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin8, Type);
+MQGasSensor MQ9(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin9, Type);
 
 unsigned long oldTime = 0;
 

@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - reading an MQ135
+  MQGasSensor Library - reading an MQ135
 
   Demonstrates the use a MQ135 sensor.
   Library originally added 01 may 2019
@@ -22,7 +22,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <DHT_U.h>
@@ -71,7 +71,7 @@ DHT_Unified dht(DHTPIN, DHTTYPE);
 uint32_t delayMS;
 
 //Declare Sensor
-MQUnifiedsensor MQ135(placa, Voltage_Resolution, ADC_Bit_Resolution, pin, type);
+MQGasSensor MQ135(placa, Voltage_Resolution, ADC_Bit_Resolution, pin, type);
 
 void setup() {
   //Init the serial port communication - to debug the library

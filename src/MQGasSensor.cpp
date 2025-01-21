@@ -1,9 +1,9 @@
-#include "MQUnifiedsensor.h"
+#include "MQGasSensor.h"
 
 #define retries 2
 #define retry_interval 20
 
-MQUnifiedsensor::MQUnifiedsensor(String Placa, float Voltage_Resolution, int ADC_Bit_Resolution, int pin, String type) {
+MQGasSensor::MQGasSensor(String Placa, float Voltage_Resolution, int ADC_Bit_Resolution, int pin, String type) {
   this->_pin = pin;
   Placa.toCharArray(this->_placa, 20);
   type.toCharArray(this->_type, 7);
@@ -12,65 +12,65 @@ MQUnifiedsensor::MQUnifiedsensor(String Placa, float Voltage_Resolution, int ADC
   this-> _VOLT_RESOLUTION = Voltage_Resolution;
   this-> _ADC_Bit_Resolution = ADC_Bit_Resolution;
 }
-MQUnifiedsensor::MQUnifiedsensor(String Placa, String type) {
+MQGasSensor::MQGasSensor(String Placa, String type) {
   Placa.toCharArray(this->_placa, 20);
   type.toCharArray(this->_type, 7);
 }
-void MQUnifiedsensor::init()
+void MQGasSensor::init()
 {
   pinMode(_pin, INPUT);
 }
-void MQUnifiedsensor::setA(float a) {
+void MQGasSensor::setA(float a) {
   this->_a = a;
 }
-void MQUnifiedsensor::setB(float b) {
+void MQGasSensor::setB(float b) {
   this->_b = b;
 }
-void MQUnifiedsensor::setR0(float R0) {
+void MQGasSensor::setR0(float R0) {
   this->_R0 = R0;
 }
-void MQUnifiedsensor::setRL(float RL) {
+void MQGasSensor::setRL(float RL) {
   this->_RL = RL;
 }
-void MQUnifiedsensor::setADC(int value)
+void MQGasSensor::setADC(int value)
 {
   this-> _sensor_volt = (value) * _VOLT_RESOLUTION / ((pow(2, _ADC_Bit_Resolution)) - 1); 
   this-> _adc =  value;
 }
-void MQUnifiedsensor::setVoltResolution(float voltage_resolution)
+void MQGasSensor::setVoltResolution(float voltage_resolution)
 {
   _VOLT_RESOLUTION = voltage_resolution;
 }
-void MQUnifiedsensor::setPin(int pin) {
+void MQGasSensor::setPin(int pin) {
   this->_pin = pin;
 }
-void MQUnifiedsensor::setRegressionMethod(int regressionMethod)
+void MQGasSensor::setRegressionMethod(int regressionMethod)
 {
   //this->_regressionMethod = regressionMethod;
   this->_regressionMethod = regressionMethod;
 }
-float MQUnifiedsensor::getR0() {
+float MQGasSensor::getR0() {
   return _R0;
 }
-float MQUnifiedsensor::getRL() {
+float MQGasSensor::getRL() {
   return _RL;
 }
-float MQUnifiedsensor::getVoltResolution()
+float MQGasSensor::getVoltResolution()
 {
   return _VOLT_RESOLUTION;
 }
-String MQUnifiedsensor::getRegressionMethod()
+String MQGasSensor::getRegressionMethod()
 {
   if(_regressionMethod == 1) return "Exponential";
   else return "Linear";
 }
-float MQUnifiedsensor::getA() {
+float MQGasSensor::getA() {
   return _a;
 }
-float MQUnifiedsensor::getB() {
+float MQGasSensor::getB() {
   return _b;
 }
-void MQUnifiedsensor::serialDebug(bool onSetup)
+void MQGasSensor::serialDebug(bool onSetup)
 {
   if(onSetup)
   {
@@ -114,15 +114,15 @@ void MQUnifiedsensor::serialDebug(bool onSetup)
     }
   }
 }
-void MQUnifiedsensor::update()
+void MQGasSensor::update()
 {
   _sensor_volt = this->getVoltage();
 }
-void MQUnifiedsensor::externalADCUpdate(float volt)
+void MQGasSensor::externalADCUpdate(float volt)
 {
   _sensor_volt = volt;
 }
-float MQUnifiedsensor::validateEcuation(float ratioInput)
+float MQGasSensor::validateEcuation(float ratioInput)
 {
   //Serial.print("Ratio input: "); Serial.println(ratioInput);
   //Serial.print("a: "); Serial.println(_a);
@@ -139,7 +139,7 @@ float MQUnifiedsensor::validateEcuation(float ratioInput)
   //Serial.println("Result: "); Serial.println(_PPM);
   return _PPM;  
 }
-float MQUnifiedsensor::readSensor(bool isMQ303A, float correctionFactor, bool injected)
+float MQGasSensor::readSensor(bool isMQ303A, float correctionFactor, bool injected)
 {
   //More explained in: https://jayconsystems.com/blog/understanding-a-gas-sensor
   if(isMQ303A) {
@@ -161,7 +161,7 @@ float MQUnifiedsensor::readSensor(bool isMQ303A, float correctionFactor, bool in
   //if(_PPM > 10000) _PPM = 99999999; //No negative values accepted or upper datasheet recomendation.
   return _PPM;
 }
-float MQUnifiedsensor::readSensorR0Rs()
+float MQGasSensor::readSensorR0Rs()
 {
   //More explained in: https://jayconsystems.com/blog/understanding-a-gas-sensor
   _RS_Calc = ((_VOLT_RESOLUTION*_RL)/_sensor_volt)-_RL; //Get value of RS in a gas
@@ -179,7 +179,7 @@ float MQUnifiedsensor::readSensorR0Rs()
   //if(_PPM > 10000) _PPM = 99999999; //No negative values accepted or upper datasheet recomendation.
   return _PPM;
 }
-float MQUnifiedsensor::calibrate(float ratioInCleanAir) {
+float MQGasSensor::calibrate(float ratioInCleanAir) {
   //More explained in: https://jayconsystems.com/blog/understanding-a-gas-sensor
   /*
   V = I x R 
@@ -200,7 +200,7 @@ float MQUnifiedsensor::calibrate(float ratioInCleanAir) {
   if(R0 < 0)  R0 = 0; //No negative values accepted.
   return R0;
 }
-float MQUnifiedsensor::getVoltage(bool read, bool injected, int value) {
+float MQGasSensor::getVoltage(bool read, bool injected, int value) {
   float voltage;
   if(read)
   {
@@ -223,12 +223,12 @@ float MQUnifiedsensor::getVoltage(bool read, bool injected, int value) {
   }
   return voltage;
 }
-float MQUnifiedsensor:: setRsR0RatioGetPPM(float value)
+float MQGasSensor:: setRsR0RatioGetPPM(float value)
 {
   _ratio = value;
   return readSensor(false, 0, true);
 }
-float MQUnifiedsensor::getRS()
+float MQGasSensor::getRS()
 {
   //More explained in: https://jayconsystems.com/blog/understanding-a-gas-sensor
   _RS_Calc = ((_VOLT_RESOLUTION*_RL)/_sensor_volt)-_RL; //Get value of RS in a gas
@@ -236,7 +236,7 @@ float MQUnifiedsensor::getRS()
   return _RS_Calc;
 }
 
-float MQUnifiedsensor::stringTofloat(String & str)
+float MQGasSensor::stringTofloat(String & str)
 {
   return atof( str.c_str() );
 }

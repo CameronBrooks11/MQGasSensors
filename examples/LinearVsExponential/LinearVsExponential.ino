@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - reading an MQ4
+  MQGasSensor Library - reading an MQ4
 
   Demonstrates the use a MQ4 sensor.
   Library originally added 01 may 2019
@@ -20,7 +20,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 
 //Definitions
 #define placa "Arduino UNO"
@@ -32,7 +32,7 @@
 //#define calibration_button 13 //Pin to calibrate your sensor
 
 //Declare Sensor
-MQUnifiedsensor MQ4(placa, Voltage_Resolution, ADC_Bit_Resolution, pin, type);
+MQGasSensor MQ4(placa, Voltage_Resolution, ADC_Bit_Resolution, pin, type);
 
 void setup() {
   //Init the serial port communication - to debug the library

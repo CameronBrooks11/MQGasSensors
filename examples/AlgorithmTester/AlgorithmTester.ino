@@ -1,5 +1,5 @@
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 
 // Wiring NOT required, only an arduino or esp8266 board
 
@@ -14,7 +14,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 /************************Hardware Related Macros************************************/
 #define         Board                   ("Arduino UNO")
 #define         Pin                     (A3)  //Analog input 3 of your arduino
@@ -24,7 +24,7 @@
 #define         ADC_Bit_Resolution      (10) // For arduino UNO/MEGA/NANO
 
 //Declare Sensor
-MQUnifiedsensor mySensor(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
+MQGasSensor mySensor(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 
 /*****************************Globals***********************************************/
 double          ratio[4]                = {};

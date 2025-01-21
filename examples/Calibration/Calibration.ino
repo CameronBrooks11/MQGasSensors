@@ -1,5 +1,5 @@
 /*
-  MQUnifiedsensor Library - calibrating an MQ2
+  MQGasSensor Library - calibrating an MQ2
 
   Demonstrates the use a MQ2 sensor.
   Library originally added 01 may 2019
@@ -14,7 +14,7 @@
 */
 
 //Include the library
-#include <MQUnifiedsensor.h>
+#include <MQGasSensor.h>
 /************************Hardware Related Macros************************************/
 #define         Board                   ("Arduino UNO")
 #define         Pin                     (A2)  //Analog input 2 of your arduino
@@ -41,7 +41,7 @@ double          alcoholPPM          =   (0);
 unsigned long contador = 0;
 /**************************Object_Sensor********************************************/
 
-MQUnifiedsensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
+MQGasSensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 
 void setup() {
   //Init serial port
