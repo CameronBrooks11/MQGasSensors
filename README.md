@@ -49,6 +49,8 @@ A robust Arduino library for interfacing with MQ-series gas sensors, enabling ac
 
 ## Getting Started
 
+See the [MQGasSensorsAnalysis](https://github.com/CameronBrooks11/MQGasSensorsAnalysis.git) repository for information on how this library determines the regression parameters based on the datasheet graphs.
+
 ```c++
 //Include the library
 #include <MQGasSensor.h>
