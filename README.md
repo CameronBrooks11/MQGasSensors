@@ -1,10 +1,9 @@
 <!-- PROJECT SHIELDS -->
 <!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+*** Markdown "reference style" links are used for readability.
+*** Links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom for reference variables declarations (contributors-url, forks-url, etc.).
+*** For more information, visit: https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
 [![Contributors][contributors-shield]][contributors-url]
@@ -22,7 +21,7 @@ A robust Arduino library for interfacing with MQ-series gas sensors, enabling ac
 - Preheat and baseline calibration for MQ sensors.
 - Calculate sensor resistance (Rs) and baseline resistance (R0).
 - Support for multiple MQ-series sensors (e.g., MQ-2, MQ-7, MQ-135).
-- Semi-automated method for deriving the regression parameters (a and b) from the manufacturer datasheet.
+- [Semi-automated method](https://github.com/CameronBrooks11/MQGasSensorsAnalysis) for deriving the regression parameters (a and b) from the manufacturer datasheet.
 
 <!-- TABLE OF CONTENTS -->
 
