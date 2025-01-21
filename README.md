@@ -21,8 +21,8 @@ A robust Arduino library for interfacing with MQ-series gas sensors, enabling ac
 
 - Preheat and baseline calibration for MQ sensors.
 - Calculate sensor resistance (Rs) and baseline resistance (R0).
-- Derive gas concentration (PPM) using datasheet-provided regression models.
 - Support for multiple MQ-series sensors (e.g., MQ-2, MQ-7, MQ-135).
+- Semi-automated method for deriving the regression parameters (a and b) from the manufacturer datasheet.
 
 <!-- TABLE OF CONTENTS -->
 
