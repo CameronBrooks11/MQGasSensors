@@ -15,7 +15,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-# MQSensorsLib
+# MQGasSensors
 
 We present a unified library for MQ sensors, this library allows to read MQ signals easily from Arduino, Genuino, ESP8266, ESP-32 boards whose references are MQ2, MQ3, MQ4, MQ5, MQ6, MQ7, MQ8, MQ9, MQ131, MQ135, MQ303A, MQ309A.
 
@@ -69,18 +69,18 @@ float ppmCH4 = MQ4.readSensor();
 ##### Data of board that you should have
 * RL Value in KOhms
 ##### Graph
-![Wiring_MQSensor](https://raw.githubusercontent.com/miguel5612/MQSensorsLib_Docs/master/static/img/Points_explanation.jpeg)
+![Wiring_MQSensor](https://raw.githubusercontent.com/miguel5612/MQGasSensors_Docs/master/static/img/Points_explanation.jpeg)
 #### RS/R0 value (From datasheet of your sensor)
 * RS/R0 (Clean air - English) -> (Aire puro - Spanish)
 * **Note**: RS/R0 is equal to Ratio variable on the program
-![Graph from datasheet](https://raw.githubusercontent.com/miguel5612/MQSensorsLib_Docs/master/static/img/Graph_Explanation.jpeg)
+![Graph from datasheet](https://raw.githubusercontent.com/miguel5612/MQGasSensors_Docs/master/static/img/Graph_Explanation.jpeg)
 ### Arduino
-![Arduino_Wiring_MQSensor](https://raw.githubusercontent.com/miguel5612/MQSensorsLib_Docs/master/static/img/MQ_Arduino.PNG)
+![Arduino_Wiring_MQSensor](https://raw.githubusercontent.com/miguel5612/MQGasSensors_Docs/master/static/img/MQ_Arduino.PNG)
 #### MQ-7 / MQ-309A
-** Note ** [issue](https://github.com/miguel5612/MQSensorsLib/issues/26): MQ-7 and MQ-309 needs two different voltages for heater, they can be supplied by PWM and DC Signal controlled by your controller, another option is to use two different power sources, you should use the best option for you, next i will show the PWM option and on the examples this will be the way .
-![MQ-7_MQ-309](https://raw.githubusercontent.com/miguel5612/MQSensorsLib_Docs/master/static/img/MQ-309_MQ-7.PNG)
+** Note ** [issue](https://github.com/miguel5612/MQGasSensors/issues/26): MQ-7 and MQ-309 needs two different voltages for heater, they can be supplied by PWM and DC Signal controlled by your controller, another option is to use two different power sources, you should use the best option for you, next i will show the PWM option and on the examples this will be the way .
+![MQ-7_MQ-309](https://raw.githubusercontent.com/miguel5612/MQGasSensors_Docs/master/static/img/MQ-309_MQ-7.PNG)
 ### ESP8266-ESP32
-![ESP8266_Wiring_MQSensor](https://raw.githubusercontent.com/miguel5612/MQSensorsLib_Docs/master/static/img/MQ_ESP8266.PNG)
+![ESP8266_Wiring_MQSensor](https://raw.githubusercontent.com/miguel5612/MQGasSensors_Docs/master/static/img/MQ_ESP8266.PNG)
 
 ### ESP32 WROOM 32D
 The ESP32 WROOM 32D does not need an external power supply. A0 goes to PIN36, Vcc to 3v3 and GND to any GND port on the board. Check the **ESP2/ESP32_WROOM_32** folder to fixing the measuring issue when connecting to wifi.
@@ -89,7 +89,7 @@ The ESP32 WROOM 32D does not need an external power supply. A0 goes to PIN36, Vc
 #### User Manual (v1.0) 12.2019
 [Manual](https://drive.google.com/open?id=1BAFInlvqKR7h81zETtjz4_RC2EssvFWX)
 #### User Manual (v2.0) 04.2020
-[Manual](https://github.com/miguel5612/MQSensorsLib_Docs/blob/master/Docs/MQSensorLib_2.0.pdf)
+[Manual](https://github.com/miguel5612/MQGasSensors_Docs/blob/master/Docs/MQSensorLib_2.0.pdf)
 
 ### Serial debug (optional)
 If your sensor is an **MQ2** (Same for others sensors):
@@ -103,7 +103,7 @@ MQ2.serialDebug();
 ```
 * Result:
 
-![Serial debug output](https://github.com/miguel5612/MQSensorsLib_Docs/blob/master/static/img/Serial_Mon_Explanation.jpeg?raw=true)
+![Serial debug output](https://github.com/miguel5612/MQGasSensors_Docs/blob/master/static/img/Serial_Mon_Explanation.jpeg?raw=true)
 
 **Note**: 
 * ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) `Yellow -> Calibration status.`
@@ -131,20 +131,20 @@ You'll need Arduino desktop app 1.8.9 or later.
 | MQ-9 | HANWEI Electronics | [datasheet](http://www.haoyuelectronics.com/Attachment/MQ-9/MQ9.pdf) |
 | MQ-131 | HANWEI Electronics | [datasheet](http://www.sensorsportal.com/DOWNLOADS/MQ131.pdf) |
 | MQ-135 | HANWEI Electronics | [datasheet](https://www.electronicoscaldas.com/datasheet/MQ-135_Hanwei.pdf) |
-| MQ-136 | HANWEI Electronics | [datasheet](https://github.com/miguel5612/MQSensorsLib_Docs/blob/master/Datasheets/MQ136%20-%20Hanwei.pdf) |
+| MQ-136 | HANWEI Electronics | [datasheet](https://github.com/miguel5612/MQGasSensors_Docs/blob/master/Datasheets/MQ136%20-%20Hanwei.pdf) |
 | MQ-303A | HANWEI Electronics | [datasheet](http://www.kosmodrom.com.ua/pdf/MQ303A.pdf) |
 | MQ-309A | HANWEI Electronics | [datasheet](http://www.sensorica.ru/pdf/MQ-309A.pdf) |
 
 ### Info of datasheets 
 
-Review WPDigitalizer [folder](https://github.com/miguel5612/MQSensorsLib_Docs/tree/master/WPDigitalizer) [website](https://automeris.io/WebPlotDigitizer/)
+Review WPDigitalizer [folder](https://github.com/miguel5612/MQGasSensors_Docs/tree/master/WPDigitalizer) [website](https://automeris.io/WebPlotDigitizer/)
 
 ### Installing
 
 Clone this repository into your desktop machine
 
 ```
-git clone https://github.com/miguel5612/MQSensorsLib
+git clone https://github.com/miguel5612/MQGasSensors
 ```
 
 
@@ -170,12 +170,12 @@ Examples/MQ-board.ino
 
 ## Built With
 
-* [Data sheets](https://github.com/miguel5612/MQSensorsLib_Docs/tree/master/Datasheets) - Curves and behavior for each sensor, using logarithmic graphs.
-* [Main purpose](https://github.com/miguel5612/MQSensorsLib_Docs/blob/master/static/img/bg.jpg) - Every sensor has high sensibility for a specific gas or material.
+* [Data sheets](https://github.com/miguel5612/MQGasSensors_Docs/tree/master/Datasheets) - Curves and behavior for each sensor, using logarithmic graphs.
+* [Main purpose](https://github.com/miguel5612/MQGasSensors_Docs/blob/master/static/img/bg.jpg) - Every sensor has high sensibility for a specific gas or material.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/miguel5612/MQSensorsLib/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/miguel5612/MQGasSensors/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Reviewers
 
@@ -193,7 +193,7 @@ Please read [CONTRIBUTING.md](https://github.com/miguel5612/MQSensorsLib/blob/ma
 * **Juan A. Rodríguez.** - [*Github*](https://github.com/Obiot24) - [CV]()
 * **Mario A. Rodríguez O.** - [*GitHub*](https://github.com/MarioAndresR) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000111304)
 
-See also the list of [contributors](https://github.com/miguel5612/MQSensorsLib/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/miguel5612/MQGasSensors/contributors) who participated in this project.
 
 ## License
 
@@ -201,11 +201,11 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Cite as
 
-* Plain text: Califa Urquiza, Miguel Angel, Contreras Contreras, Ghiordy, & Carrillo Amado, Yerson Ramiro. (2019, September 3). miguel5612/MQSensorsLib: Arduino Preview V1.03 (Version 1.0.3). Zenodo. http://doi.org/10.5281/zenodo.3384301
+* Plain text: Califa Urquiza, Miguel Angel, Contreras Contreras, Ghiordy, & Carrillo Amado, Yerson Ramiro. (2019, September 3). miguel5612/MQGasSensors: Arduino Preview V1.03 (Version 1.0.3). Zenodo. http://doi.org/10.5281/zenodo.3384301
 * CSL: {
   "publisher": "Zenodo", 
   "DOI": "10.5281/zenodo.3384301", 
-  "title": "miguel5612/MQSensorsLib: Arduino Preview V1.03", 
+  "title": "miguel5612/MQGasSensors: Arduino Preview V1.03", 
   "issued": {
     "date-parts": [
       [
@@ -236,7 +236,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
   author       = {Califa Urquiza, Miguel Angel and
                   Contreras Contreras, Ghiordy and
                   Carrillo Amado, Yerson Ramiro},
-  title        = {miguel5612/MQSensorsLib: Arduino Preview V1.03},
+  title        = {miguel5612/MQGasSensors: Arduino Preview V1.03},
   month        = sep,
   year         = 2019,
   doi          = {10.5281/zenodo.3384301},
@@ -251,16 +251,16 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/miguel5612/MQSensorsLib.svg?style=flat-square
-[contributors-url]: https://github.com/miguel5612/MQSensorsLib/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/miguel5612/MQSensorsLib.svg?style=flat-square
-[forks-url]: https://github.com/miguel5612/MQSensorsLib/network/members
-[stars-shield]: https://img.shields.io/github/stars/miguel5612/MQSensorsLib.svg?style=flat-square
-[stars-url]: https://github.com/miguel5612/MQSensorsLib/stargazers
-[issues-shield]: https://img.shields.io/github/issues/miguel5612/MQSensorsLib.svg?style=flat-square
-[issues-url]: https://github.com/miguel5612/MQSensorsLib/issues
-[license-shield]: https://img.shields.io/github/license/miguel5612/MQSensorsLib.svg?style=flat-square
-[license-url]: https://github.com/miguel5612/MQSensorsLib/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/miguel5612/MQGasSensors.svg?style=flat-square
+[contributors-url]: https://github.com/miguel5612/MQGasSensors/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/miguel5612/MQGasSensors.svg?style=flat-square
+[forks-url]: https://github.com/miguel5612/MQGasSensors/network/members
+[stars-shield]: https://img.shields.io/github/stars/miguel5612/MQGasSensors.svg?style=flat-square
+[stars-url]: https://github.com/miguel5612/MQGasSensors/stargazers
+[issues-shield]: https://img.shields.io/github/issues/miguel5612/MQGasSensors.svg?style=flat-square
+[issues-url]: https://github.com/miguel5612/MQGasSensors/issues
+[license-shield]: https://img.shields.io/github/license/miguel5612/MQGasSensors.svg?style=flat-square
+[license-url]: https://github.com/miguel5612/MQGasSensors/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [build-url]: https://travis-ci.org/dwyl/esta.svg?branch=master
 [linkedin-url]: https://www.linkedin.com/in/miguel5612
