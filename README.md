@@ -15,7 +15,15 @@
 
 # MQGasSensors
 
-We present a unified library for MQ sensors, this library allows to read MQ signals easily from Arduino, Genuino, ESP8266, ESP-32 boards whose references are MQ2, MQ3, MQ4, MQ5, MQ6, MQ7, MQ8, MQ9, MQ131, MQ135, MQ303A, MQ309A.
+A robust Arduino library for interfacing with MQ-series gas sensors, enabling accurate gas concentration measurements with ease. Supports calibration, resistance calculations, and real-time gas concentration derivation for various gases.
+
+## Features
+
+- Preheat and baseline calibration for MQ sensors.
+- Calculate sensor resistance (Rs) and baseline resistance (R0).
+- Derive gas concentration (PPM) using datasheet-provided regression models.
+- Support for multiple MQ-series sensors (e.g., MQ-2, MQ-7, MQ-135).
+  Works with Arduino, Genuino, ESP8266, ESP-32 boards whose references are MQ2, MQ3, MQ4, MQ5, MQ6, MQ7, MQ8, MQ9, MQ131, MQ135, MQ303A, MQ309A.
 
 <!-- TABLE OF CONTENTS -->
 
@@ -30,7 +38,6 @@ We present a unified library for MQ sensors, this library allows to read MQ sign
 - [Sensor manufacturers](#Sensor-manufacturers)
 - [Contributing](#Contributing)
 - [Authors](#Authors)
-- [Be a sponsor 💖](#Sponsor)
 
 ## Getting Started
 
@@ -58,60 +65,52 @@ MQ4.update();
 float ppmCH4 = MQ4.readSensor();
 ```
 
-## Wiring
+## Usage
 
-### Sensor
+## Hardware Setup
 
-#### Important points:
+### Sensor Considerations
 
-##### Points you should identify
+**Important points:**
+
+Sensor pins:
 
 - VCC -> 5V Power supply (+) wire
 - GND -> GND Ground (-) wire
 - AO -> Analog Output of the sensor
 
-##### Data of board that you should have
+![Wiring_MQSensor](docs/static/img/Points_explanation.jpeg)
 
-- RL Value in KOhms
+Sensor characteristics:
 
-##### Graph
+- Find your RL Value in KOhms
+  - From datasheet of your sensor
+- Find your RS/R0 (Clean air - English)
+  - Note: RS/R0 is equal to Ratio variable on the program
+  - From datasheet of your sensor
 
-![Wiring_MQSensor](https://raw.githubusercontent.com/CameronBrooks11/MQGasSensors_Docs/master/static/img/Points_explanation.jpeg)
+![Graph from datasheet](docs/static/img/Graph_Explanation.jpeg)
 
-#### RS/R0 value (From datasheet of your sensor)
 
-- RS/R0 (Clean air - English) -> (Aire puro - Spanish)
-- **Note**: RS/R0 is equal to Ratio variable on the program
-  ![Graph from datasheet](https://raw.githubusercontent.com/CameronBrooks11/MQGasSensors_Docs/master/static/img/Graph_Explanation.jpeg)
+![Arduino_Wiring_MQSensor](docs/static/img/MQ_Arduino.PNG)
 
-### Arduino
-
-![Arduino_Wiring_MQSensor](https://raw.githubusercontent.com/CameronBrooks11/MQGasSensors_Docs/master/static/img/MQ_Arduino.PNG)
+### Wiring Hookup
 
 #### MQ-7 / MQ-309A
 
-** Note ** [issue](https://github.com/CameronBrooks11/MQGasSensors/issues/26): MQ-7 and MQ-309 needs two different voltages for heater, they can be supplied by PWM and DC Signal controlled by your controller, another option is to use two different power sources, you should use the best option for you, next i will show the PWM option and on the examples this will be the way .
-![MQ-7_MQ-309](https://raw.githubusercontent.com/CameronBrooks11/MQGasSensors_Docs/master/static/img/MQ-309_MQ-7.PNG)
+**Note**: MQ-7 and MQ-309 needs two different voltages for heater, they can be supplied by PWM and DC Signal controlled by your controller, another option is to use two different power sources, you should use the best option for you, next i will show the PWM option and on the examples this will be the way.
 
-### ESP8266-ESP32
+![MQ-7_MQ-309](docs/static/img/MQ-309_MQ-7.PNG)
 
-![ESP8266_Wiring_MQSensor](https://raw.githubusercontent.com/CameronBrooks11/MQGasSensors_Docs/master/static/img/MQ_ESP8266.PNG)
+#### ESP Wiring
 
-### ESP32 WROOM 32D
+![ESP8266_Wiring_MQSensor](docs/static/img/MQ_ESP8266.PNG)
+
+#### ESP32 WROOM 32D
 
 The ESP32 WROOM 32D does not need an external power supply. A0 goes to PIN36, Vcc to 3v3 and GND to any GND port on the board. Check the **ESP2/ESP32_WROOM_32** folder to fixing the measuring issue when connecting to wifi.
 
-### Manuals
-
-#### User Manual (v1.0) 12.2019
-
-[Manual](https://drive.google.com/open?id=1BAFInlvqKR7h81zETtjz4_RC2EssvFWX)
-
-#### User Manual (v2.0) 04.2020
-
-[Manual](https://github.com/CameronBrooks11/MQGasSensors_Docs/blob/master/Docs/MQSensorLib_2.0.pdf)
-
-### Serial debug (optional)
+## Serial debug (optional)
 
 If your sensor is an **MQ2** (Same for others sensors):
 
@@ -131,42 +130,26 @@ MQ2.serialDebug();
 
 ![Serial debug output](https://github.com/CameronBrooks11/MQGasSensors_Docs/blob/master/static/img/Serial_Mon_Explanation.jpeg?raw=true)
 
-**Note**:
+## Sensor Manufacturers
 
-- ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) `Yellow -> Calibration status.`
-- ![#008000](https://placehold.it/15/008000/000000?text=+) `Green -> Hardware and software characteristics.`
-- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Red -> Headers of the library calculations.`
-- Only valid for **1** gas sensor readings.
-
-**Usage**
-
-- Quick troubleshooting, since it shows everything the library does and the results of the calculations in each function.
-
-### Prerequisites
-
-You'll need Arduino desktop app 1.8.9 or later.
-
-### Sensor manufacturers:
-
-| Sensor  | Manufacture        | URL Datasheet                                                                                              |
-| ------- | ------------------ | ---------------------------------------------------------------------------------------------------------- |
-| MQ-2    | HANWEI Electronics | [datasheet](https://www.pololu.com/file/0J309/MQ2.pdf)                                                     |
-| MQ-3    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/MQ-3.pdf)                                          |
-| MQ-4    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-4.pdf)                                |
-| MQ-5    | HANWEI Electronics | [datasheet](https://www.parallax.com/sites/default/files/downloads/605-00009-MQ-5-Datasheet.pdf)           |
-| MQ-6    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-6.pdf)                                |
-| MQ-7    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-7.pdf)                                |
-| MQ-8    | HANWEI Electronics | [datasheet](https://dlnmh9ip6v2uc.cloudfront.net/datasheets/Sensors/Biometric/MQ-8.pdf)                    |
-| MQ-9    | HANWEI Electronics | [datasheet](http://www.haoyuelectronics.com/Attachment/MQ-9/MQ9.pdf)                                       |
-| MQ-131  | HANWEI Electronics | [datasheet](http://www.sensorsportal.com/DOWNLOADS/MQ131.pdf)                                              |
-| MQ-135  | HANWEI Electronics | [datasheet](https://www.electronicoscaldas.com/datasheet/MQ-135_Hanwei.pdf)                                |
+| Sensor  | Manufacture        | URL Datasheet                                                                                                   |
+| ------- | ------------------ | --------------------------------------------------------------------------------------------------------------- |
+| MQ-2    | HANWEI Electronics | [datasheet](https://www.pololu.com/file/0J309/MQ2.pdf)                                                          |
+| MQ-3    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/MQ-3.pdf)                                               |
+| MQ-4    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-4.pdf)                                     |
+| MQ-5    | HANWEI Electronics | [datasheet](https://www.parallax.com/sites/default/files/downloads/605-00009-MQ-5-Datasheet.pdf)                |
+| MQ-6    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-6.pdf)                                     |
+| MQ-7    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-7.pdf)                                     |
+| MQ-8    | HANWEI Electronics | [datasheet](https://dlnmh9ip6v2uc.cloudfront.net/datasheets/Sensors/Biometric/MQ-8.pdf)                         |
+| MQ-9    | HANWEI Electronics | [datasheet](http://www.haoyuelectronics.com/Attachment/MQ-9/MQ9.pdf)                                            |
+| MQ-131  | HANWEI Electronics | [datasheet](http://www.sensorsportal.com/DOWNLOADS/MQ131.pdf)                                                   |
+| MQ-135  | HANWEI Electronics | [datasheet](https://www.electronicoscaldas.com/datasheet/MQ-135_Hanwei.pdf)                                     |
 | MQ-136  | HANWEI Electronics | [datasheet](https://github.com/CameronBrooks11/MQGasSensors_Docs/blob/master/Datasheets/MQ136%20-%20Hanwei.pdf) |
-| MQ-303A | HANWEI Electronics | [datasheet](http://www.kosmodrom.com.ua/pdf/MQ303A.pdf)                                                    |
-| MQ-309A | HANWEI Electronics | [datasheet](http://www.sensorica.ru/pdf/MQ-309A.pdf)                                                       |
+| MQ-303A | HANWEI Electronics | [datasheet](http://www.kosmodrom.com.ua/pdf/MQ303A.pdf)                                                         |
+| MQ-309A | HANWEI Electronics | [datasheet](http://www.sensorica.ru/pdf/MQ-309A.pdf)                                                            |
 
-### Info of datasheets
 
-Review WPDigitalizer [folder](https://github.com/CameronBrooks11/MQGasSensors_Docs/tree/master/WPDigitalizer) [website](https://automeris.io/WebPlotDigitizer/)
+Review WPDigitalizer [folder](docs/WPDigitalizer/README.md) [website](https://automeris.io/WebPlotDigitizer/)
 
 ### Installing
 
@@ -203,77 +186,35 @@ Examples/MQ-board.ino
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/CameronBrooks11/MQGasSensors/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Reviewers
-
-- **PhD. Jacipt A Ramón V.** - [_GitHub_]() - [CV](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000512702)
-
-## Authors
-
-- **Miguel A. Califa U.** - [_GitHub_](https://github.com/CameronBrooks11) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050477)
-- **Ghiordy F. Contreras C.** - [_GitHub_](https://github.com/Ghiordy) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050476)
-- **Yersson R. Carrillo A.** - [_GitHub_](https://github.com/Yercar18/Dronefenix) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001637655)
-
-## Collaborators
-
-- **Andres A. Martinez.** - [_Github_](https://github.com/andresmacsi) - [CV](https://www.linkedin.com/in/andr%C3%A9s-acevedo-mart%C3%ADnez-73ab35185/?originalSubdomain=co)
-- **Juan A. Rodríguez.** - [_Github_](https://github.com/Obiot24) - [CV]()
-- **Mario A. Rodríguez O.** - [_GitHub_](https://github.com/MarioAndresR) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000111304)
-
-See also the list of [contributors](https://github.com/CameronBrooks11/MQGasSensors/contributors) who participated in this project.
+Please read [CONTRIBUTING.md](https://github.com/CameronBrooks11/MQGasSensors/blob/master/CONTRIBUTING.md) for details on the code of conduct, and the process for submitting pull requests.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Cite as
+## Acknowledgment
 
-- Plain text: Califa Urquiza, Miguel Angel, Contreras Contreras, Ghiordy, & Carrillo Amado, Yerson Ramiro. (2019, September 3). CameronBrooks11/MQGasSensors: Arduino Preview V1.03 (Version 1.0.3). Zenodo. http://doi.org/10.5281/zenodo.3384301
-- CSL: {
-  "publisher": "Zenodo",
-  "DOI": "10.5281/zenodo.3384301",
-  "title": "CameronBrooks11/MQGasSensors: Arduino Preview V1.03",
-  "issued": {
-  "date-parts": [
-  [
-  2019,
-  9,
-  3
-  ]
-  ]
-  },
-  "abstract": "<p>Publishing on Zenodo platform as software in order to extend its applications for other works allowing to recognize MQSensorLib&#39;s Authors this work into scientific community using Digital Object Identifier System (DOI).</p>",
-  "author": [
-  {
-  "family": "Califa Urquiza, Miguel Angel"
-  },
-  {
-  "family": "Contreras Contreras, Ghiordy"
-  },
-  {
-  "family": "Carrillo Amado, Yerson Ramiro"
-  }
-  ],
-  "version": "1.0.3",
-  "type": "article",
-  "id": "3384301"
-  }
-- BibTeX:
-  @misc{califa_urquiza_miguel_angel_2019_3384301,
-  author = {Califa Urquiza, Miguel Angel and
-  Contreras Contreras, Ghiordy and
-  Carrillo Amado, Yerson Ramiro},
-  title = {CameronBrooks11/MQGasSensors: Arduino Preview V1.03},
-  month = sep,
-  year = 2019,
-  doi = {10.5281/zenodo.3384301},
-  url = {https://doi.org/10.5281/zenodo.3384301}
-  }
+This library is a fork of the original **MQSensorsLib** library, created and maintained by Miguel Angel Califa Urquiza, Ghiordy Contreras Contreras, and Yerson Ramiro Carrillo Amado. Their work laid the foundation for interfacing MQ-series gas sensors with Arduino, and we acknowledge their significant contributions to the community.
 
-## Sponsor
+Original repository: [miguel5612/MQSensorsLib](https://github.com/miguel5612/MQSensorsLib)  
+Cite their work as:
 
-- [Paypal](https://www.paypal.com/paypalme/CameronBrooks11)
+- Califa Urquiza, Miguel Angel, Contreras Contreras, Ghiordy, & Carrillo Amado, Yerson Ramiro. (2019, September 3). CameronBrooks11/MQGasSensors: Arduino Preview V1.03 (Version 1.0.3). Zenodo. [http://doi.org/10.5281/zenodo.3384301](http://doi.org/10.5281/zenodo.3384301)
+
+### Attribution
+
+- **Authors**
+  - _Miguel A. Califa U._ - [_GitHub_](https://github.com/CameronBrooks11) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050477)
+  - _Ghiordy F. Contreras C._ - [_GitHub_](https://github.com/Ghiordy) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050476)
+  - _Yersson R. Carrillo A._ - [_GitHub_](https://github.com/Yercar18/Dronefenix) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001637655)
+- **Contributors**
+  - _Andres A. Martinez._ - [_Github_](https://github.com/andresmacsi) - [CV](https://www.linkedin.com/in/andr%C3%A9s-acevedo-mart%C3%ADnez-73ab35185/?originalSubdomain=co)
+  - _Juan A. Rodríguez._ - [_Github_](https://github.com/Obiot24)
+  - _Mario A. Rodríguez O._ - [_GitHub_](https://github.com/MarioAndresR) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000111304)
+- **Reviewers**
+- _PhD. Jacipt A Ramón V._ - [CV](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000512702)
+
+See also the list of [contributors](https://github.com/miguel5612/MQSensorsLib/graphs/contributors) who participated in the original project.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
