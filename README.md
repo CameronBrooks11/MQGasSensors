@@ -182,10 +182,6 @@ The ESP32 WROOM 32D does not need an external power supply. A0 goes to PIN36, Vc
 | MQ-303A | HANWEI Electronics | [datasheet](http://www.kosmodrom.com.ua/pdf/MQ303A.pdf)                                                         |
 | MQ-309A | HANWEI Electronics | [datasheet](http://www.sensorica.ru/pdf/MQ-309A.pdf)                                                            |
 
-Review WPDigitalizer [folder](tools/WPDigitalizer/README.md) for details on how graphs from datasheet were processed. WPDigitalizer can be found [here](https://automeris.io/WebPlotDigitizer/).
-
-**Note**: this library has moved towards using python for analysis of the datasheet curves.
-
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://github.com/CameronBrooks11/MQGasSensors/blob/master/CONTRIBUTING.md) for details on the code of conduct, and the process for submitting pull requests.
