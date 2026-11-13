@@ -4,8 +4,9 @@
 #   scripts/examples.sh check   compile; exit 1 on any failure
 #   scripts/examples.sh setup   install the board cores and libraries the examples need
 #
-# Outside CI, a sketch whose board core or library is not installed is reported
-# as SKIP. With CI set, a skip is a failure: the gate must build everything.
+# Outside CI, a sketch whose board core or library is not installed at the
+# pinned version is reported as SKIP. With CI set, a skip is a failure: the gate
+# must build everything.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -13,6 +14,25 @@ AVR=arduino:avr:mega
 ESP32=esp32:esp32:esp32
 ESP8266=esp8266:esp8266:nodemcuv2
 BOARD_INDEXES=https://espressif.github.io/arduino-esp32/package_esp32_index.json,https://arduino.esp8266.com/stable/package_esp8266com_index.json
+
+# The pinned version of each board core and library. `setup` installs exactly
+# these and `check` builds only against them.
+version_of() {
+  case "$1" in
+    arduino:avr) echo 1.8.8 ;;
+    esp32:esp32) echo 3.3.12 ;;
+    esp8266:esp8266) echo 3.1.2 ;;
+    "Adafruit ADS1X15") echo 2.6.2 ;;
+    "Adafruit BusIO") echo 1.17.4 ;;
+    "Adafruit Unified Sensor") echo 1.1.15 ;;
+    "DHT sensor library") echo 1.4.7 ;;
+    ArduinoUnit) echo 3.0.4 ;;
+    *)
+      echo "error: no pinned version for '$1'" >&2
+      return 1
+      ;;
+  esac
+}
 
 # The board a sketch is built for. Sketches are written for an AVR board unless
 # they sit in one of the ESP folders.
@@ -24,10 +44,10 @@ board_for() {
   esac
 }
 
-# Third-party libraries a sketch includes, one per line.
+# Third-party libraries a sketch needs, one per line, dependencies included.
 libs_for() {
   case "$(basename "$1")" in
-    MQ135-ADS1115) echo "Adafruit ADS1X15" ;;
+    MQ135-ADS1115) printf '%s\n' "Adafruit BusIO" "Adafruit ADS1X15" ;;
     MQ-135-CorrectionFactorDHT11) printf '%s\n' "Adafruit Unified Sensor" "DHT sensor library" ;;
     UnitTesting) echo "ArduinoUnit" ;;
   esac
@@ -37,41 +57,49 @@ sketches() {
   find examples -name '*.ino' -printf '%h\n' | sort -u
 }
 
-has_core() {
-  arduino-cli core list --json | jq -e --arg id "${1%:*}" '(.platforms // []) | any(.id == $id)' >/dev/null
+# Installed version of a core or library; empty when it is not installed.
+core_version() {
+  arduino-cli core list --json | jq -r --arg id "$1" '(.platforms // [])[] | select(.id == $id) | .installed_version'
 }
 
-has_lib() {
-  arduino-cli lib list --json | jq -e --arg n "$1" '(.installed_libraries // []) | any(.library.name == $n)' >/dev/null
+lib_version() {
+  arduino-cli lib list --json | jq -r --arg n "$1" '(.installed_libraries // [])[] | .library | select(.name == $n) | .version'
 }
 
 setup() {
+  local fqbn core sketch lib
   arduino-cli core update-index --additional-urls "$BOARD_INDEXES"
   for fqbn in "$AVR" "$ESP32" "$ESP8266"; do
-    arduino-cli core install --additional-urls "$BOARD_INDEXES" "${fqbn%:*}"
+    core=${fqbn%:*}
+    arduino-cli core install --additional-urls "$BOARD_INDEXES" "$core@$(version_of "$core")"
   done
   arduino-cli lib update-index
   while IFS= read -r sketch; do
     while IFS= read -r lib; do
-      arduino-cli lib install "$lib"
+      arduino-cli lib install --no-deps "$lib@$(version_of "$lib")"
     done < <(libs_for "$sketch")
   done < <(sketches)
 }
 
 check() {
   local build="${TMPDIR:-/tmp}/mqgassensors-build" pass=0 fail=0 skip=0
-  local sketch fqbn lib missing log
+  local sketch fqbn core lib want have missing log
   while IFS= read -r sketch; do
     fqbn=$(board_for "$sketch")
+    core=${fqbn%:*}
     missing=""
-    has_core "$fqbn" || missing="core ${fqbn%:*}"
+    want=$(version_of "$core")
+    have=$(core_version "$core")
+    [ "$have" = "$want" ] || missing="core $core@$want (found ${have:-none})"
     while IFS= read -r lib; do
-      [ -z "$lib" ] || has_lib "$lib" || missing="${missing:+$missing, }library $lib"
+      want=$(version_of "$lib")
+      have=$(lib_version "$lib")
+      [ "$have" = "$want" ] || missing="${missing:+$missing, }library $lib@$want (found ${have:-none})"
     done < <(libs_for "$sketch")
 
     if [ -n "$missing" ]; then
       skip=$((skip + 1))
-      echo "SKIP $sketch ($fqbn): not installed: $missing"
+      echo "SKIP $sketch ($fqbn): needs $missing"
     elif log=$(arduino-cli compile --fqbn "$fqbn" --library . --build-path "$build/$sketch" "$sketch" 2>&1); then
       pass=$((pass + 1))
       echo "PASS $sketch ($fqbn)"
