@@ -65,10 +65,21 @@ connectivity = 8
 | `trace <recipe> [--points CSV] [--overlay PNG]` | Trace and fit a curve from its recipe |
 | `fit <points.csv>` | Fit points that are already digitised |
 | `mark <recipe> --id … --sensor … --gas … (--image F \| --datasheet ID --page N --pixels-sha256 H)` | Mark a new figure by clicking, and write its recipe |
+| `table [--check]` | Write `docs/coefficients.md`, or fail if it is out of date |
 
 `mark` opens a window and needs matplotlib: `uv sync --extra interactive`.
 
 An overlay shows the traced points, the fitted line and the axis reference positions on top of the figure. It contains the datasheet's figure, so keep it local; `analysis/out/` is ignored by git.
+
+## Points and the coefficients page
+
+[`curves.toml`](curves.toml) lists every curve that has digitised points: its sensor, gas, datasheet and the CSV under `points/` that holds them. A curve's points are either read by hand by the authors of MQSensorsLib (a few marker positions each) or traced from the figure by this tool.
+
+```
+just coefficients
+```
+
+fits every curve and writes [`docs/coefficients.md`](../docs/coefficients.md). That page also lists every `setA`/`setB` pair used in `examples/` beside the curve it comes from. `just check` fails when the page no longer matches the points or the examples, so a coefficient cannot change without the page changing with it.
 
 ## Limits
 
