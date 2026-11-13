@@ -58,6 +58,8 @@ def load_curves(analysis=ANALYSIS, manifest=None):
             raise ValueError(f"{c['id']}: datasheet '{c['datasheet']}' is not in the manifest")
         if c["origin"] not in ("upstream", "traced"):
             raise ValueError(f"{c['id']}: origin must be 'upstream' or 'traced'")
+        if c["origin"] == "traced" and not (Path(analysis) / c.get("recipe", "")).is_file():
+            raise ValueError(f"{c['id']}: a traced curve needs a 'recipe' file")
         c["sheet"] = sheets[c["datasheet"]]
         c.setdefault("unit", "ppm")
         c["fit"] = fit(*points.read(Path(analysis) / c["points"]))
@@ -99,7 +101,13 @@ def judge(a_text, b_text, f):
 
 
 def audit(curves, pairs):
-    """One row per example pair: its closest curve for that sensor and the verdict."""
+    """One row per example pair: its closest curve for that sensor and the verdict.
+
+    The examples were written from Hanwei-era datasheets, so only curves from
+    those are candidates. A Winsen manual for the same sensor is a different
+    document with a different curve, and comparing against it would mislead.
+    """
+    curves = [c for c in curves if c.get("sheet", {}).get("maker", "Hanwei").startswith("Hanwei")]
     rows = []
     for (sensor, a_text, b_text), sketches in sorted(pairs.items(), key=lambda kv: (sensor_key(kv[0][0]), float(kv[0][1]))):
         candidates = [c for c in curves if c["sensor"] == sensor]
@@ -126,7 +134,7 @@ VERDICT = {
     "rounded": "the fit, rounded coarsely",
     "near": "near the fit, not equal",
     "different": "does not match any curve",
-    "no points": "no digitised points for this sensor",
+    "no points": "no digitised points from a Hanwei-era datasheet",
     "not a power law": "linear-model example",
 }
 
@@ -143,27 +151,33 @@ def render(curves, rows):
         "",
         "## Fitted curves",
         "",
-        "| Sensor | Gas | a | b | Concentration range | Rs/R0 range | Points | r² | Datasheet | Points from |",
-        "|---|---|---|---|---|---|---|---|---|---|",
+        "| Sensor | Gas | a | b | Concentration range | Rs/R0 range | Points | r² | Largest error | Datasheet | Points from |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     for c in sorted(curves, key=lambda c: (sensor_key(c["sensor"]), c["sheet"]["maker"], c["gas"].lower())):
         f = c["fit"]
-        origin = "read by hand upstream" if c["origin"] == "upstream" else "traced from the figure"
+        origin = "read by hand upstream" if c["origin"] == "upstream" else f"[traced](../analysis/{c['recipe']})"
         out.append(
             f"| {c['sensor']} | {c['gas']} | {sig(f.a)} | {sig(f.b, 4)} | {sig(f.ppm_min, 3)} to {sig(f.ppm_max, 3)} {c['unit']} "
-            f"| {sig(f.ratio_min, 3)} to {sig(f.ratio_max, 3)} | {f.n} | {f.r_squared:.4f} | `{c['datasheet']}` | {origin} |"
+            f"| {sig(f.ratio_min, 3)} to {sig(f.ratio_max, 3)} | {f.n} | {f.r_squared:.4f} | {f.max_ppm_error * 100:.0f} % | `{c['datasheet']}` | {origin} |"
         )
+    notes = [c for c in curves if c.get("note")]
+    if notes:
+        out += ["", "Notes:", ""]
+        out += [f"- **{c['sensor']} {c['gas']}** (`{c['datasheet']}`): {c['note']}" for c in notes]
     out += [
         "",
         "The concentration is in the unit of the datasheet figure's horizontal axis. Where that is not ppm, the value the library returns is in that unit too, whatever the sketch calls it: the MQ-3 curves are drawn against mg/L.",
         "",
         "`Datasheet` is an id in [`datasheets/manifest.toml`](../datasheets/manifest.toml), which records the document's maker, edition and SHA-256. Datasheets from different makers for the same sensor have different curves.",
         "",
-        "**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced from the figure** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md).",
+        "**Largest error** is the biggest relative difference, over the fitted points, between the concentration the fit returns and the concentration the datasheet plots at that Rs/R0. It is what approximating the curve by a power law costs, before any error in the sensor itself.",
+        "",
+        "**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md); the link is the recipe that reproduces it.",
         "",
         "## Values used in the examples",
         "",
-        "Every distinct `setA`/`setB` pair in `examples/`, beside the closest fitted curve for the same sensor.",
+        "Every distinct `setA`/`setB` pair in `examples/`, beside the closest fitted curve for the same sensor. The examples were written from the Hanwei-era datasheets, so only curves from those are compared; a Winsen manual for the same sensor is a different document with a different curve.",
         "",
         "| Sensor | setA | setB | Closest curve | Fitted a | Fitted b | Difference in a | Verdict | Sketches |",
         "|---|---|---|---|---|---|---|---|---|",

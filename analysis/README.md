@@ -53,7 +53,14 @@ lo = 20                       # colour tolerance below and above the seed's
 up = 20
 bin_width = 1                 # columns averaged into one point
 connectivity = 8
+ppm = [100, 10000]            # optional: keep only points in this range
+
+[[check]]                     # optional, repeatable: a value read off the
+at = 1000                     # figure by eye, which the trace must pass
+ratio = 0.09                  # within 10 % of (or `within = ...`)
 ```
+
+`ppm` matters where a line ends in a marker: the marker's outer half has the line's colour and would otherwise be read as points beyond the last value the datasheet plots. A `check` guards against a wrong calibration or seed: the trace fails if it does not pass near a value a person read off the figure.
 
 `datasheet` is an id from [`datasheets/manifest.toml`](../datasheets/manifest.toml); run `just datasheets` first. `pixels_sha256` identifies the figure by its content, which also proves the figure being traced is the one the recipe was written for.
 
@@ -66,6 +73,7 @@ connectivity = 8
 | `fit <points.csv>` | Fit points that are already digitised |
 | `mark <recipe> --id … --sensor … --gas … (--image F \| --datasheet ID --page N --pixels-sha256 H)` | Mark a new figure by clicking, and write its recipe |
 | `table [--check]` | Write `docs/coefficients.md`, or fail if it is out of date |
+| `reproduce` | Re-trace every traced curve from its datasheet and compare with the committed points |
 
 `mark` opens a window and needs matplotlib: `uv sync --extra interactive`.
 
@@ -79,12 +87,21 @@ An overlay shows the traced points, the fitted line and the axis reference posit
 just coefficients
 ```
 
-fits every curve and writes [`docs/coefficients.md`](../docs/coefficients.md). That page also lists every `setA`/`setB` pair used in `examples/` beside the curve it comes from. `just check` fails when the page no longer matches the points or the examples, so a coefficient cannot change without the page changing with it.
+fits every curve and writes [`docs/coefficients.md`](../docs/coefficients.md). For a traced curve, the recipe is in `recipes/` and
+
+```
+just reproduce
+```
+
+downloads the datasheets, traces each such curve again and expects the committed points back byte for byte. The `Datasheet mirrors` workflow runs it monthly and on pull requests that touch a recipe, the points or the tracer.
+
+The coefficients page also lists every `setA`/`setB` pair used in `examples/` beside the curve it comes from. `just check` fails when the page no longer matches the points or the examples, so a coefficient cannot change without the page changing with it.
 
 ## Limits
 
 - **Resolution.** A figure is only as precise as its pixels. In a 400 by 305 pixel figure spanning two decades vertically, one pixel is about 1.8 % in Rs/R0.
-- **A power law is an approximation.** Some datasheet curves bend on log-log axes. The fit is then a best straight line over the traced range, and `r^2` drops accordingly. Coefficients should not be used outside the range of the points.
+- **A power law is an approximation.** Some datasheet curves bend on log-log axes, and several are drawn as straight segments between a handful of plotted values. The fit is then a best straight line over the traced range. The coefficients page gives, for each curve, the largest difference between the fit and the points: up to 20 % in concentration for the curves traced so far. Coefficients should not be used outside the range of the points.
+- **Markers.** Where a line carries markers, their pixels are part of the trace. A symmetric marker does not move the centre of the stroke; a triangle shifts it slightly over the few columns it covers.
 - **A datasheet curve is typical, not individual.** It describes a nominal sensor under the conditions the datasheet states. No fit here has been validated against hardware.
 
 ## Tests

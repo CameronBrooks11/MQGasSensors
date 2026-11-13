@@ -15,6 +15,10 @@ from dataclasses import dataclass
 import numpy as np
 
 
+# Columns left out either side of one that exceeds a recipe's max_thickness.
+MARKER_MARGIN = 3
+
+
 @dataclass(frozen=True)
 class Axis:
     """A logarithmic axis fixed by two pixel positions with known values."""
@@ -72,11 +76,22 @@ def flood(image, seed, lo, up, connectivity=8):
     return mask
 
 
-def centreline(mask, bin_width=1):
+def centreline(mask, bin_width=1, max_thickness=None):
     """Mean row of the masked pixels in each `bin_width`-pixel-wide column band.
 
     Returns (x, y) pixel arrays: band centres and the stroke's mean row there.
+
+    A marker drawn on the line has the line's colour, so the fill takes it too,
+    and an asymmetric one (a triangle) pulls the mean row away from the line.
+    With `max_thickness`, pixel columns where the trace is taller than that many
+    pixels are left out: the line is a few pixels thick, a marker much more.
+    So are the MARKER_MARGIN columns either side of them, where the marker
+    tapers to within the limit but still sits off the line's centre.
     """
+    if max_thickness is not None:
+        thick = mask.sum(axis=0) > max_thickness
+        near = np.convolve(thick, np.ones(2 * MARKER_MARGIN + 1), mode="same") > 0
+        mask = mask & ~near[None, :]
     ys, xs = np.nonzero(mask)
     if xs.size == 0:
         raise ValueError("the trace is empty")
@@ -89,10 +104,10 @@ def centreline(mask, bin_width=1):
     return cx, cy
 
 
-def trace(image, seed, x_axis, y_axis, lo=20, up=20, bin_width=1, connectivity=8):
+def trace(image, seed, x_axis, y_axis, lo=20, up=20, bin_width=1, connectivity=8, max_thickness=None):
     """Trace the curve through `seed` and return (ppm, ratio, pixel_x, pixel_y)."""
     mask = flood(image, seed, lo, up, connectivity)
-    px, py = centreline(mask, bin_width)
+    px, py = centreline(mask, bin_width, max_thickness)
     ppm = 10 ** x_axis.to_log10(px)
     ratio = 10 ** y_axis.to_log10(py)
     return ppm, ratio, px, py
@@ -109,6 +124,10 @@ class Fit:
 
     The two are not exact inverses of each other unless the points lie on a
     perfect line; r_squared says how close to one they are.
+
+    max_ppm_error is the largest relative difference, over the fitted points,
+    between a * ratio**b and the point's own ppm: how far the library's answer
+    can be from the datasheet's curve within the fitted range.
     """
 
     A: float
@@ -121,6 +140,7 @@ class Fit:
     ppm_max: float
     ratio_min: float
     ratio_max: float
+    max_ppm_error: float
 
 
 def fit(ppm, ratio):
@@ -133,9 +153,12 @@ def fit(ppm, ratio):
     B, logA = np.polyfit(lx, ly, 1)
     b, loga = np.polyfit(ly, lx, 1)
     r = np.corrcoef(lx, ly)[0, 1]
+    a = 10**loga
+    max_ppm_error = float(np.max(np.abs(a * ratio**b / ppm - 1)))
     return Fit(
         A=float(10**logA), B=float(B), a=float(10**loga), b=float(b),
         r_squared=float(r * r), n=int(ppm.size),
         ppm_min=float(ppm.min()), ppm_max=float(ppm.max()),
         ratio_min=float(ratio.min()), ratio_max=float(ratio.max()),
+        max_ppm_error=max_ppm_error,
     )

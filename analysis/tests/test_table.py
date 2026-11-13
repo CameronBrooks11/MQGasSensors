@@ -78,6 +78,15 @@ class ExampleScanTests(unittest.TestCase):
                          {("MQ-4", "not a power law"), ("MQ-136", "no points"), ("MQ-4", "same")})
 
 
+class EditionTests(unittest.TestCase):
+    def test_example_values_are_not_compared_with_another_makers_curve(self):
+        hanwei = {"sensor": "MQ-136", "gas": "H2S", "fit": fitted(36.737, -3.536), "sheet": {"maker": "Hanwei"}}
+        winsen = {"sensor": "MQ-136", "gas": "H2S", "fit": fitted(0.13543, -3.7705), "sheet": {"maker": "Winsen"}}
+        pair = {("MQ-136", "36.737", "-3.536"): ["MQ-136"]}
+        self.assertEqual(table.audit([winsen], pair)[0][5], "no points")
+        self.assertEqual(table.audit([winsen, hanwei], pair)[0][5], "same")
+
+
 class RepositoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -87,7 +96,8 @@ class RepositoryTests(unittest.TestCase):
         return next(c for c in self.curves if c["id"] == ident)["fit"]
 
     def test_every_curve_names_a_manifest_datasheet_and_fits(self):
-        self.assertEqual(len(self.curves), 57)
+        self.assertEqual(sum(c["origin"] == "upstream" for c in self.curves), 57)
+        self.assertEqual(sum(c["origin"] == "traced" for c in self.curves), 5)
         for c in self.curves:
             self.assertGreaterEqual(c["fit"].n, 3, c["id"])
             self.assertLess(c["fit"].b, 0, c["id"])
@@ -117,6 +127,17 @@ class RepositoryTests(unittest.TestCase):
             with contextlib.redirect_stdout(out):
                 self.assertEqual(table.run(output=stale), 0)
                 self.assertEqual(table.run(check=True, output=stale), 0)
+
+    @unittest.skipUnless((table.ROOT / "datasheets" / "files" / "mq-8-winsen-v1.3.pdf").exists(),
+                         "datasheets not downloaded (run `just datasheets`)")
+    def test_traced_points_come_back_out_of_the_datasheets(self):
+        from mqcurves import cli
+
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            code = cli.main(["reproduce"])
+        self.assertEqual(code, 0, out.getvalue())
+        self.assertIn("5 of 5", out.getvalue())
 
     def test_check_passes_on_the_committed_page(self):
         out = io.StringIO()
