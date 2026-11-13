@@ -15,10 +15,11 @@ check:
     scripts/check-assets.sh
     scripts/examples.sh check
 
-# Run the library's unit tests on a simulated Mega 2560 (needs simavr), then the tooling's
+# Run the tests: the library on a simulated Mega 2560 (needs simavr), the scripts, the curve tracer (needs uv)
 test:
     scripts/test.sh
     python3 -m unittest discover -s tests
+    cd analysis && uv run --locked python -m unittest discover -s tests
 
 # Download the datasheets in datasheets/manifest.toml, verifying each by SHA-256
 datasheets:

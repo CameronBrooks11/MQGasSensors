@@ -8,3 +8,7 @@
 datasheets/files/
 __pycache__/
 
+# Curve tracer: its environment, and overlays, which contain datasheet figures
+analysis/.venv/
+analysis/out/
+

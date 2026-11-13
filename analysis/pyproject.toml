@@ -1,0 +1,19 @@
+[project]
+name = "mqcurves"
+version = "0.1.0"
+description = "Trace MQ gas sensor sensitivity curves from datasheet figures and fit calibration coefficients"
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = [
+    "numpy>=2.0",
+    "pillow>=11.0",
+    "pypdfium2>=4.30",
+]
+
+[project.optional-dependencies]
+# Only for marking a new figure by hand: `python -m mqcurves mark`.
+interactive = ["matplotlib>=3.9"]
+
+# Run in place with `uv run python -m mqcurves`; nothing is built or installed.
+[tool.uv]
+package = false
