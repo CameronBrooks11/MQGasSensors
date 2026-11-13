@@ -61,10 +61,15 @@ Each fit is a straight line through digitised points on log-log axes. It describ
 | MQ-6 | LPG | 1016.8 | -2.398 | 201 to 10000 ppm | 0.393 to 1.99 | 9 | 0.9994 | 4 % | `mq-6-hanwei-2007` | read by hand upstream |
 | MQ-6 | LPG | 1025.1 | -2.368 | 200 to 10000 ppm | 0.391 to 2.04 | 9 | 0.9991 | 5 % | `mq-6-hanwei-2007` | [extracted](../analysis/recipes/mq-6-hanwei-2007-lpg-extracted.toml) |
 | MQ-7 | alcohol | 9.3366e+18 | -14.41 | 49.6 to 4080 ppm | 12.0 to 16.2 | 5 | 0.9422 | 75 % | `mq-7-hanwei-2007` | read by hand upstream |
+| MQ-7 | alcohol | 1.4350e+19 | -14.58 | 50.0 to 4040 ppm | 12.1 to 16.1 | 5 | 0.9398 | 81 % | `mq-7-hanwei-2007` | [extracted](../analysis/recipes/mq-7-hanwei-2007-alcohol-extracted.toml) |
 | MQ-7 | CH4 | 6.0771e+13 | -10.54 | 49.6 to 4030 ppm | 9.01 to 13.9 | 5 | 0.9548 | 47 % | `mq-7-hanwei-2007` | read by hand upstream |
+| MQ-7 | CH4 | 5.5816e+13 | -10.49 | 50.0 to 4040 ppm | 9.02 to 13.9 | 5 | 0.9631 | 39 % | `mq-7-hanwei-2007` | [extracted](../analysis/recipes/mq-7-hanwei-2007-ch4-extracted.toml) |
 | MQ-7 | CO | 99.042 | -1.518 | 50.9 to 4030 ppm | 0.0901 to 1.61 | 5 | 0.9990 | 9 % | `mq-7-hanwei-2007` | read by hand upstream |
+| MQ-7 | CO | 98.691 | -1.528 | 49.8 to 4020 ppm | 0.0908 to 1.60 | 5 | 0.9992 | 9 % | `mq-7-hanwei-2007` | [extracted](../analysis/recipes/mq-7-hanwei-2007-co-extracted.toml) |
 | MQ-7 | H2 | 69.014 | -1.374 | 49.6 to 4030 ppm | 0.0520 to 1.26 | 5 | 0.9999 | 2 % | `mq-7-hanwei-2007` | read by hand upstream |
+| MQ-7 | H2 | 70.057 | -1.365 | 49.5 to 4010 ppm | 0.0521 to 1.27 | 5 | 0.9998 | 3 % | `mq-7-hanwei-2007` | [extracted](../analysis/recipes/mq-7-hanwei-2007-h2-extracted.toml) |
 | MQ-7 | LPG | 7.4158e+08 | -7.703 | 49.6 to 4030 ppm | 4.91 to 8.68 | 5 | 0.9951 | 15 % | `mq-7-hanwei-2007` | read by hand upstream |
+| MQ-7 | LPG | 7.7057e+08 | -7.570 | 49.8 to 4020 ppm | 5.02 to 9.02 | 5 | 0.9982 | 9 % | `mq-7-hanwei-2007` | [extracted](../analysis/recipes/mq-7-hanwei-2007-lpg-extracted.toml) |
 | MQ-8 | alcohol | 49783 | -1.695 | 199 to 9950 ppm | 2.38 to 24.4 | 9 | 0.9952 | 15 % | `mq-8-hanwei-2009` | read by hand upstream |
 | MQ-8 | alcohol | 48842 | -1.691 | 199 to 10000 ppm | 2.35 to 24.6 | 9 | 0.9955 | 15 % | `mq-8-hanwei-2009` | [extracted](../analysis/recipes/mq-8-hanwei-2009-alcohol-extracted.toml) |
 | MQ-8 | CH4 | 7.5359e+13 | -6.666 | 197 to 9840 ppm | 29.1 to 54.0 | 9 | 0.9701 | 42 % | `mq-8-hanwei-2009` | read by hand upstream |
@@ -147,6 +152,11 @@ Curves re-derived from a datasheet that also has hand-read points for the same g
 | MQ-6 | CO | `mq-6-hanwei-2007` | 1.3305e+14 | 1.5935e+14 | -12.43 | -12.53 | +0.3 % at 201, -0.3 % at 501, +0.1 % at 794, +0.0 % at 1000, +0.1 % at 1570, +0.5 % at 1980, +0.5 % at 3010, -0.2 % at 4940, -0.2 % at 10000 ppm |
 | MQ-6 | H2 | `mq-6-hanwei-2007` | 88158 | 93440 | -3.597 | -3.640 | +0.2 % at 202, -0.6 % at 496, +1.0 % at 801, +0.7 % at 1000, -1.0 % at 1550, -0.3 % at 2000, -1.2 % at 2990, -0.5 % at 4940, -0.7 % at 9920 ppm |
 | MQ-6 | LPG | `mq-6-hanwei-2007` | 1016.8 | 1025.1 | -2.398 | -2.368 | -2.2 % at 201, +0.2 % at 501, -0.6 % at 794, +0.6 % at 996, -0.3 % at 1570, +0.4 % at 1980, -0.1 % at 2990, +0.4 % at 4940, +0.5 % at 10000 ppm |
+| MQ-7 | alcohol | `mq-7-hanwei-2007` | 9.3366e+18 | 1.4350e+19 | -14.41 | -14.58 | +0.5 % at 49.6, -0.6 % at 97.9, +0.2 % at 396, +0.8 % at 1010, -0.7 % at 4080 ppm |
+| MQ-7 | CH4 | `mq-7-hanwei-2007` | 6.0771e+13 | 5.5816e+13 | -10.54 | -10.49 | -0.2 % at 49.6, -1.1 % at 99.1, -0.2 % at 401, +0.2 % at 1010, -0.2 % at 4030 ppm |
+| MQ-7 | CO | `mq-7-hanwei-2007` | 99.042 | 98.691 | -1.518 | -1.528 | +1.8 % at 50.9, -1.2 % at 97.9, -0.3 % at 396, -1.2 % at 1010, -0.7 % at 4030 ppm |
+| MQ-7 | H2 | `mq-7-hanwei-2007` | 69.014 | 70.057 | -1.374 | -1.365 | -1.3 % at 49.6, -1.7 % at 99.1, +1.1 % at 396, +0.0 % at 996, +0.2 % at 4030 ppm |
+| MQ-7 | LPG | `mq-7-hanwei-2007` | 7.4158e+08 | 7.7057e+08 | -7.703 | -7.570 | -3.9 % at 49.6, -3.6 % at 100, -4.6 % at 396, -4.4 % at 1010, -2.1 % at 4030 ppm |
 | MQ-8 | alcohol | `mq-8-hanwei-2009` | 49783 | 48842 | -1.695 | -1.691 | -1.0 % at 199, +2.9 % at 499, +0.7 % at 804, +0.5 % at 985, -0.1 % at 1490, +0.7 % at 2000, +1.8 % at 2970, +0.3 % at 4950, +0.6 % at 9950 ppm |
 | MQ-8 | CH4 | `mq-8-hanwei-2009` | 7.5359e+13 | 8.3559e+13 | -6.666 | -6.675 | -1.0 % at 197, -0.5 % at 498, -2.4 % at 796, -1.4 % at 983, -1.2 % at 1490, -0.2 % at 1970, -0.2 % at 2960, -0.8 % at 4990, -1.8 % at 9840 ppm |
 | MQ-8 | CO | `mq-8-hanwei-2009` | 7.3658e+15 | 2.0195e+16 | -7.335 | -7.606 | +2.9 % at 197, +1.0 % at 498, +1.9 % at 795, -0.1 % at 992, +1.3 % at 1490, +0.2 % at 1970, +0.2 % at 2960, +1.5 % at 4940, -0.3 % at 9830 ppm |

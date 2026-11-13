@@ -751,6 +751,56 @@ origin = "upstream"
 upstream_file = "WPDigitalizer/MQ7/LPG.csv"
 
 [[curve]]
+id = "mq-7-hanwei-2007-alcohol-extracted"
+sensor = "MQ-7"
+gas = "alcohol"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/alcohol-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-7-hanwei-2007-alcohol-extracted.toml"
+hand_read = "mq-7-hanwei-2007-alcohol"
+
+[[curve]]
+id = "mq-7-hanwei-2007-ch4-extracted"
+sensor = "MQ-7"
+gas = "CH4"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/ch4-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-7-hanwei-2007-ch4-extracted.toml"
+hand_read = "mq-7-hanwei-2007-ch4"
+
+[[curve]]
+id = "mq-7-hanwei-2007-co-extracted"
+sensor = "MQ-7"
+gas = "CO"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/co-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-7-hanwei-2007-co-extracted.toml"
+hand_read = "mq-7-hanwei-2007-co"
+
+[[curve]]
+id = "mq-7-hanwei-2007-h2-extracted"
+sensor = "MQ-7"
+gas = "H2"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/h2-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-7-hanwei-2007-h2-extracted.toml"
+hand_read = "mq-7-hanwei-2007-h2"
+
+[[curve]]
+id = "mq-7-hanwei-2007-lpg-extracted"
+sensor = "MQ-7"
+gas = "LPG"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/lpg-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-7-hanwei-2007-lpg-extracted.toml"
+hand_read = "mq-7-hanwei-2007-lpg"
+
+[[curve]]
 id = "mq-8-hanwei-2009-ch4"
 sensor = "MQ-8"
 gas = "CH4"
