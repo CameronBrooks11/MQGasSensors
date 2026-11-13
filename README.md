@@ -123,7 +123,7 @@ MQ2.serialDebug();
 
 - Result:
 
-![Serial debug output](docs/docs/img/Serial_Mon_Explanation.jpeg)
+![Serial debug output](docs/img/Serial_Mon_Explanation.jpeg)
 
 ## Hardware Setup
 
@@ -137,7 +137,7 @@ Sensor pins:
 - GND -> GND Ground (-) wire
 - AO -> Analog Output of the sensor
 
-![Wiring_MQSensor](docs/docs/img/Points_explanation.jpeg)
+![Wiring_MQSensor](docs/img/Points_explanation.jpeg)
 
 Sensor characteristics:
 
@@ -149,9 +149,9 @@ Sensor characteristics:
   - Note: RS/R0 is equal to Ratio variable on the program
   - From datasheet of your sensor
 
-![Graph from datasheet](docs/docs/img/Graph_Explanation.jpeg)
+![Graph from datasheet](docs/img/Graph_Explanation.jpeg)
 
-![Arduino_Wiring_MQSensor](docs/docs/img/MQ_Arduino.PNG)
+![Arduino_Wiring_MQSensor](docs/img/MQ_Arduino.PNG)
 
 ### Wiring Hookup
 
@@ -159,11 +159,11 @@ Sensor characteristics:
 
 **Note**: MQ-7 and MQ-309 needs two different voltages for heater, they can be supplied by PWM and DC Signal controlled by your controller, another option is to use two different power sources, you should use the best option for you, next i will show the PWM option and on the examples this will be the way.
 
-![MQ-7_MQ-309](docs/docs/img/MQ-309_MQ-7.PNG)
+![MQ-7_MQ-309](docs/img/MQ-309_MQ-7.PNG)
 
 #### ESP Wiring
 
-![ESP8266_Wiring_MQSensor](docs/docs/img/MQ_ESP8266.PNG)
+![ESP8266_Wiring_MQSensor](docs/img/MQ_ESP8266.PNG)
 
 #### ESP32 WROOM 32D
 
@@ -183,7 +183,7 @@ The ESP32 WROOM 32D does not need an external power supply. A0 goes to PIN36, Vc
 | MQ-9    | HANWEI Electronics | [datasheet](http://www.haoyuelectronics.com/Attachment/MQ-9/MQ9.pdf)                                            |
 | MQ-131  | HANWEI Electronics | [datasheet](http://www.sensorsportal.com/DOWNLOADS/MQ131.pdf)                                                   |
 | MQ-135  | HANWEI Electronics | [datasheet](https://www.electronicoscaldas.com/datasheet/MQ-135_Hanwei.pdf)                                     |
-| MQ-136  | HANWEI Electronics | [datasheet](https://github.com/CameronBrooks11/MQGasSensors_Docs/blob/master/Datasheets/MQ136%20-%20Hanwei.pdf) |
+| MQ-136  | HANWEI Electronics | [datasheet](https://github.com/miguel5612/MQSensorsLib_Docs/blob/master/Datasheets/MQ136%20-%20Hanwei.pdf)     |
 | MQ-303A | HANWEI Electronics | [datasheet](http://www.kosmodrom.com.ua/pdf/MQ303A.pdf)                                                         |
 | MQ-309A | HANWEI Electronics | [datasheet](http://www.sensorica.ru/pdf/MQ-309A.pdf)                                                            |
 
@@ -202,12 +202,12 @@ This library is a fork of the original **MQSensorsLib** library, created and mai
 Original repository: [miguel5612/MQSensorsLib](https://github.com/miguel5612/MQSensorsLib)  
 Cite their work as:
 
-- Califa Urquiza, Miguel Angel, Contreras Contreras, Ghiordy, & Carrillo Amado, Yerson Ramiro. (2019, September 3). CameronBrooks11/MQGasSensors: Arduino Preview V1.03 (Version 1.0.3). Zenodo. [http://doi.org/10.5281/zenodo.3384301](http://doi.org/10.5281/zenodo.3384301)
+- Califa Urquiza, Miguel Angel, Contreras Contreras, Ghiordy, & Carrillo Amado, Yerson Ramiro. (2019, September 3). miguel5612/MQSensorsLib: Arduino Preview V1.03 (Version 1.0.3). Zenodo. [http://doi.org/10.5281/zenodo.3384301](http://doi.org/10.5281/zenodo.3384301)
 
 ### Attribution
 
 - **Authors**
-  - _Miguel A. Califa U._ - [_GitHub_](https://github.com/CameronBrooks11) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050477)
+  - _Miguel A. Califa U._ - [_GitHub_](https://github.com/miguel5612) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050477)
   - _Ghiordy F. Contreras C._ - [_GitHub_](https://github.com/Ghiordy) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050476)
   - _Yersson R. Carrillo A._ - [_GitHub_](https://github.com/Yercar18/Dronefenix) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001637655)
 - **Contributors**
@@ -231,4 +231,4 @@ See also the list of [contributors](https://github.com/miguel5612/MQSensorsLib/g
 [issues-shield]: https://img.shields.io/github/issues/CameronBrooks11/MQGasSensors.svg?style=flat-square
 [issues-url]: https://github.com/CameronBrooks11/MQGasSensors/issues
 [license-shield]: https://img.shields.io/github/license/CameronBrooks11/MQGasSensors.svg?style=flat-square
-[license-url]: https://github.com/CameronBrooks11/MQGasSensors/blob/master/LICENSE.txt
+[license-url]: https://github.com/CameronBrooks11/MQGasSensors/blob/master/LICENSE

@@ -9,7 +9,7 @@
   by Miguel Califa 
   
   Wiring:
-  https://github.com/CameronBrooks11/MQGasSensors_Docs/blob/master/docs/img/MQ_Arduino.PNG
+  https://github.com/CameronBrooks11/MQGasSensors/blob/master/docs/img/MQ_Arduino.PNG
   Please make sure arduino A0 pin represents the analog input configured on #define pin
  This example code is in the public domain.
 
@@ -95,7 +95,7 @@ void loop() {
   float Aceton = MQ135.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
   Serial.print("|   "); Serial.print(CO); 
   Serial.print("   |   "); Serial.print(Alcohol);
-  // Note: 200 Offset for CO2 source: https://github.com/CameronBrooks11/MQGasSensors/issues/29
+  // Note: 200 Offset for CO2 source: https://github.com/miguel5612/MQSensorsLib/issues/29
 
     
         

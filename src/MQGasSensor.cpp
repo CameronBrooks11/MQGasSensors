@@ -314,7 +314,7 @@ float MQGasSensor::readSensorR0Rs(float correctionFactor)
   _RS_Calc = ((_VCC * _RL) / _sensor_volt) - _RL; // Get value of RS in a gas
   if (_RS_Calc < 0)
     _RS_Calc = 0;                // No negative values accepted.
-  _ratio = this->_R0 / _RS_Calc; // Get ratio RS_air/RS_gas <- INVERTED for MQ-131 issue 28 https://github.com/CameronBrooks11/MQGasSensors/issues/28
+  _ratio = this->_R0 / _RS_Calc; // Get ratio RS_air/RS_gas <- INVERTED for MQ-131 issue 28 https://github.com/miguel5612/MQSensorsLib/issues/28
   _ratio += correctionFactor;
   if (_ratio <= 0)
     _ratio = 0; // No negative values accepted or upper datasheet recommendation.
