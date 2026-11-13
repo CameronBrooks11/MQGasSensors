@@ -15,6 +15,11 @@ check:
     scripts/check-assets.sh
     scripts/examples.sh check
 
-# Run the unit tests on a simulated Mega 2560 (needs simavr)
+# Run the library's unit tests on a simulated Mega 2560 (needs simavr), then the tooling's
 test:
     scripts/test.sh
+    python3 -m unittest discover -s tests
+
+# Download the datasheets in datasheets/manifest.toml, verifying each by SHA-256
+datasheets:
+    scripts/datasheets.py fetch
