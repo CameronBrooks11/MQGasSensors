@@ -17,7 +17,7 @@ values = [100, 10000]
 pixels = [126, 229.5]
 values = [1, 10]
 
-# Black circles. The one at 1000 ppm has a one-pixel gap in its outline, which
+# Black diamonds. The one at 1000 ppm has a one-pixel gap in its outline, which
 # `close` shuts; the holes are then 1 or 2 px.
 [markers]
 colour = [0, 0, 0]

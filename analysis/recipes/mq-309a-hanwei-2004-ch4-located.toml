@@ -17,7 +17,7 @@ values = [100, 10000]
 pixels = [126, 229.5]
 values = [1, 10]
 
-# Green squares.
+# Green circles.
 [markers]
 colour = [0, 128, 0]
 tolerance = 0

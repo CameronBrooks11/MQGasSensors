@@ -120,7 +120,7 @@ count = 7
 # close = 1                      # optional: thicken the outline first, to close gaps
 ```
 
-`area` leaves out the larger patches that lines enclose where they meet. `fill` tells markers of one colour apart: a square's hole fills its bounding box, a triangle's between a half and three quarters of it. Where an outline has a one-pixel gap its hole leaks out; `close` thickens every outline by that many pixels first. That shrinks every hole from every side, which leaves a symmetric hole's centre where it was; on the MQ-309A CO circles, whose outlines are uneven, one centre moves by half a pixel.
+`area` leaves out the larger patches that lines enclose where they meet. `fill` tells markers of one colour apart: a square's hole fills its bounding box, a triangle's between a half and three quarters of it. Where an outline has a one-pixel gap its hole leaks out; `close` thickens every outline by that many pixels first. That shrinks every hole from every side, which leaves a symmetric hole's centre where it was; on the MQ-309A CO diamonds, whose outlines are uneven, one centre moves by half a pixel.
 
 Marker outlines drawn as strokes, such as crosses and stars, enclose nothing and are not found this way.
 
