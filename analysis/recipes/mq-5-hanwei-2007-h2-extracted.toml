@@ -1,0 +1,21 @@
+id = "mq-5-hanwei-2007-h2-extracted"
+sensor = "MQ-5"
+gas = "H2"
+
+[source]
+datasheet = "mq-5-hanwei-2007"
+page = 2
+
+[frame]
+x = [95.04, 359.76]
+y = [449.76, 680.88]
+ppm = [100, 10000]
+ratio = [0.1, 10]
+
+# Navy outline, navy fill: diamonds.
+[markers]
+stroke = [0, 0, 128]
+fill = [0, 0, 128]
+count = 9
+# The legend.
+exclude = [[105.36, 453.6, 167.52, 541.92]]

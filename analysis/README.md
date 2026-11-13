@@ -96,7 +96,7 @@ count = 4                        # how many the figure plots
 exclude = [[98.64, 433.44, 169.68, 536.64]]   # optional: boxes to ignore, e.g. the legend
 ```
 
-Nothing is read unless the PDF matches the SHA-256 in the manifest, the page draws a rectangle at the frame's coordinates, and exactly `count` markers of those colours are found. A path of the marker colours larger than a marker is refused as a line. A marker drawn as several strokes, such as a cross, is joined into one.
+Nothing is read unless the PDF matches the SHA-256 in the manifest, the page draws a rectangle at the frame's coordinates, and exactly `count` markers of those colours are found. A path larger than a marker is never read as one, whatever its colours: it is a line, a legend sample or a box. A marker drawn as several strokes, such as a cross, is joined into one, and is centred where its strokes start, which stays right when the frame clips some of them. Markers that share colours are told apart with `shape`: `outline`, `x`, `star` or `plus`. A marker the legend is drawn over is still in the file and is read, so `exclude` should cover only the legend's own markers where the legend sits over data.
 
 ## Commands
 

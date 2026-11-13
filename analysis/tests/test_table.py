@@ -135,7 +135,7 @@ class RepositoryTests(unittest.TestCase):
     def test_every_curve_names_a_manifest_datasheet_and_fits(self):
         self.assertEqual(sum(c["origin"] == "upstream" for c in self.curves), 57)
         self.assertEqual(sum(c["origin"] == "traced" for c in self.curves), 5)
-        self.assertEqual(sum(c["origin"] == "extracted" for c in self.curves), 6)
+        self.assertEqual(sum(c["origin"] == "extracted" for c in self.curves), 27)
         for c in self.curves:
             self.assertGreaterEqual(c["fit"].n, 3, c["id"])
             self.assertLess(c["fit"].b, 0, c["id"])
@@ -175,7 +175,7 @@ class RepositoryTests(unittest.TestCase):
         with contextlib.redirect_stdout(out):
             code = cli.main(["reproduce"])
         self.assertEqual(code, 0, out.getvalue())
-        self.assertIn("11 of 11", out.getvalue())
+        self.assertIn("32 of 32", out.getvalue())
 
     def test_check_passes_on_the_committed_page(self):
         out = io.StringIO()

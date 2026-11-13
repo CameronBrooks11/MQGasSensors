@@ -133,10 +133,11 @@ class VectorTests(unittest.TestCase):
         with self.assertRaisesRegex(vector.VectorError, "no rectangle drawn at the frame"):
             self.extract(self.recipe(frame_x="[50, 351]"))
 
-    def test_line_in_the_marker_colours_is_refused(self):
+    def test_line_in_the_marker_colours_is_not_a_marker(self):
         self.write_pdf(figure(line_colours="0 0 1 RG 1 0 1 rg"))
-        with self.assertRaisesRegex(vector.VectorError, "a line, not a marker"):
-            self.extract(self.recipe())
+        ppm, ratio, _, _ = self.extract(self.recipe())
+        np.testing.assert_allclose(ppm, PPM, rtol=1e-4)
+        np.testing.assert_allclose(ratio, [A * p**B for p in PPM], rtol=1e-4)
 
     def test_datasheet_must_match_the_manifest(self):
         r = self.recipe()
@@ -149,6 +150,52 @@ class VectorTests(unittest.TestCase):
         self.manifest.write_text("datasheet = []\n")
         with self.assertRaisesRegex(vector.VectorError, "not in"):
             r.pdf(self.dir, self.manifest)
+
+    def test_markers_drawn_as_subpaths_of_one_path_are_read_one_by_one(self):
+        xs = [float(X.to_pixel(p)) for p in PPM]
+        ys = [float(Y.to_pixel(A * p**B)) for p in PPM]
+        crosses = " ".join(f"{x:.4f} {y:.4f} m {x + dx:.4f} {y + dy:.4f} l"
+                           for x, y in zip(xs, ys) for dx, dy in ((2, 2), (-2, 2), (2, -2), (-2, -2)))
+        self.write_pdf("0 0 0 RG 1 1 1 rg 50 50 300 200 re S\n1 0 0 RG 1 1 0 rg " + crosses + " S\n")
+        ppm, ratio, _, _ = self.extract(self.recipe(stroke="[255, 0, 0]", fill="[255, 255, 0]", exclude=False))
+        np.testing.assert_allclose(ppm, PPM, rtol=1e-4)
+        np.testing.assert_allclose(ratio, [A * p**B for p in PPM], rtol=1e-4)
+
+    def test_cross_clipped_at_the_frame_is_centred_on_its_strokes_start(self):
+        # Only the two strokes pointing into the plot are drawn, as at a frame edge.
+        y = float(Y.to_pixel(1.0))
+        self.write_pdf("0 0 0 RG 1 1 1 rg 50 50 300 200 re S\n"
+                       + "".join(f"1 0 0 RG 1 1 0 rg 50 {y:.4f} m 52 {y + dy:.4f} l S\n" for dy in (2, -2)))
+        ppm, ratio, _, _ = self.extract(self.recipe(stroke="[255, 0, 0]", fill="[255, 255, 0]", count=1, exclude=False))
+        np.testing.assert_allclose([ppm[0], ratio[0]], [100.0, 1.0], rtol=1e-4)
+
+    def test_shape_tells_apart_markers_that_share_colours(self):
+        # Crosses, then stars, then triangles, all in the same colours, as one line's
+        # markers after another's. A cross and a star sit at the same place.
+        def strokes(x, y, ends):
+            return "".join(f"0 0 0 RG 1 1 0 rg {x:.4f} {y:.4f} m {x + dx:.4f} {y + dy:.4f} l S\n" for dx, dy in ends)
+
+        diagonals = ((2, 2), (-2, 2), (2, -2), (-2, -2))
+        at = {"x": ((1000.0, 2.0), (5000.0, 1.0)), "star": ((1000.0, 2.0), (3000.0, 4.0)), "outline": ((300.0, 0.5), (3000.0, 0.5))}
+        content = "0 0 0 RG 1 1 1 rg 50 50 300 200 re S\n"
+        for ppm, ratio in at["x"]:
+            content += strokes(float(X.to_pixel(ppm)), float(Y.to_pixel(ratio)), diagonals)
+        for ppm, ratio in at["star"]:
+            content += strokes(float(X.to_pixel(ppm)), float(Y.to_pixel(ratio)), diagonals + ((0, 2), (0, -2)))
+        for ppm, ratio in at["outline"]:
+            x, y = float(X.to_pixel(ppm)), float(Y.to_pixel(ratio))
+            content += f"0 0 0 RG 1 1 0 rg {x:.4f} {y + 2:.4f} m {x + 2:.4f} {y - 2:.4f} l {x - 2:.4f} {y - 2:.4f} l h B\n"
+        self.write_pdf(content)
+        for shape, expected in at.items():
+            r = self.recipe(stroke="[0, 0, 0]", fill="[255, 255, 0]", count=2, exclude=False)
+            ppm, ratio, _, _ = self.extract(vector.Recipe(**{**r.__dict__, "shape": shape}))
+            np.testing.assert_allclose(np.column_stack([ppm, ratio]), expected, rtol=1e-4, err_msg=shape)
+
+    def test_outline_drawn_twice_is_one_marker(self):
+        x, y = float(X.to_pixel(1000.0)), float(Y.to_pixel(A * 1000.0**B))
+        self.write_pdf(figure().replace(square(x, y), square(x, y) * 2))
+        ppm, _, _, _ = self.extract(self.recipe())
+        np.testing.assert_allclose(ppm, PPM, rtol=1e-4)
 
     def test_recipe_with_a_bad_colour_is_refused(self):
         with self.assertRaisesRegex(vector.VectorError, "r, g, b"):

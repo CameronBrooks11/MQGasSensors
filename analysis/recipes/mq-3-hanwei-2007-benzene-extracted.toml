@@ -1,0 +1,21 @@
+id = "mq-3-hanwei-2007-benzene-extracted"
+sensor = "MQ-3"
+gas = "benzene"
+
+[source]
+datasheet = "mq-3-hanwei-2007"
+page = 2
+
+[frame]
+x = [87.36, 353.76]
+y = [435.36, 664.8]
+ppm = [0.1, 10]
+ratio = [0.1, 100]
+
+# Black outline, magenta fill: squares.
+[markers]
+stroke = [0, 0, 0]
+fill = [255, 0, 255]
+count = 10
+# The legend's markers. It covers data markers either side, which are kept.
+exclude = [[254, 536.16, 263, 631.92]]

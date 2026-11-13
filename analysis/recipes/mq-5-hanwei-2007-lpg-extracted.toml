@@ -1,0 +1,21 @@
+id = "mq-5-hanwei-2007-lpg-extracted"
+sensor = "MQ-5"
+gas = "LPG"
+
+[source]
+datasheet = "mq-5-hanwei-2007"
+page = 2
+
+[frame]
+x = [95.04, 359.76]
+y = [449.76, 680.88]
+ppm = [100, 10000]
+ratio = [0.1, 10]
+
+# Magenta outline, magenta fill: squares.
+[markers]
+stroke = [255, 0, 255]
+fill = [255, 0, 255]
+count = 9
+# The legend.
+exclude = [[105.36, 453.6, 167.52, 541.92]]
