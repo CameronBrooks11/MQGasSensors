@@ -200,6 +200,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 This library is a fork of the original **MQSensorsLib** library, created and maintained by Miguel Angel Califa Urquiza, Ghiordy Contreras Contreras, and Yerson Ramiro Carrillo Amado. Their work laid the foundation for interfacing MQ-series gas sensors with Arduino, and we acknowledge their significant contributions to the community.
 
 Original repository: [miguel5612/MQSensorsLib](https://github.com/miguel5612/MQSensorsLib)  
+Last synced with the original at commit [`59a2e58`](https://github.com/miguel5612/MQSensorsLib/commit/59a2e5852ec12f5da3cf508be68f5a9405314003) (2025-06-04, its version 3.0.5). This project is developed independently from that point.  
 Cite their work as:
 
 - Califa Urquiza, Miguel Angel, Contreras Contreras, Ghiordy, & Carrillo Amado, Yerson Ramiro. (2019, September 3). miguel5612/MQSensorsLib: Arduino Preview V1.03 (Version 1.0.3). Zenodo. [http://doi.org/10.5281/zenodo.3384301](http://doi.org/10.5281/zenodo.3384301)
