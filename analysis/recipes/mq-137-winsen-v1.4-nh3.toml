@@ -1,0 +1,39 @@
+id = "mq-137-winsen-v1.4-nh3"
+sensor = "MQ-137"
+gas = "NH3"
+
+[source]
+datasheet = "mq-137-winsen-v1.4"
+page = 4
+pixels_sha256 = "e15ca2f6523ba0d5b0a0d46b727a0f64a0b4b8a2ce982302b834c40214581553"
+
+[x]
+pixels = [51.19, 379.11]
+values = [1, 200]
+
+[y]
+pixels = [264.37, 9.23]
+values = [0.01, 1]
+
+[trace]
+seed = [219, 78]
+lo = 25
+up = 25
+bin_width = 1
+connectivity = 8
+ppm = [1, 200]
+max_thickness = 3
+
+# Values read off the figure by eye, as a guard against a wrong calibration or seed.
+
+[[check]]
+at = 1
+ratio = 0.58
+
+[[check]]
+at = 10
+ratio = 0.32
+
+[[check]]
+at = 200
+ratio = 0.14

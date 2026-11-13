@@ -29,3 +29,7 @@ coefficients:
 # Download the datasheets in datasheets/manifest.toml, verifying each by SHA-256
 datasheets:
     scripts/datasheets.py fetch
+
+# Download the datasheets, then re-trace every traced curve and compare with the committed points
+reproduce: datasheets
+    cd analysis && uv run --locked python -m mqcurves reproduce

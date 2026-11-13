@@ -1,9 +1,15 @@
 name: Datasheet mirrors
 
-# Tests every mirror of every datasheet in datasheets/manifest.toml, not only
-# the first that works. Kept out of the pull request gate so that an archive
-# having a bad day cannot fail unrelated changes; it runs on a pull request only
-# when the manifest or the fetch script itself changes.
+# Two checks that need the real datasheets, kept out of the pull request gate so
+# that an archive having a bad day cannot fail unrelated changes:
+#
+#   verify     tests every mirror of every datasheet in datasheets/manifest.toml,
+#              not only the first that works
+#   reproduce  downloads the datasheets and re-traces every traced curve from
+#              them, expecting the committed points back exactly
+#
+# Both run monthly, on demand, and on a pull request that changes what they
+# depend on.
 on:
   schedule:
     - cron: "17 6 3 * *" # 06:17 UTC on the 3rd of each month
@@ -14,6 +20,11 @@ on:
       - datasheets/manifest.toml
       - scripts/datasheets.py
       - .github/workflows/datasheets.yml
+      - analysis/curves.toml
+      - analysis/recipes/**
+      - analysis/points/**
+      - analysis/mqcurves/**
+      - analysis/uv.lock
 
 permissions:
   contents: read
@@ -51,3 +62,25 @@ jobs:
             grep -E '^(BAD|DEAD)' verify.log || echo 'every mirror served the expected file'
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  reproduce:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install just
+        uses: extractions/setup-just@v2
+        with:
+          just-version: "1.40.0"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.13.4"
+
+      # Downloads each datasheet from its first working mirror, then traces every
+      # curve whose points came from a recipe and compares them with the committed
+      # points byte for byte.
+      - name: Download the datasheets and re-trace
+        run: just reproduce
