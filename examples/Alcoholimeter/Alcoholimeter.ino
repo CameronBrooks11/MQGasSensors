@@ -30,6 +30,7 @@
 #define         Type                    ("MQ-3") //MQ3
 #define         Voltage_Resolution      (5)
 #define         ADC_Bit_Resolution      (10) // For arduino UNO/MEGA/NANO
+#define         RatioMQ3CleanAir        (60) //RS / R0 = 60 ppm
 
 /*****************************Globals***********************************************/
 double          alcoholPPM          =   (0);
