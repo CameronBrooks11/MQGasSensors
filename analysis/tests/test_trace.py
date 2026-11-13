@@ -70,6 +70,43 @@ class TraceTests(unittest.TestCase):
         self.assertGreater(cx.max() - cx.min(), 300)
 
 
+class MarkerTests(unittest.TestCase):
+    """A triangle marker on the line has the line's colour and is not symmetric about it."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.image, cls.seed = synthetic.figure(A, B, PPM_FROM, PPM_TO, markers=(400.0, 1000.0, 3000.0))
+
+    def worst(self, **kw):
+        """Largest distance, in pixels, between a traced point and the drawn line."""
+        ppm, ratio, _, py = trace(self.image, self.seed, synthetic.X_AXIS, synthetic.Y_AXIS, **kw)
+        return float(np.max(np.abs(py - synthetic.Y_AXIS.to_pixel(A * ppm**B)))), ppm
+
+    def test_markers_pull_the_trace_off_the_line(self):
+        worst, _ = self.worst()
+        self.assertGreater(worst, 1.5)
+
+    def test_thickness_limit_keeps_the_trace_on_the_line(self):
+        worst, ppm = self.worst(max_thickness=4)
+        self.assertLess(worst, 1.0)
+        # The columns under each marker are gone, the line between them is not.
+        for at in (400.0, 1000.0, 3000.0):
+            self.assertGreater(np.min(np.abs(np.log10(ppm / at))), 0.01, at)
+        self.assertGreater(ppm.size, 150)
+
+    def test_fit_is_right_with_the_limit(self):
+        ppm, ratio, _, _ = trace(self.image, self.seed, synthetic.X_AXIS, synthetic.Y_AXIS, max_thickness=4)
+        f = fit(ppm, ratio)
+        self.assertAlmostEqual(f.B, B, delta=0.01)
+        self.assertAlmostEqual(f.A / A, 1.0, delta=0.012)
+
+    def test_limit_does_nothing_where_there_are_no_markers(self):
+        plain, seed = synthetic.figure(A, B, PPM_FROM, PPM_TO)
+        with_limit = trace(plain, seed, synthetic.X_AXIS, synthetic.Y_AXIS, max_thickness=4)[0]
+        without = trace(plain, seed, synthetic.X_AXIS, synthetic.Y_AXIS)[0]
+        np.testing.assert_array_equal(with_limit, without)
+
+
 class AxisTests(unittest.TestCase):
     def test_round_trip(self):
         ax = Axis(50, 100.0, 380, 10000.0)

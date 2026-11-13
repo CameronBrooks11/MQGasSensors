@@ -86,6 +86,52 @@ class PipelineTests(unittest.TestCase):
         _, _, _, _, _, f = cli.run_recipe(recipe.load(args.recipe))
         self.assertAlmostEqual(f.B, B, delta=0.01)
 
+    def test_ppm_range_drops_points_outside_it(self):
+        inner = self.dir / "range.toml"
+        recipe.dump(inner, id="range", sensor="MQ-0", gas="H2", source={"image": "figure.png"},
+                    x=((synthetic.LEFT, 100.0), (synthetic.RIGHT, 10000.0)),
+                    y=((synthetic.TOP, 1.0), (synthetic.BOTTOM, 0.01)), seed=self.seed, ppm=(500.0, 2000.0))
+        _, ppm, _, _, _, f = cli.run_recipe(recipe.load(inner))
+        self.assertGreaterEqual(ppm.min(), 500.0)
+        self.assertLessEqual(ppm.max(), 2000.0)
+        self.assertGreater(ppm.min(), 0)
+        self.assertLess(ppm.min(), 520.0)
+        self.assertAlmostEqual(f.B, B, delta=0.02)
+
+    def test_ppm_range_must_be_ordered(self):
+        self.recipe.write_text(self.recipe.read_text() + "ppm = [2000, 500]\n")
+        code, _, err = self.run_cli("trace", self.recipe)
+        self.assertEqual(code, 1)
+        self.assertIn("ppm must be", err)
+
+    def with_check(self, at, ratio):
+        self.recipe.write_text(self.recipe.read_text() + f"\n[[check]]\nat = {at}\nratio = {ratio}\n")
+        return self.run_cli("trace", self.recipe)
+
+    def test_value_read_by_eye_that_agrees_passes(self):
+        code, out, _ = self.with_check(1000, round(A * 1000**B, 3))
+        self.assertEqual(code, 0)
+        self.assertIn("check at 1000 ppm", out)
+        self.assertNotIn("FAILED", out)
+
+    def test_value_read_by_eye_that_disagrees_fails_the_trace(self):
+        code, out, _ = self.with_check(1000, 2 * A * 1000**B)
+        self.assertEqual(code, 1)
+        self.assertIn("FAILED", out)
+
+    def test_check_far_outside_the_traced_range_fails(self):
+        code, out, _ = self.with_check(9000, round(A * 9000**B, 4))
+        self.assertEqual(code, 1)
+        self.assertIn("outside the traced range", out)
+
+    def test_check_just_past_the_end_of_the_line_extends_it(self):
+        # The line is drawn to 5000 ppm; a value read at 6000 is on its extension.
+        code, out, _ = self.with_check(6000, round(A * 6000**B, 4))
+        self.assertEqual(code, 0)
+        self.assertIn("extended", out)
+        code, out, _ = self.with_check(6000, 2 * A * 6000**B)
+        self.assertEqual(code, 1)
+
     def test_missing_axis_is_reported_not_raised(self):
         self.recipe.write_text(self.recipe.read_text().replace("[y]", "[z]"))
         code, _, err = self.run_cli("trace", self.recipe)

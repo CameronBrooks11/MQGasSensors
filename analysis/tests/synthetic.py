@@ -23,11 +23,13 @@ def polyline(curve_a, curve_b, ppm_from, ppm_to):
     return list(zip(X_AXIS.to_pixel(ppm).tolist(), Y_AXIS.to_pixel(ratio).tolist(), strict=True))
 
 
-def figure(curve_a, curve_b, ppm_from, ppm_to):
+def figure(curve_a, curve_b, ppm_from, ppm_to, markers=()):
     """A figure whose blue curve is ratio = curve_a * ppm**curve_b over part of the plot.
 
     Also drawn: grey gridlines the curve crosses, a second curve in another
     colour, and a legend sample in the curve's own colour that does not touch it.
+    `markers` are ppm values at which the curve carries a triangle in its own
+    colour, sitting on the line with its apex up, as a spreadsheet chart draws one.
     Returns (HxWx3 uint8 array, a seed pixel on the blue curve).
     """
     img = Image.new("RGB", (WIDTH, HEIGHT), "white")
@@ -47,6 +49,9 @@ def figure(curve_a, curve_b, ppm_from, ppm_to):
     d.line(polyline(0.9, -0.05, 100, 10000), fill=GREEN, width=3)
     pts = polyline(curve_a, curve_b, ppm_from, ppm_to)
     d.line(pts, fill=BLUE, width=3, joint="curve")
+    for at in markers:
+        x, y = float(X_AXIS.to_pixel(at)), float(Y_AXIS.to_pixel(curve_a * at**curve_b))
+        d.polygon([(x - 5, y + 4), (x + 5, y + 4), (x, y - 6)], fill=BLUE)
     d.line([(70, 235), (100, 235)], fill=BLUE, width=3)  # legend sample
     d.text((106, 229), "H2", fill=(0, 0, 0))
 

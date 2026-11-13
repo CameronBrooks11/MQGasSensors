@@ -1,0 +1,39 @@
+id = "mq-9b-winsen-v1.4-co"
+sensor = "MQ-9B"
+gas = "CO"
+
+[source]
+datasheet = "mq-9b-winsen-v1.4"
+page = 4
+pixels_sha256 = "9273142c178bfb13320e0b2733ee15df87cfa10d22411bff0a129f913ee09f87"
+
+[x]
+pixels = [51.53, 372.95]
+values = [10, 10000]
+
+[y]
+pixels = [262.55, 13.25]
+values = [0.01, 1]
+
+[trace]
+seed = [159, 161]
+lo = 25
+up = 25
+bin_width = 1
+connectivity = 8
+ppm = [10, 1000]
+max_thickness = 4
+
+# Values read off the figure by eye, as a guard against a wrong calibration or seed.
+
+[[check]]
+at = 10
+ratio = 0.25
+
+[[check]]
+at = 100
+ratio = 0.065
+
+[[check]]
+at = 1000
+ratio = 0.021

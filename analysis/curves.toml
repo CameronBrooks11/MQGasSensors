@@ -7,6 +7,7 @@
 # origin = "traced": produced by `mqcurves trace` from the recipe named in `recipe`.
 #
 # unit: the concentration unit of the figure's horizontal axis. "ppm" unless given.
+# note: something a reader of the coefficients page should know about this curve.
 
 [[curve]]
 id = "mq-131-2009-cl2"
@@ -526,3 +527,49 @@ datasheet = "mq-9-hanwei-2008"
 points = "points/mq-9-hanwei-2008/lpg.csv"
 origin = "upstream"
 upstream_file = "WPDigitalizer/MQ9/LPG.csv"
+
+[[curve]]
+id = "mq-8-winsen-v1.3-h2"
+sensor = "MQ-8"
+gas = "H2"
+datasheet = "mq-8-winsen-v1.3"
+points = "points/mq-8-winsen-v1.3/h2.csv"
+origin = "traced"
+recipe = "recipes/mq-8-winsen-v1.3-h2.toml"
+
+[[curve]]
+id = "mq-9b-winsen-v1.4-co"
+sensor = "MQ-9B"
+gas = "CO"
+datasheet = "mq-9b-winsen-v1.4"
+points = "points/mq-9b-winsen-v1.4/co.csv"
+origin = "traced"
+recipe = "recipes/mq-9b-winsen-v1.4-co.toml"
+
+[[curve]]
+id = "mq-9b-winsen-v1.4-ch4"
+sensor = "MQ-9B"
+gas = "CH4"
+datasheet = "mq-9b-winsen-v1.4"
+points = "points/mq-9b-winsen-v1.4/ch4.csv"
+origin = "traced"
+recipe = "recipes/mq-9b-winsen-v1.4-ch4.toml"
+
+[[curve]]
+id = "mq-136-winsen-v1.4-h2s"
+sensor = "MQ-136"
+gas = "H2S"
+datasheet = "mq-136-winsen-v1.4"
+points = "points/mq-136-winsen-v1.4/h2s.csv"
+origin = "traced"
+recipe = "recipes/mq-136-winsen-v1.4-h2s.toml"
+
+[[curve]]
+id = "mq-137-winsen-v1.4-nh3"
+sensor = "MQ-137"
+gas = "NH3"
+datasheet = "mq-137-winsen-v1.4"
+points = "points/mq-137-winsen-v1.4/nh3.csv"
+origin = "traced"
+recipe = "recipes/mq-137-winsen-v1.4-nh3.toml"
+note = "The line the MQ137 manual prints for NH3 is identical, pixel for pixel along the curve, to the line the MQ136 manual prints for H2S; the two figures differ only in the legend and a CO line. The traced points and the fit are therefore the same as MQ-136 H2S. Whether the manufacturer measured the same response or reused the chart is not known."

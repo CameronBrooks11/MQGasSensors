@@ -1,0 +1,39 @@
+id = "mq-136-winsen-v1.4-h2s"
+sensor = "MQ-136"
+gas = "H2S"
+
+[source]
+datasheet = "mq-136-winsen-v1.4"
+page = 4
+pixels_sha256 = "b97f6ecaffacac388c2041bc3b4c5b1ba4af165f392569e69f605f53588fb408"
+
+[x]
+pixels = [51.19, 379.11]
+values = [1, 200]
+
+[y]
+pixels = [264.37, 9.23]
+values = [0.01, 1]
+
+[trace]
+seed = [219, 78]
+lo = 25
+up = 25
+bin_width = 1
+connectivity = 8
+ppm = [1, 200]
+max_thickness = 3
+
+# Values read off the figure by eye, as a guard against a wrong calibration or seed.
+
+[[check]]
+at = 1
+ratio = 0.58
+
+[[check]]
+at = 10
+ratio = 0.32
+
+[[check]]
+at = 200
+ratio = 0.14

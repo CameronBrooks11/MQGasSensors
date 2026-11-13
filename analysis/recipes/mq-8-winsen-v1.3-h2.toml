@@ -1,0 +1,38 @@
+id = "mq-8-winsen-v1.3-h2"
+sensor = "MQ-8"
+gas = "H2"
+
+[source]
+datasheet = "mq-8-winsen-v1.3"
+page = 4
+pixels_sha256 = "a7e8f9d7734e15958df64e9ed5dc308651ffe8d58d33a386b66c7577bd867f31"
+
+[x]
+pixels = [51.37, 372.71]
+values = [100, 10000]
+
+[y]
+pixels = [264.36, 9.24]
+values = [0.01, 1]
+
+[trace]
+seed = [211, 142]
+lo = 25
+up = 25
+bin_width = 1
+connectivity = 8
+ppm = [100, 10000]
+
+# Values read off the figure by eye, as a guard against a wrong calibration or seed.
+
+[[check]]
+at = 100
+ratio = 0.25
+
+[[check]]
+at = 1000
+ratio = 0.09
+
+[[check]]
+at = 10000
+ratio = 0.04

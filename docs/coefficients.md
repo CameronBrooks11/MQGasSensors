@@ -8,75 +8,86 @@ Each fit is a straight line through digitised points on log-log axes. It describ
 
 ## Fitted curves
 
-| Sensor | Gas | a | b | Concentration range | Rs/R0 range | Points | r² | Datasheet | Points from |
-|---|---|---|---|---|---|---|---|---|---|
-| MQ-2 | alcohol | 3616.1 | -2.675 | 203 to 10100 ppm | 0.659 to 2.87 | 9 | 0.9978 | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-2 | CH4 | 4301.2 | -2.651 | 201 to 10200 ppm | 0.703 to 3.06 | 9 | 0.9977 | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-2 | CO | 32721 | -3.014 | 203 to 10300 ppm | 1.45 to 5.23 | 9 | 0.9983 | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-2 | H2 | 982.04 | -2.131 | 200 to 10000 ppm | 0.335 to 2.08 | 9 | 0.9997 | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-2 | LPG | 578.68 | -2.135 | 198 to 9960 ppm | 0.256 to 1.59 | 9 | 0.9983 | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-2 | propane | 658.71 | -2.168 | 200 to 10000 ppm | 0.277 to 1.72 | 8 | 0.9992 | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-3 | alcohol | 0.39339 | -1.504 | 0.104 to 10.1 mg/L | 0.116 to 2.30 | 10 | 0.9993 | `mq-3-hanwei-2007` | read by hand upstream |
-| MQ-3 | benzene | 4.8387 | -2.680 | 0.103 to 9.91 mg/L | 0.773 to 4.15 | 10 | 0.9988 | `mq-3-hanwei-2007` | read by hand upstream |
-| MQ-3 | CH4 | 1.8807e+31 | -19.01 | 0.102 to 9.91 mg/L | 39.1 to 49.1 | 10 | 0.9725 | `mq-3-hanwei-2007` | read by hand upstream |
-| MQ-3 | CO | 521850 | -3.821 | 0.102 to 9.91 mg/L | 16.0 to 50.6 | 7 | 0.9738 | `mq-3-hanwei-2007` | read by hand upstream |
-| MQ-3 | hexane | 7585.3 | -2.849 | 0.104 to 10.0 mg/L | 10.2 to 52.1 | 7 | 0.9990 | `mq-3-hanwei-2007` | read by hand upstream |
-| MQ-3 | LPG | 44771 | -3.245 | 0.104 to 9.91 mg/L | 13.1 to 51.3 | 7 | 0.9915 | `mq-3-hanwei-2007` | read by hand upstream |
-| MQ-4 | alcohol | 6.4754e+10 | -14.01 | 200 to 10000 ppm | 3.07 to 4.04 | 4 | 0.9994 | `mq-4-hanwei-2007` | read by hand upstream |
-| MQ-4 | CH4 | 1012.7 | -2.786 | 196 to 10000 ppm | 0.434 to 1.79 | 4 | 0.9996 | `mq-4-hanwei-2007` | read by hand upstream |
-| MQ-4 | CO | 2.0828e+14 | -19.05 | 202 to 10100 ppm | 3.54 to 4.32 | 4 | 0.9426 | `mq-4-hanwei-2007` | read by hand upstream |
-| MQ-4 | H2 | 332400 | -5.600 | 200 to 10100 ppm | 1.87 to 3.74 | 4 | 0.9996 | `mq-4-hanwei-2007` | read by hand upstream |
-| MQ-4 | LPG | 3811.9 | -3.113 | 198 to 10000 ppm | 0.746 to 2.60 | 4 | 0.9993 | `mq-4-hanwei-2007` | read by hand upstream |
-| MQ-4 | smoke | 2.7663e+07 | -8.308 | 202 to 9910 ppm | 2.54 to 4.00 | 4 | 0.9687 | `mq-4-hanwei-2007` | read by hand upstream |
-| MQ-5 | alcohol | 68091 | -4.551 | 200 to 10000 ppm | 1.45 to 3.52 | 9 | 0.9923 | `mq-5-hanwei-2007` | read by hand upstream |
-| MQ-5 | CH4 | 177.65 | -2.560 | 200 to 10000 ppm | 0.201 to 0.939 | 9 | 0.9985 | `mq-5-hanwei-2007` | read by hand upstream |
-| MQ-5 | CO | 1.5974e+06 | -6.847 | 200 to 10100 ppm | 2.25 to 3.88 | 9 | 0.9561 | `mq-5-hanwei-2007` | read by hand upstream |
-| MQ-5 | H2 | 1163.8 | -3.874 | 201 to 10100 ppm | 0.657 to 1.74 | 9 | 0.9331 | `mq-5-hanwei-2007` | read by hand upstream |
-| MQ-5 | LPG | 76.907 | -2.489 | 199 to 9930 ppm | 0.144 to 0.700 | 9 | 0.9986 | `mq-5-hanwei-2007` | read by hand upstream |
-| MQ-6 | alcohol | 5.9810e+07 | -6.062 | 201 to 9920 ppm | 4.25 to 7.97 | 9 | 0.9983 | `mq-6-hanwei-2007` | read by hand upstream |
-| MQ-6 | CH4 | 2127.2 | -2.526 | 201 to 9920 ppm | 0.538 to 2.52 | 9 | 0.9996 | `mq-6-hanwei-2007` | read by hand upstream |
-| MQ-6 | CO | 1.3305e+14 | -12.43 | 201 to 10000 ppm | 6.42 to 8.89 | 9 | 0.9879 | `mq-6-hanwei-2007` | read by hand upstream |
-| MQ-6 | H2 | 88158 | -3.597 | 202 to 9920 ppm | 2.03 to 5.71 | 9 | 0.9771 | `mq-6-hanwei-2007` | read by hand upstream |
-| MQ-6 | LPG | 1016.8 | -2.398 | 201 to 10000 ppm | 0.393 to 1.99 | 9 | 0.9994 | `mq-6-hanwei-2007` | read by hand upstream |
-| MQ-7 | alcohol | 9.3366e+18 | -14.41 | 49.6 to 4080 ppm | 12.0 to 16.2 | 5 | 0.9422 | `mq-7-hanwei-2007` | read by hand upstream |
-| MQ-7 | CH4 | 6.0771e+13 | -10.54 | 49.6 to 4030 ppm | 9.01 to 13.9 | 5 | 0.9548 | `mq-7-hanwei-2007` | read by hand upstream |
-| MQ-7 | CO | 99.042 | -1.518 | 50.9 to 4030 ppm | 0.0901 to 1.61 | 5 | 0.9990 | `mq-7-hanwei-2007` | read by hand upstream |
-| MQ-7 | H2 | 69.014 | -1.374 | 49.6 to 4030 ppm | 0.0520 to 1.26 | 5 | 0.9999 | `mq-7-hanwei-2007` | read by hand upstream |
-| MQ-7 | LPG | 7.4158e+08 | -7.703 | 49.6 to 4030 ppm | 4.91 to 8.68 | 5 | 0.9951 | `mq-7-hanwei-2007` | read by hand upstream |
-| MQ-8 | alcohol | 49783 | -1.695 | 199 to 9950 ppm | 2.38 to 24.4 | 9 | 0.9952 | `mq-8-hanwei-2009` | read by hand upstream |
-| MQ-8 | CH4 | 7.5359e+13 | -6.666 | 197 to 9840 ppm | 29.1 to 54.0 | 9 | 0.9701 | `mq-8-hanwei-2009` | read by hand upstream |
-| MQ-8 | CO | 7.3658e+15 | -7.335 | 197 to 9830 ppm | 40.0 to 67.2 | 9 | 0.9659 | `mq-8-hanwei-2009` | read by hand upstream |
-| MQ-8 | H2 | 976.97 | -0.6879 | 198 to 9990 ppm | 0.0287 to 8.66 | 9 | 0.9969 | `mq-8-hanwei-2009` | read by hand upstream |
-| MQ-8 | LPG | 7.9758e+07 | -3.724 | 199 to 9930 ppm | 12.9 to 34.8 | 9 | 0.9462 | `mq-8-hanwei-2009` | read by hand upstream |
-| MQ-9 | CH4 | 4269.6 | -2.648 | 198 to 9890 ppm | 0.704 to 3.10 | 9 | 0.9978 | `mq-9-hanwei-2008` | read by hand upstream |
-| MQ-9 | CO | 599.65 | -2.244 | 198 to 988 ppm | 0.795 to 1.64 | 4 | 0.9996 | `mq-9-hanwei-2008` | read by hand upstream |
-| MQ-9 | LPG | 993.68 | -2.147 | 200 to 9980 ppm | 0.338 to 2.06 | 9 | 0.9994 | `mq-9-hanwei-2008` | read by hand upstream |
-| MQ-131 | Cl2 | 47.209 | -1.186 | 4.96 to 99.2 ppm | 0.497 to 5.97 | 5 | 0.9914 | `mq-131-2009` | read by hand upstream |
-| MQ-131 | NOx | 462.43 | -2.204 | 5.00 to 98.8 ppm | 2.03 to 8.09 | 5 | 0.9954 | `mq-131-2009` | read by hand upstream |
-| MQ-131 | O3 | 23.943 | -1.110 | 5.02 to 99.3 ppm | 0.282 to 4.06 | 5 | 0.9996 | `mq-131-2009` | read by hand upstream |
-| MQ-135 | acetone | 34.668 | -3.369 | 10.0 to 200 ppm | 0.586 to 1.44 | 3 | 0.9984 | `mq-135-hanwei` | read by hand upstream |
-| MQ-135 | alcohol | 77.255 | -3.180 | 10.0 to 200 ppm | 0.737 to 1.90 | 3 | 0.9998 | `mq-135-hanwei` | read by hand upstream |
-| MQ-135 | CO | 605.18 | -3.937 | 9.92 to 200 ppm | 1.34 to 2.85 | 3 | 0.9983 | `mq-135-hanwei` | read by hand upstream |
-| MQ-135 | CO2 | 110.47 | -2.862 | 10.0 to 198 ppm | 0.805 to 2.31 | 3 | 0.9993 | `mq-135-hanwei` | read by hand upstream |
-| MQ-135 | NH4 | 102.20 | -2.473 | 10.0 to 200 ppm | 0.767 to 2.56 | 3 | 0.9999 | `mq-135-hanwei` | read by hand upstream |
-| MQ-135 | toluene | 44.947 | -3.445 | 10.0 to 200 ppm | 0.643 to 1.54 | 3 | 0.9994 | `mq-135-hanwei` | read by hand upstream |
-| MQ-303A | ethanol | 3.4916 | -2.432 | 9.76 to 9710 ppm | 0.0370 to 0.637 | 7 | 0.9994 | `mq-303a-hanwei-2006` | read by hand upstream |
-| MQ-303A | H2 | 4.1487 | -2.716 | 9.76 to 9620 ppm | 0.0581 to 0.735 | 7 | 0.9998 | `mq-303a-hanwei-2006` | read by hand upstream |
-| MQ-303A | iso-butane | 5.3977 | -3.001 | 95.3 to 9530 ppm | 0.0853 to 0.391 | 5 | 0.9984 | `mq-303a-hanwei-2006` | read by hand upstream |
-| MQ-309A | alcohol | 473620 | -3.647 | 992 to 7050 ppm | 3.13 to 5.37 | 3 | 0.9948 | `mq-309a-hanwei-2004` | read by hand upstream |
-| MQ-309A | CH4 | 980.24 | -1.680 | 298 to 6980 ppm | 0.310 to 2.03 | 4 | 1.0000 | `mq-309a-hanwei-2004` | read by hand upstream |
-| MQ-309A | CO | 1.4136e+06 | -4.010 | 997 to 7050 ppm | 3.71 to 6.05 | 3 | 0.9949 | `mq-309a-hanwei-2004` | read by hand upstream |
-| MQ-309A | H2 | 1532.9 | -1.951 | 299 to 6990 ppm | 0.460 to 2.33 | 4 | 0.9997 | `mq-309a-hanwei-2004` | read by hand upstream |
+| Sensor | Gas | a | b | Concentration range | Rs/R0 range | Points | r² | Largest error | Datasheet | Points from |
+|---|---|---|---|---|---|---|---|---|---|---|
+| MQ-2 | alcohol | 3616.1 | -2.675 | 203 to 10100 ppm | 0.659 to 2.87 | 9 | 0.9978 | 9 % | `mq-2-hanwei-2009` | read by hand upstream |
+| MQ-2 | CH4 | 4301.2 | -2.651 | 201 to 10200 ppm | 0.703 to 3.06 | 9 | 0.9977 | 10 % | `mq-2-hanwei-2009` | read by hand upstream |
+| MQ-2 | CO | 32721 | -3.014 | 203 to 10300 ppm | 1.45 to 5.23 | 9 | 0.9983 | 10 % | `mq-2-hanwei-2009` | read by hand upstream |
+| MQ-2 | H2 | 982.04 | -2.131 | 200 to 10000 ppm | 0.335 to 2.08 | 9 | 0.9997 | 3 % | `mq-2-hanwei-2009` | read by hand upstream |
+| MQ-2 | LPG | 578.68 | -2.135 | 198 to 9960 ppm | 0.256 to 1.59 | 9 | 0.9983 | 9 % | `mq-2-hanwei-2009` | read by hand upstream |
+| MQ-2 | propane | 658.71 | -2.168 | 200 to 10000 ppm | 0.277 to 1.72 | 8 | 0.9992 | 6 % | `mq-2-hanwei-2009` | read by hand upstream |
+| MQ-3 | alcohol | 0.39339 | -1.504 | 0.104 to 10.1 mg/L | 0.116 to 2.30 | 10 | 0.9993 | 9 % | `mq-3-hanwei-2007` | read by hand upstream |
+| MQ-3 | benzene | 4.8387 | -2.680 | 0.103 to 9.91 mg/L | 0.773 to 4.15 | 10 | 0.9988 | 10 % | `mq-3-hanwei-2007` | read by hand upstream |
+| MQ-3 | CH4 | 1.8807e+31 | -19.01 | 0.102 to 9.91 mg/L | 39.1 to 49.1 | 10 | 0.9725 | 43 % | `mq-3-hanwei-2007` | read by hand upstream |
+| MQ-3 | CO | 521850 | -3.821 | 0.102 to 9.91 mg/L | 16.0 to 50.6 | 7 | 0.9738 | 58 % | `mq-3-hanwei-2007` | read by hand upstream |
+| MQ-3 | hexane | 7585.3 | -2.849 | 0.104 to 10.0 mg/L | 10.2 to 52.1 | 7 | 0.9990 | 9 % | `mq-3-hanwei-2007` | read by hand upstream |
+| MQ-3 | LPG | 44771 | -3.245 | 0.104 to 9.91 mg/L | 13.1 to 51.3 | 7 | 0.9915 | 29 % | `mq-3-hanwei-2007` | read by hand upstream |
+| MQ-4 | alcohol | 6.4754e+10 | -14.01 | 200 to 10000 ppm | 3.07 to 4.04 | 4 | 0.9994 | 5 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | CH4 | 1012.7 | -2.786 | 196 to 10000 ppm | 0.434 to 1.79 | 4 | 0.9996 | 3 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | CO | 2.0828e+14 | -19.05 | 202 to 10100 ppm | 3.54 to 4.32 | 4 | 0.9426 | 83 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | H2 | 332400 | -5.600 | 200 to 10100 ppm | 1.87 to 3.74 | 4 | 0.9996 | 5 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | LPG | 3811.9 | -3.113 | 198 to 10000 ppm | 0.746 to 2.60 | 4 | 0.9993 | 6 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | smoke | 2.7663e+07 | -8.308 | 202 to 9910 ppm | 2.54 to 4.00 | 4 | 0.9687 | 37 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-5 | alcohol | 68091 | -4.551 | 200 to 10000 ppm | 1.45 to 3.52 | 9 | 0.9923 | 23 % | `mq-5-hanwei-2007` | read by hand upstream |
+| MQ-5 | CH4 | 177.65 | -2.560 | 200 to 10000 ppm | 0.201 to 0.939 | 9 | 0.9985 | 8 % | `mq-5-hanwei-2007` | read by hand upstream |
+| MQ-5 | CO | 1.5974e+06 | -6.847 | 200 to 10100 ppm | 2.25 to 3.88 | 9 | 0.9561 | 39 % | `mq-5-hanwei-2007` | read by hand upstream |
+| MQ-5 | H2 | 1163.8 | -3.874 | 201 to 10100 ppm | 0.657 to 1.74 | 9 | 0.9331 | 42 % | `mq-5-hanwei-2007` | read by hand upstream |
+| MQ-5 | LPG | 76.907 | -2.489 | 199 to 9930 ppm | 0.144 to 0.700 | 9 | 0.9986 | 8 % | `mq-5-hanwei-2007` | read by hand upstream |
+| MQ-6 | alcohol | 5.9810e+07 | -6.062 | 201 to 9920 ppm | 4.25 to 7.97 | 9 | 0.9983 | 10 % | `mq-6-hanwei-2007` | read by hand upstream |
+| MQ-6 | CH4 | 2127.2 | -2.526 | 201 to 9920 ppm | 0.538 to 2.52 | 9 | 0.9996 | 5 % | `mq-6-hanwei-2007` | read by hand upstream |
+| MQ-6 | CO | 1.3305e+14 | -12.43 | 201 to 10000 ppm | 6.42 to 8.89 | 9 | 0.9879 | 21 % | `mq-6-hanwei-2007` | read by hand upstream |
+| MQ-6 | H2 | 88158 | -3.597 | 202 to 9920 ppm | 2.03 to 5.71 | 9 | 0.9771 | 30 % | `mq-6-hanwei-2007` | read by hand upstream |
+| MQ-6 | LPG | 1016.8 | -2.398 | 201 to 10000 ppm | 0.393 to 1.99 | 9 | 0.9994 | 4 % | `mq-6-hanwei-2007` | read by hand upstream |
+| MQ-7 | alcohol | 9.3366e+18 | -14.41 | 49.6 to 4080 ppm | 12.0 to 16.2 | 5 | 0.9422 | 75 % | `mq-7-hanwei-2007` | read by hand upstream |
+| MQ-7 | CH4 | 6.0771e+13 | -10.54 | 49.6 to 4030 ppm | 9.01 to 13.9 | 5 | 0.9548 | 47 % | `mq-7-hanwei-2007` | read by hand upstream |
+| MQ-7 | CO | 99.042 | -1.518 | 50.9 to 4030 ppm | 0.0901 to 1.61 | 5 | 0.9990 | 9 % | `mq-7-hanwei-2007` | read by hand upstream |
+| MQ-7 | H2 | 69.014 | -1.374 | 49.6 to 4030 ppm | 0.0520 to 1.26 | 5 | 0.9999 | 2 % | `mq-7-hanwei-2007` | read by hand upstream |
+| MQ-7 | LPG | 7.4158e+08 | -7.703 | 49.6 to 4030 ppm | 4.91 to 8.68 | 5 | 0.9951 | 15 % | `mq-7-hanwei-2007` | read by hand upstream |
+| MQ-8 | alcohol | 49783 | -1.695 | 199 to 9950 ppm | 2.38 to 24.4 | 9 | 0.9952 | 15 % | `mq-8-hanwei-2009` | read by hand upstream |
+| MQ-8 | CH4 | 7.5359e+13 | -6.666 | 197 to 9840 ppm | 29.1 to 54.0 | 9 | 0.9701 | 42 % | `mq-8-hanwei-2009` | read by hand upstream |
+| MQ-8 | CO | 7.3658e+15 | -7.335 | 197 to 9830 ppm | 40.0 to 67.2 | 9 | 0.9659 | 48 % | `mq-8-hanwei-2009` | read by hand upstream |
+| MQ-8 | H2 | 976.97 | -0.6879 | 198 to 9990 ppm | 0.0287 to 8.66 | 9 | 0.9969 | 12 % | `mq-8-hanwei-2009` | read by hand upstream |
+| MQ-8 | LPG | 7.9758e+07 | -3.724 | 199 to 9930 ppm | 12.9 to 34.8 | 9 | 0.9462 | 41 % | `mq-8-hanwei-2009` | read by hand upstream |
+| MQ-8 | H2 | 2.1898 | -2.587 | 101 to 9900 ppm | 0.0404 to 0.248 | 321 | 0.9952 | 20 % | `mq-8-winsen-v1.3` | [traced](../analysis/recipes/mq-8-winsen-v1.3-h2.toml) |
+| MQ-9 | CH4 | 4269.6 | -2.648 | 198 to 9890 ppm | 0.704 to 3.10 | 9 | 0.9978 | 9 % | `mq-9-hanwei-2008` | read by hand upstream |
+| MQ-9 | CO | 599.65 | -2.244 | 198 to 988 ppm | 0.795 to 1.64 | 4 | 0.9996 | 2 % | `mq-9-hanwei-2008` | read by hand upstream |
+| MQ-9 | LPG | 993.68 | -2.147 | 200 to 9980 ppm | 0.338 to 2.06 | 9 | 0.9994 | 5 % | `mq-9-hanwei-2008` | read by hand upstream |
+| MQ-9B | CH4 | 3.4756 | -2.593 | 473 to 8430 ppm | 0.0499 to 0.153 | 120 | 0.9996 | 5 % | `mq-9b-winsen-v1.4` | [traced](../analysis/recipes/mq-9b-winsen-v1.4-ch4.toml) |
+| MQ-9B | CO | 0.72228 | -1.821 | 11.7 to 864 ppm | 0.0219 to 0.223 | 174 | 0.9986 | 13 % | `mq-9b-winsen-v1.4` | [traced](../analysis/recipes/mq-9b-winsen-v1.4-co.toml) |
+| MQ-131 | Cl2 | 47.209 | -1.186 | 4.96 to 99.2 ppm | 0.497 to 5.97 | 5 | 0.9914 | 14 % | `mq-131-2009` | read by hand upstream |
+| MQ-131 | NOx | 462.43 | -2.204 | 5.00 to 98.8 ppm | 2.03 to 8.09 | 5 | 0.9954 | 11 % | `mq-131-2009` | read by hand upstream |
+| MQ-131 | O3 | 23.943 | -1.110 | 5.02 to 99.3 ppm | 0.282 to 4.06 | 5 | 0.9996 | 4 % | `mq-131-2009` | read by hand upstream |
+| MQ-135 | acetone | 34.668 | -3.369 | 10.0 to 200 ppm | 0.586 to 1.44 | 3 | 0.9984 | 7 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | alcohol | 77.255 | -3.180 | 10.0 to 200 ppm | 0.737 to 1.90 | 3 | 0.9998 | 3 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | CO | 605.18 | -3.937 | 9.92 to 200 ppm | 1.34 to 2.85 | 3 | 0.9983 | 7 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | CO2 | 110.47 | -2.862 | 10.0 to 198 ppm | 0.805 to 2.31 | 3 | 0.9993 | 5 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | NH4 | 102.20 | -2.473 | 10.0 to 200 ppm | 0.767 to 2.56 | 3 | 0.9999 | 2 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | toluene | 44.947 | -3.445 | 10.0 to 200 ppm | 0.643 to 1.54 | 3 | 0.9994 | 4 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-136 | H2S | 0.13471 | -3.775 | 1.12 to 181 ppm | 0.148 to 0.569 | 280 | 0.9997 | 5 % | `mq-136-winsen-v1.4` | [traced](../analysis/recipes/mq-136-winsen-v1.4-h2s.toml) |
+| MQ-137 | NH3 | 0.13471 | -3.775 | 1.12 to 181 ppm | 0.148 to 0.569 | 280 | 0.9997 | 5 % | `mq-137-winsen-v1.4` | [traced](../analysis/recipes/mq-137-winsen-v1.4-nh3.toml) |
+| MQ-303A | ethanol | 3.4916 | -2.432 | 9.76 to 9710 ppm | 0.0370 to 0.637 | 7 | 0.9994 | 9 % | `mq-303a-hanwei-2006` | read by hand upstream |
+| MQ-303A | H2 | 4.1487 | -2.716 | 9.76 to 9620 ppm | 0.0581 to 0.735 | 7 | 0.9998 | 5 % | `mq-303a-hanwei-2006` | read by hand upstream |
+| MQ-303A | iso-butane | 5.3977 | -3.001 | 95.3 to 9530 ppm | 0.0853 to 0.391 | 5 | 0.9984 | 9 % | `mq-303a-hanwei-2006` | read by hand upstream |
+| MQ-309A | alcohol | 473620 | -3.647 | 992 to 7050 ppm | 3.13 to 5.37 | 3 | 0.9948 | 8 % | `mq-309a-hanwei-2004` | read by hand upstream |
+| MQ-309A | CH4 | 980.24 | -1.680 | 298 to 6980 ppm | 0.310 to 2.03 | 4 | 1.0000 | 1 % | `mq-309a-hanwei-2004` | read by hand upstream |
+| MQ-309A | CO | 1.4136e+06 | -4.010 | 997 to 7050 ppm | 3.71 to 6.05 | 3 | 0.9949 | 8 % | `mq-309a-hanwei-2004` | read by hand upstream |
+| MQ-309A | H2 | 1532.9 | -1.951 | 299 to 6990 ppm | 0.460 to 2.33 | 4 | 0.9997 | 3 % | `mq-309a-hanwei-2004` | read by hand upstream |
+
+Notes:
+
+- **MQ-137 NH3** (`mq-137-winsen-v1.4`): The line the MQ137 manual prints for NH3 is identical, pixel for pixel along the curve, to the line the MQ136 manual prints for H2S; the two figures differ only in the legend and a CO line. The traced points and the fit are therefore the same as MQ-136 H2S. Whether the manufacturer measured the same response or reused the chart is not known.
 
 The concentration is in the unit of the datasheet figure's horizontal axis. Where that is not ppm, the value the library returns is in that unit too, whatever the sketch calls it: the MQ-3 curves are drawn against mg/L.
 
 `Datasheet` is an id in [`datasheets/manifest.toml`](../datasheets/manifest.toml), which records the document's maker, edition and SHA-256. Datasheets from different makers for the same sensor have different curves.
 
-**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced from the figure** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md).
+**Largest error** is the biggest relative difference, over the fitted points, between the concentration the fit returns and the concentration the datasheet plots at that Rs/R0. It is what approximating the curve by a power law costs, before any error in the sensor itself.
+
+**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md); the link is the recipe that reproduces it.
 
 ## Values used in the examples
 
-Every distinct `setA`/`setB` pair in `examples/`, beside the closest fitted curve for the same sensor.
+Every distinct `setA`/`setB` pair in `examples/`, beside the closest fitted curve for the same sensor. The examples were written from the Hanwei-era datasheets, so only curves from those are compared; a Winsen manual for the same sensor is a different document with a different curve.
 
 | Sensor | setA | setB | Closest curve | Fitted a | Fitted b | Difference in a | Verdict | Sketches |
 |---|---|---|---|---|---|---|---|---|
@@ -107,7 +118,7 @@ Every distinct `setA`/`setB` pair in `examples/`, beside the closest fitted curv
 | MQ-135 | 102.2 | -2.473 | NH4 | 102.20 | -2.473 | 0.0 % | same as the fit | MQ-135, MQ-135-ALL, MQ-135-CorrectionFactorDHT11, MQ135-ADS1115 |
 | MQ-135 | 110.47 | -2.862 | CO2 | 110.47 | -2.862 | 0.0 % | same as the fit | MQ-135-ALL, MQ135-ADS1115, UnitTesting |
 | MQ-135 | 605.18 | -3.937 | CO | 605.18 | -3.937 | 0.0 % | same as the fit | MQ-135-ALL, MQ135-ADS1115 |
-| MQ-136 | 36.737 | -3.536 |  | | |  | no digitised points for this sensor | MQ-136, UnitTesting |
+| MQ-136 | 36.737 | -3.536 |  | | |  | no digitised points from a Hanwei-era datasheet | MQ-136, UnitTesting |
 | MQ-303A | 1 | 1 | ethanol | 3.4916 | -2.432 | 71.4 % | does not match any curve | UnitTesting |
 | MQ-303A | 3.4916 | -2.432 | ethanol | 3.4916 | -2.432 | 0.0 % | same as the fit | UnitTesting |
 | MQ-303A | 6.2144 | -2.894 | iso-butane | 5.3977 | -3.001 | 15.1 % | does not match any curve | MQ-303A |
@@ -119,7 +130,7 @@ Every distinct `setA`/`setB` pair in `examples/`, beside the closest fitted curv
 | the fit, rounded coarsely | 5 |
 | near the fit, not equal | 2 |
 | does not match any curve | 5 |
-| no digitised points for this sensor | 1 |
+| no digitised points from a Hanwei-era datasheet | 1 |
 | linear-model example | 1 |
 
 - **Same as the fit**: the example's value equals the fitted value at the precision the example writes it.
