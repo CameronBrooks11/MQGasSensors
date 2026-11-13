@@ -11,15 +11,20 @@ permissions:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # Pinned: simavr comes from this release's apt archive.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
       - name: Install just
         uses: extractions/setup-just@v2
+        with:
+          just-version: "1.40.0"
 
       - name: Install arduino-cli
         uses: arduino/setup-arduino-cli@v2
+        with:
+          version: "1.5.1"
 
       - name: Setup (board cores and libraries)
         run: just setup

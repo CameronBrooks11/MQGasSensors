@@ -2,13 +2,11 @@
 <!--
 *** Markdown "reference style" links are used for readability.
 *** Links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom for reference variables declarations (contributors-url, forks-url, etc.).
+*** See the bottom for reference variables declarations (check-url, issues-url, etc.).
 *** For more information, visit: https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
+[![Check][check-shield]][check-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
@@ -16,7 +14,7 @@
 
 A robust Arduino library for interfacing with MQ-series gas sensors, enabling accurate gas concentration measurements with ease. Supports calibration, resistance calculations, and real-time gas concentration derivation for various gases.
 
-**Note:** this library is currently underdevelopment, check back later and use the [original](https://github.com/miguel5612/MQSensorsLib) in the meantime!
+**Status:** version 1.1.0. Every example is compiled for its board and the unit tests run on a simulated Arduino Mega on each change. This version has not yet been validated against physical sensors. The library began as a fork of [MQSensorsLib](https://github.com/miguel5612/MQSensorsLib) and is now developed independently; see [Acknowledgment](#acknowledgment).
 
 ## Features
 
@@ -67,7 +65,7 @@ See the [MQGasSensorsAnalysis](https://github.com/CameronBrooks11/MQGasSensorsAn
 //Declare Sensor
 MQGasSensor MQ4(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 // Setup
-MQ4.setRegressionMethod("Exponential"); //_PPM =  a*ratio^b
+MQ4.setRegressionMethod(1); // 1 -> Exponential: _PPM =  a*ratio^b
 MQ4.setA(1012.7); MQ4.setB(-2.786); // Configure the equation to to calculate CH4 concentration
 MQ4.setR0(3.86018237); // Value getted on calibration
 // Loop
@@ -167,7 +165,7 @@ Sensor characteristics:
 
 #### ESP32 WROOM 32D
 
-The ESP32 WROOM 32D does not need an external power supply. A0 goes to PIN36, Vcc to 3v3 and GND to any GND port on the board. Check the **ESP2/ESP32_WROOM_32** folder to fixing the measuring issue when connecting to wifi.
+The ESP32 WROOM 32D does not need an external power supply. A0 goes to PIN36, Vcc to 3v3 and GND to any GND port on the board. Check the **examples/ESP32/ESP32_WROOM_32D** folder for a fix to the measuring issue when connecting to wifi.
 
 ## Sensor Manufacturers
 
@@ -193,11 +191,11 @@ Please read [CONTRIBUTING.md](https://github.com/CameronBrooks11/MQGasSensors/bl
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgment
 
-This library is a fork of the original **MQSensorsLib** library, created and maintained by Miguel Angel Califa Urquiza, Ghiordy Contreras Contreras, and Yerson Ramiro Carrillo Amado. Their work laid the foundation for interfacing MQ-series gas sensors with Arduino, and we acknowledge their significant contributions to the community.
+This library began as a fork of the original **MQSensorsLib** library, created and maintained by Miguel Angel Califa Urquiza, Ghiordy Contreras Contreras, and Yerson Ramiro Carrillo Amado. Their work laid the foundation for interfacing MQ-series gas sensors with Arduino, and we acknowledge their significant contributions to the community.
 
 Original repository: [miguel5612/MQSensorsLib](https://github.com/miguel5612/MQSensorsLib)  
 Last synced with the original at commit [`59a2e58`](https://github.com/miguel5612/MQSensorsLib/commit/59a2e5852ec12f5da3cf508be68f5a9405314003) (2025-06-04, its version 3.0.5). This project is developed independently from that point.  
@@ -223,12 +221,8 @@ See also the list of [contributors](https://github.com/miguel5612/MQSensorsLib/g
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/CameronBrooks11/MQGasSensors.svg?style=flat-square
-[contributors-url]: https://github.com/CameronBrooks11/MQGasSensors/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/CameronBrooks11/MQGasSensors.svg?style=flat-square
-[forks-url]: https://github.com/CameronBrooks11/MQGasSensors/network/members
-[stars-shield]: https://img.shields.io/github/stars/CameronBrooks11/MQGasSensors.svg?style=flat-square
-[stars-url]: https://github.com/CameronBrooks11/MQGasSensors/stargazers
+[check-shield]: https://img.shields.io/github/actions/workflow/status/CameronBrooks11/MQGasSensors/check.yml?branch=master&label=build%20%26%20tests&style=flat-square
+[check-url]: https://github.com/CameronBrooks11/MQGasSensors/actions/workflows/check.yml
 [issues-shield]: https://img.shields.io/github/issues/CameronBrooks11/MQGasSensors.svg?style=flat-square
 [issues-url]: https://github.com/CameronBrooks11/MQGasSensors/issues
 [license-shield]: https://img.shields.io/github/license/CameronBrooks11/MQGasSensors.svg?style=flat-square
