@@ -21,7 +21,9 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    # A full pass took 23 minutes from a GitHub runner on 2026-11-13, and a few
+    # minutes from a home line the same day. Why it is slower here is not known.
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -29,7 +31,7 @@ jobs:
       - name: Verify every mirror
         run: |
           set -o pipefail
-          python3 scripts/datasheets.py verify --retries 5 --backoff 10 | tee verify.log
+          python3 -u scripts/datasheets.py verify --retries 5 --backoff 10 | tee verify.log
 
       # A mirror that fails while another still works does not fail the run;
       # it is raised as a warning so it gets replaced before the last one goes.
