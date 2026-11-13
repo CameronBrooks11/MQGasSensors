@@ -3,6 +3,12 @@
 
 #include <Arduino.h>
 #include <stdint.h>
+#include <float.h>
+#include <math.h>
+
+// Maximum coefficients allowed for the regression model
+#define MQ_MAX_A 1e30
+#define MQ_MAX_B 100.0
 
 /***********************Software Related Macros************************************/
 
@@ -22,14 +28,15 @@ public:
   void setB(float b);
   void setRegressionMethod(int regressionMethod);
   void setVoltResolution(float voltage_resolution = 5);
+  void setVCC(float vcc = 5);
   void setPin(int pin = 1);
   void serialDebug(bool onSetup = false); // Show on serial port information about sensor
   void setADC(int value);                 // For external ADC Usage
 
   // user functions
-  float calibrate(float ratioInCleanAir);
+  float calibrate(float ratioInCleanAir, float correctionFactor = 0.0);
   float readSensor(bool isMQ303A = false, float correctionFactor = 0.0, bool injected = false);
-  float readSensorR0Rs();
+  float readSensorR0Rs(float correctionFactor = 0.0);
   float validateEcuation(float ratioInput = 0);
 
   // get function for info
@@ -38,6 +45,7 @@ public:
   float getR0();
   float getRL();
   float getVoltResolution();
+  float getVCC();
   String getRegressionMethod();
   float getVoltage(bool read = true, bool injected = false, int value = 0);
   float stringTofloat(String &str);
@@ -51,6 +59,7 @@ private:
   byte _pin = 1;
   byte _firstFlag = false;
   float _VOLT_RESOLUTION = 5.0; // if 3.3v use 3.3
+  float _VCC = 5.0;             // Sensor supply voltage
   float _RL = 10;               // Value in KiloOhms
   byte _ADC_Bit_Resolution = 10;
   byte _regressionMethod = 1; // 1 -> Exponential || 2 -> Linear

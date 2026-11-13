@@ -103,7 +103,7 @@ void setup() {
   // Explanation: 
    // In this routine the sensor will measure the resistance of the sensor supposedly before being pre-heated
   // and on clean air (Calibration conditions), setting up R0 value.
-  // We recomend executing this routine only on setup in laboratory conditions.
+  // We recommend executing this routine only on setup in laboratory conditions.
   // This routine does not need to be executed on each restart, you can load your R0 value from eeprom.
   // Acknowledgements: https://jayconsystems.com/blog/understanding-a-gas-sensor
   Serial.print("Calibrating please wait.");
@@ -158,8 +158,8 @@ void setup() {
   Serial.print(MQ8calcR0/10); Serial.print(" | ");
   Serial.print(MQ9calcR0/10); Serial.println(" |");
 
-  if(isinf(MQ2calcR0) || isinf(MQ3calcR0) || isinf(MQ4calcR0) || isinf(MQ5calcR0)  || isinf(MQ6calcR0) || isinf(MQ7calcR0) || isinf(MQ8calcR0) || isinf(MQ9calcR0)) {Serial.println("Warning: Conection issue founded, R0 is infite (Open circuit detected) please check your wiring and supply"); while(1);}
-  if(MQ2calcR0 == 0 || MQ3calcR0 == 0 || MQ4calcR0 == 0 || MQ5calcR0 == 0 || MQ6calcR0 == 0 || MQ7calcR0 == 0 || MQ8calcR0 == 0 || MQ9calcR0 == 0){Serial.println("Warning: Conection issue founded, R0 is zero (Analog pin with short circuit to ground) please check your wiring and supply"); while(1);}
+  if(isinf(MQ2calcR0) || isinf(MQ3calcR0) || isinf(MQ4calcR0) || isinf(MQ5calcR0)  || isinf(MQ6calcR0) || isinf(MQ7calcR0) || isinf(MQ8calcR0) || isinf(MQ9calcR0)) {Serial.println("Warning: Connection issue found, R0 is infinite (Open circuit detected) please check your wiring and supply"); while(1);}
+  if(MQ2calcR0 == 0 || MQ3calcR0 == 0 || MQ4calcR0 == 0 || MQ5calcR0 == 0 || MQ6calcR0 == 0 || MQ7calcR0 == 0 || MQ8calcR0 == 0 || MQ9calcR0 == 0){Serial.println("Warning: Connection issue found, R0 is zero (Analog pin with short circuit to ground) please check your wiring and supply"); while(1);}
   /*****************************  MQ CAlibration ********************************************/ 
  
   //Print in serial monitor
@@ -201,15 +201,16 @@ void readAllSensors()
   MQ7.update();
   MQ8.update();
   MQ9.update();
+  float correctionFactor = 0; // Optional environmental correction
   //Read the sensor and print in serial port
-  float MQ2Lecture =  MQ2.readSensor();
-  float MQ3Lecture =  MQ3.readSensor();
-  float MQ4Lecture =  MQ4.readSensor();
-  float MQ5Lecture =  MQ5.readSensor();
-  float MQ6Lecture =  MQ6.readSensor();
-  float MQ7Lecture =  MQ7.readSensor();
-  float MQ8Lecture =  MQ8.readSensor();
-  float MQ9Lecture =  MQ9.readSensor();
+  float MQ2Lecture =  MQ2.readSensor(false, correctionFactor);
+  float MQ3Lecture =  MQ3.readSensor(false, correctionFactor);
+  float MQ4Lecture =  MQ4.readSensor(false, correctionFactor);
+  float MQ5Lecture =  MQ5.readSensor(false, correctionFactor);
+  float MQ6Lecture =  MQ6.readSensor(false, correctionFactor);
+  float MQ7Lecture =  MQ7.readSensor(false, correctionFactor);
+  float MQ8Lecture =  MQ8.readSensor(false, correctionFactor);
+  float MQ9Lecture =  MQ9.readSensor(false, correctionFactor);
 
   Serial.print("| "); Serial.print(MQ2Lecture);
   Serial.print("   |   "); Serial.print(MQ3Lecture);

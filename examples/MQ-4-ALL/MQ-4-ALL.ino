@@ -55,7 +55,7 @@ void setup() {
   // Explanation: 
    // In this routine the sensor will measure the resistance of the sensor supposedly before being pre-heated
   // and on clean air (Calibration conditions), setting up R0 value.
-  // We recomend executing this routine only on setup in laboratory conditions.
+  // We recommend executing this routine only on setup in laboratory conditions.
   // This routine does not need to be executed on each restart, you can load your R0 value from eeprom.
   // Acknowledgements: https://jayconsystems.com/blog/understanding-a-gas-sensor
   Serial.print("Calibrating please wait.");
@@ -69,8 +69,8 @@ void setup() {
   MQ4.setR0(calcR0/10);
   Serial.println("  done!.");
   
-  if(isinf(calcR0)) {Serial.println("Warning: Conection issue, R0 is infinite (Open circuit detected) please check your wiring and supply"); while(1);}
-  if(calcR0 == 0){Serial.println("Warning: Conection issue found, R0 is zero (Analog pin shorts to ground) please check your wiring and supply"); while(1);}
+  if(isinf(calcR0)) {Serial.println("Warning: Connection issue, R0 is infinite (Open circuit detected) please check your wiring and supply"); while(1);}
+  if(calcR0 == 0){Serial.println("Warning: Connection issue found, R0 is zero (Analog pin shorts to ground) please check your wiring and supply"); while(1);}
   /*****************************  MQ CAlibration ********************************************/ 
 
   Serial.println("*************** Values from MQ-4 **********************");
@@ -79,6 +79,7 @@ void setup() {
 
 void loop() {
   MQ4.update(); // Update data, the arduino will read the voltage from the analog pin
+  float correctionFactor = 0; // Optional environmental correction
   
   /*
     Exponential regression:
@@ -90,19 +91,19 @@ void loop() {
   smoke  | 30000000 | -8.308
   */
   MQ4.setA(3811.9); MQ4.setB(-3.113); // Configure the equation to to calculate CH4 concentration
-  float LPG = MQ4.readSensor(); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
+  float LPG = MQ4.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
   
   MQ4.setA(1012.7); MQ4.setB(-2.786); // Configure the equation to to calculate CH4 concentration
-  float CH4 = MQ4.readSensor(); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
+  float CH4 = MQ4.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
   
   MQ4.setA(200000000000000); MQ4.setB(-19.05); // Configure the equation to to calculate CH4 concentration
-  float CO = MQ4.readSensor(); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
+  float CO = MQ4.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
   
   MQ4.setA(60000000000); MQ4.setB(-14.01); // Configure the equation to to calculate CH4 concentration
-  float Alcohol = MQ4.readSensor(); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
+  float Alcohol = MQ4.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
   
   MQ4.setA(30000000); MQ4.setB(-8.308); // Configure the equation to to calculate CH4 concentration
-  float Smoke = MQ4.readSensor(); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
+  float Smoke = MQ4.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
   
   Serial.print("|    "); Serial.print(LPG);
   Serial.print("    |    "); Serial.print(CH4);

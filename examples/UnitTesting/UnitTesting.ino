@@ -27,11 +27,11 @@
 #define         Pin7                     (A7)  //Analog input 7 of your arduino
 #define         Pin8                     (A8)  //Analog input 8 of your arduino
 #define         Pin9                     (A9)  //Analog input 9 of your arduino
-#define         Pin10                    (A10) //Analog input 9 of your arduino
-#define         Pin11                    (A11) //Analog input 9 of your arduino
-#define         Pin12                    (A12) //Analog input 9 of your arduino
-#define         Pin13                    (A13) //Analog input 9 of your arduino
-#define         Pin14                    (A14) //Analog input 9 of your arduino
+#define         Pin10                    (A10) //Analog input 10 of your arduino
+#define         Pin11                    (A11) //Analog input 11 of your arduino
+#define         Pin12                    (A12) //Analog input 12 of your arduino
+#define         Pin13                    (A13) //Analog input 13 of your arduino
+#define         Pin14                    (A14) //Analog input 14 of your arduino
 #define         PWMPin                   (5)   // Pin connected to mosfet
 /***********************Software Related Macros************************************/
 #define         RatioMQ2CleanAir          (9.83) //RS / R0 = 9.83 ppm 
@@ -237,13 +237,23 @@ test(MQ303A_Ethanol)
 {
   MQ303A.setRegressionMethod(1); //_PPM =  a*ratio^b
   MQ303A.setA(3.4916); MQ303A.setB(-2.432); // Configure the equation to to calculate Ethanol concentration
-  MQ303A.init(); 
+  MQ303A.init();
   MQ303A.setR0(10);
-  
+
   int ppmExp=944;
   int PPM = MQ303A.setRsR0RatioGetPPM(0.1); // Send and Rs/R0 and return PPM (Using datasheet)
-  
+
   assertEqual(PPM,ppmExp);
+}
+
+test(MQ303A_VoltResolution)
+{
+  float vRes = 4.7;
+  MQ303A.setVoltResolution(vRes);
+  MQ303A.setADC(100);            // provide dummy ADC value
+  float correctionFactor = 0; // Optional environmental correction
+  MQ303A.readSensor(true, correctionFactor);       // dummy read for MQ303A
+  assertEqualFloat(MQ303A.getVoltResolution(), vRes);
 }
 
 test(MQ309A_CO)

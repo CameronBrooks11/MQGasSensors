@@ -67,7 +67,7 @@ void setup() {
   // Explanation: 
    // In this routine the sensor will measure the resistance of the sensor supposedly before being pre-heated
   // and on clean air (Calibration conditions), setting up R0 value.
-  // We recomend executing this routine only on setup in laboratory conditions.
+  // We recommend executing this routine only on setup in laboratory conditions.
   // This routine does not need to be executed on each restart, you can load your R0 value from eeprom.
   // Acknowledgements: https://jayconsystems.com/blog/understanding-a-gas-sensor
   Serial.print("Calibrating please wait.");
@@ -81,8 +81,8 @@ void setup() {
   MQ309.setR0(calcR0/10);
   Serial.println("  done!.");
   
-  if(isinf(calcR0)) {Serial.println("Warning: Conection issue, R0 is infinite (Open circuit detected) please check your wiring and supply"); while(1);}
-  if(calcR0 == 0){Serial.println("Warning: Conection issue found, R0 is zero (Analog pin shorts to ground) please check your wiring and supply"); while(1);}
+  if(isinf(calcR0)) {Serial.println("Warning: Connection issue, R0 is infinite (Open circuit detected) please check your wiring and supply"); while(1);}
+  if(calcR0 == 0){Serial.println("Warning: Connection issue found, R0 is zero (Analog pin shorts to ground) please check your wiring and supply"); while(1);}
   /*****************************  MQ CAlibration ********************************************/ 
   MQ309.serialDebug(true);
 }
@@ -95,7 +95,8 @@ void loop() {
     // VH 0.9 Volts
     analogWrite(5, 2); // 255 is 100%, 2.295 is aprox 0.9% of Duty cycle for 60s
     MQ309.update(); // Update data, the arduino will read the voltage from the analog pin
-    MQ309.readSensor(); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
+    float correctionFactor = 0; // Optional environmental correction
+    MQ309.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
     MQ309.serialDebug(); // Will print the table on the serial port
     delay(500); //Sampling frequency
   }
@@ -107,7 +108,8 @@ void loop() {
     // VL 0.2 Volts
     analogWrite(5, 1); // 255 is 100%, 0.51 is aprox 0.2% of Duty cycle for 120s
     MQ309.update(); // Update data, the arduino will read the voltage from the analog pin
-    MQ309.readSensor(); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
+    float correctionFactor2 = 0; // Optional environmental correction
+    MQ309.readSensor(false, correctionFactor2); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
     MQ309.serialDebug(); // Will print the table on the serial port
     delay(500); //Sampling frequency
   } 

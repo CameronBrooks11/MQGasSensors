@@ -143,6 +143,8 @@ Sensor characteristics:
 
 - Find your RL Value in KOhms
   - From datasheet of your sensor
+- If the sensor uses a different supply voltage than the ADC reference, call `yourSensor.setVCC(<voltage>);`
+  - `setVoltResolution()` sets the ADC reference only; the RS calculation uses VCC
 - Find your RS/R0 (Clean air - English)
   - Note: RS/R0 is equal to Ratio variable on the program
   - From datasheet of your sensor
