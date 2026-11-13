@@ -1,0 +1,20 @@
+id = "mq-4-hanwei-2007-alcohol-extracted"
+sensor = "MQ-4"
+gas = "alcohol"
+
+[source]
+datasheet = "mq-4-hanwei-2007"
+page = 2
+
+[frame]
+x = [85.2, 353.04]
+y = [427.2, 651.36]
+ppm = [100, 10000]
+ratio = [0.1, 10]
+
+# Purple strokes: stars. The fill colour is unused but recorded with the strokes.
+[markers]
+stroke = [128, 0, 128]
+fill = [255, 255, 0]
+count = 4
+exclude = [[98.64, 433.44, 169.68, 536.64]]

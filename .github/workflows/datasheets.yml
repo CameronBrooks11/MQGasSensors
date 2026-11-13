@@ -5,8 +5,9 @@ name: Datasheet mirrors
 #
 #   verify     tests every mirror of every datasheet in datasheets/manifest.toml,
 #              not only the first that works
-#   reproduce  downloads the datasheets and re-traces every traced curve from
-#              them, expecting the committed points back exactly
+#   reproduce  downloads the datasheets and re-derives every traced or
+#              extracted curve from them, expecting the committed points back
+#              exactly
 #
 # Both run monthly, on demand, and on a pull request that changes what they
 # depend on.
@@ -82,5 +83,5 @@ jobs:
       # Downloads each datasheet from its first working mirror, then traces every
       # curve whose points came from a recipe and compares them with the committed
       # points byte for byte.
-      - name: Download the datasheets and re-trace
+      - name: Download the datasheets and re-derive
         run: just reproduce

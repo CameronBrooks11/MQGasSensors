@@ -1,0 +1,20 @@
+id = "mq-4-hanwei-2007-smoke-extracted"
+sensor = "MQ-4"
+gas = "smoke"
+
+[source]
+datasheet = "mq-4-hanwei-2007"
+page = 2
+
+[frame]
+x = [85.2, 353.04]
+y = [427.2, 651.36]
+ppm = [100, 10000]
+ratio = [0.1, 10]
+
+# Dark red outline, dark red fill: circles.
+[markers]
+stroke = [128, 0, 0]
+fill = [128, 0, 0]
+count = 4
+exclude = [[98.64, 433.44, 169.68, 536.64]]

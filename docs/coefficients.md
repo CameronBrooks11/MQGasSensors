@@ -23,11 +23,17 @@ Each fit is a straight line through digitised points on log-log axes. It describ
 | MQ-3 | hexane | 7585.3 | -2.849 | 0.104 to 10.0 mg/L | 10.2 to 52.1 | 7 | 0.9990 | 9 % | `mq-3-hanwei-2007` | read by hand upstream |
 | MQ-3 | LPG | 44771 | -3.245 | 0.104 to 9.91 mg/L | 13.1 to 51.3 | 7 | 0.9915 | 29 % | `mq-3-hanwei-2007` | read by hand upstream |
 | MQ-4 | alcohol | 6.4754e+10 | -14.01 | 200 to 10000 ppm | 3.07 to 4.04 | 4 | 0.9994 | 5 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | alcohol | 5.7727e+10 | -13.96 | 200 to 9980 ppm | 3.06 to 4.03 | 4 | 0.9990 | 7 % | `mq-4-hanwei-2007` | [extracted](../analysis/recipes/mq-4-hanwei-2007-alcohol-extracted.toml) |
 | MQ-4 | CH4 | 1012.7 | -2.786 | 196 to 10000 ppm | 0.434 to 1.79 | 4 | 0.9996 | 3 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | CH4 | 990.22 | -2.826 | 200 to 9960 ppm | 0.439 to 1.76 | 4 | 0.9999 | 2 % | `mq-4-hanwei-2007` | [extracted](../analysis/recipes/mq-4-hanwei-2007-ch4-extracted.toml) |
 | MQ-4 | CO | 2.0828e+14 | -19.05 | 202 to 10100 ppm | 3.54 to 4.32 | 4 | 0.9426 | 83 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | CO | 2.0570e+14 | -19.12 | 200 to 9980 ppm | 3.51 to 4.29 | 4 | 0.9554 | 73 % | `mq-4-hanwei-2007` | [extracted](../analysis/recipes/mq-4-hanwei-2007-co-extracted.toml) |
 | MQ-4 | H2 | 332400 | -5.600 | 200 to 10100 ppm | 1.87 to 3.74 | 4 | 0.9996 | 5 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | H2 | 360990 | -5.634 | 200 to 9980 ppm | 1.89 to 3.80 | 4 | 0.9998 | 4 % | `mq-4-hanwei-2007` | [extracted](../analysis/recipes/mq-4-hanwei-2007-h2-extracted.toml) |
 | MQ-4 | LPG | 3811.9 | -3.113 | 198 to 10000 ppm | 0.746 to 2.60 | 4 | 0.9993 | 6 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | LPG | 3736.2 | -3.121 | 200 to 9980 ppm | 0.740 to 2.58 | 4 | 0.9994 | 4 % | `mq-4-hanwei-2007` | [extracted](../analysis/recipes/mq-4-hanwei-2007-lpg-extracted.toml) |
 | MQ-4 | smoke | 2.7663e+07 | -8.308 | 202 to 9910 ppm | 2.54 to 4.00 | 4 | 0.9687 | 37 % | `mq-4-hanwei-2007` | read by hand upstream |
+| MQ-4 | smoke | 4.7509e+07 | -8.836 | 200 to 9960 ppm | 2.55 to 3.92 | 4 | 0.9679 | 36 % | `mq-4-hanwei-2007` | [extracted](../analysis/recipes/mq-4-hanwei-2007-smoke-extracted.toml) |
 | MQ-5 | alcohol | 68091 | -4.551 | 200 to 10000 ppm | 1.45 to 3.52 | 9 | 0.9923 | 23 % | `mq-5-hanwei-2007` | read by hand upstream |
 | MQ-5 | CH4 | 177.65 | -2.560 | 200 to 10000 ppm | 0.201 to 0.939 | 9 | 0.9985 | 8 % | `mq-5-hanwei-2007` | read by hand upstream |
 | MQ-5 | CO | 1.5974e+06 | -6.847 | 200 to 10100 ppm | 2.25 to 3.88 | 9 | 0.9561 | 39 % | `mq-5-hanwei-2007` | read by hand upstream |
@@ -83,7 +89,22 @@ The concentration is in the unit of the datasheet figure's horizontal axis. Wher
 
 **Largest error** is the biggest relative difference, over the fitted points, between the concentration the fit returns and the concentration the datasheet plots at that Rs/R0. It is what approximating the curve by a power law costs, before any error in the sensor itself.
 
-**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md); the link is the recipe that reproduces it.
+**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md). **Extracted** means the marker positions the PDF draws the figure with, read from its drawing commands by the same tool. For both, the link is the recipe that reproduces the points.
+
+## Hand-read points against the datasheet
+
+Curves re-derived from a datasheet that also has hand-read points for the same gas. Both fits are in the table above; this compares them, and says how far each hand-read point lies from the re-derived line, in Rs/R0 at the concentration the point was read at.
+
+| Sensor | Gas | Datasheet | Hand-read a | Re-derived a | Hand-read b | Re-derived b | Hand-read points off the re-derived line |
+|---|---|---|---|---|---|---|---|
+| MQ-4 | alcohol | `mq-4-hanwei-2007` | 6.4754e+10 | 5.7727e+10 | -14.01 | -13.96 | +0.4 % at 200, +0.2 % at 1000, +0.4 % at 5000, +0.4 % at 10000 ppm |
+| MQ-4 | CH4 | `mq-4-hanwei-2007` | 1012.7 | 990.22 | -2.786 | -2.826 | +0.9 % at 196, +2.0 % at 1000, +0.1 % at 4910, -0.9 % at 10000 ppm |
+| MQ-4 | CO | `mq-4-hanwei-2007` | 2.0828e+14 | 2.0570e+14 | -19.05 | -19.12 | +0.7 % at 202, +0.2 % at 1000, +0.2 % at 5000, +1.0 % at 10100 ppm |
+| MQ-4 | H2 | `mq-4-hanwei-2007` | 332400 | 360990 | -5.600 | -5.634 | -1.4 % at 200, +0.6 % at 1010, -1.5 % at 5000, -1.2 % at 10100 ppm |
+| MQ-4 | LPG | `mq-4-hanwei-2007` | 3811.9 | 3736.2 | -3.113 | -3.121 | +0.5 % at 198, +1.6 % at 1000, -0.2 % at 5000, +0.9 % at 10000 ppm |
+| MQ-4 | smoke | `mq-4-hanwei-2007` | 2.7663e+07 | 4.7509e+07 | -8.308 | -8.836 | +2.1 % at 202, +1.8 % at 1000, -0.4 % at 4910, -0.2 % at 9910 ppm |
+
+Re-derived curves are not used in the comparison with the examples below until one source is chosen per curve.
 
 ## Values used in the examples
 

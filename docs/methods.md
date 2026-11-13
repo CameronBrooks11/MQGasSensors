@@ -13,24 +13,26 @@ ppm = a * (Rs/R0)^b
 | Step | What | Where | Checked by |
 |---|---|---|---|
 | 1 | The datasheet, named by size and SHA-256 | [`datasheets/manifest.toml`](../datasheets/manifest.toml) | A download is accepted only if its bytes match |
-| 2 | The figure, named by a SHA-256 of its pixels | the curve's recipe in [`analysis/recipes/`](../analysis/recipes) | The tracer refuses a figure whose pixels differ |
+| 2 | The figure: an image named by a SHA-256 of its pixels, or a drawing named by its page and plot frame | the curve's recipe in [`analysis/recipes/`](../analysis/recipes) | The tool refuses a figure whose pixels differ, or a page without that frame |
 | 3 | The line, as digitised points | [`analysis/points/`](../analysis/points) | `just reproduce` traces it again and expects the same file |
 | 4 | The fit | [`coefficients.md`](coefficients.md) | `just check` fails if the page does not match the points |
 | 5 | The values in a sketch | `examples/` | The same page lists each one beside its curve |
 
 ```
 just datasheets     # 1: download the PDFs
-just reproduce      # 2 and 3: re-trace every traced curve from them
+just reproduce      # 2 and 3: re-derive every traced or extracted curve from them
 just coefficients   # 4 and 5: fit every curve and write the page
 ```
 
 The datasheets are copyrighted and are not stored in this repository, and neither are figures cut from them. The digitised points, which are numbers read off a figure, are.
 
-## Two ways the points were obtained
+## Three ways the points were obtained
 
 **Read by hand upstream.** The coefficients the example sketches use were derived by the authors of [MQSensorsLib](https://github.com/miguel5612/MQSensorsLib), who read a few marker positions per line off each figure. Their points are kept here unchanged, and fitting them gives back the values in the sketches. For these curves the chain starts at step 3: which figure the points were read from is recorded, but the reading cannot be repeated.
 
-**Traced.** Newer curves are read by the tool in [`analysis/`](../analysis/README.md). It takes the figure's pixels straight from the PDF, collects the connected pixels of the line's colour starting from a marked point, and averages them column by column. Pixel positions become values through an axis calibration fitted to the figure's gridlines. Every input is in a recipe file, so the whole chain from step 1 is repeatable.
+**Traced.** Curves in figures stored as images are read by the tool in [`analysis/`](../analysis/README.md). It takes the figure's pixels straight from the PDF, collects the connected pixels of the line's colour starting from a marked point, and averages them column by column. Pixel positions become values through an axis calibration fitted to the figure's gridlines. Every input is in a recipe file, so the whole chain from step 1 is repeatable.
+
+**Extracted.** Some datasheets draw the figure with PDF drawing commands, so the position of every marker is in the file. The same tool reads the centres of one gas's markers, picked out by their colours, and converts them through the plot frame's coordinates. These are the values the manufacturer plotted, to the precision of the drawing, with no pixels involved. Where hand-read points exist for the same curve, the coefficients page compares the two.
 
 ## Two editions of the datasheets
 
@@ -38,6 +40,8 @@ Two makers publish datasheets for sensors with the same names, and their curves 
 
 - **Hanwei**, 2004 to 2009. The example sketches' values come from these.
 - **Zhengzhou Winsen**, manuals from 2014 and 2015. The traced curves so far come from these.
+
+The extracted curves so far come from the Hanwei MQ-4 datasheet.
 
 A coefficient pair is only meaningful together with the datasheet it came from, so the page names the datasheet in every row and never mixes editions. Which edition describes a sensor you have bought depends on who made it.
 
