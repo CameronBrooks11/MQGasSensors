@@ -4,3 +4,7 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Datasheets are copyrighted: fetched by `just datasheets`, never committed
+datasheets/files/
+__pycache__/
+
