@@ -191,6 +191,24 @@ class VectorTests(unittest.TestCase):
             ppm, ratio, _, _ = self.extract(vector.Recipe(**{**r.__dict__, "shape": shape}))
             np.testing.assert_allclose(np.column_stack([ppm, ratio]), expected, rtol=1e-4, err_msg=shape)
 
+    def test_round_and_polygon_tell_apart_outlines_that_share_colours(self):
+        # A circle drawn with curves and a square, in the same colours.
+        cx, cy = float(X.to_pixel(300.0)), float(Y.to_pixel(2.0))
+        sx, sy = float(X.to_pixel(3000.0)), float(Y.to_pixel(0.5))
+        k = 1.1  # control-point offset for a circle of radius 2
+        circle = (f"0 0 0 RG 1 1 1 rg {cx + 2:.4f} {cy:.4f} m "
+                  f"{cx + 2:.4f} {cy + k:.4f} {cx + k:.4f} {cy + 2:.4f} {cx:.4f} {cy + 2:.4f} c "
+                  f"{cx - k:.4f} {cy + 2:.4f} {cx - 2:.4f} {cy + k:.4f} {cx - 2:.4f} {cy:.4f} c "
+                  f"{cx - 2:.4f} {cy - k:.4f} {cx - k:.4f} {cy - 2:.4f} {cx:.4f} {cy - 2:.4f} c "
+                  f"{cx + k:.4f} {cy - 2:.4f} {cx + 2:.4f} {cy - k:.4f} {cx + 2:.4f} {cy:.4f} c h B\n")
+        square_ = f"0 0 0 RG 1 1 1 rg {sx - 2:.4f} {sy - 2:.4f} 4 4 re B\n"
+        self.write_pdf("0 0 0 RG 1 1 1 rg 50 50 300 200 re S\n" + circle + square_)
+        for shape, expected in (("round", [(300.0, 2.0)]), ("polygon", [(3000.0, 0.5)]),
+                                ("outline", [(300.0, 2.0), (3000.0, 0.5)])):
+            r = self.recipe(stroke="[0, 0, 0]", fill="[255, 255, 255]", count=len(expected), exclude=False)
+            ppm, ratio, _, _ = self.extract(vector.Recipe(**{**r.__dict__, "shape": shape}))
+            np.testing.assert_allclose(np.column_stack([ppm, ratio]), expected, rtol=1e-4, err_msg=shape)
+
     def test_outline_drawn_twice_is_one_marker(self):
         x, y = float(X.to_pixel(1000.0)), float(Y.to_pixel(A * 1000.0**B))
         self.write_pdf(figure().replace(square(x, y), square(x, y) * 2))

@@ -1,0 +1,22 @@
+id = "mq-135-hanwei-alcohol-extracted"
+sensor = "MQ-135"
+gas = "alcohol"
+
+[source]
+datasheet = "mq-135-hanwei"
+page = 2
+
+[frame]
+x = [97.92, 360.24]
+y = [462.72, 688.56]
+ppm = [10, 1000]
+ratio = [0.1, 10]
+
+# Black outline, white fill: circles. CO's squares share the colours.
+[markers]
+stroke = [0, 0, 0]
+fill = [255, 255, 255]
+count = 3
+shape = "round"
+# The legend.
+exclude = [[313.92, 582.51, 354.96, 664.59]]

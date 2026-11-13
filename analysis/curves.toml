@@ -98,6 +98,66 @@ origin = "upstream"
 upstream_file = "WPDigitalizer/MQ135/Tolueno.csv"
 
 [[curve]]
+id = "mq-135-hanwei-acetone-extracted"
+sensor = "MQ-135"
+gas = "acetone"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/acetone-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-135-hanwei-acetone-extracted.toml"
+hand_read = "mq-135-hanwei-acetone"
+
+[[curve]]
+id = "mq-135-hanwei-alcohol-extracted"
+sensor = "MQ-135"
+gas = "alcohol"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/alcohol-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-135-hanwei-alcohol-extracted.toml"
+hand_read = "mq-135-hanwei-alcohol"
+
+[[curve]]
+id = "mq-135-hanwei-co-extracted"
+sensor = "MQ-135"
+gas = "CO"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/co-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-135-hanwei-co-extracted.toml"
+hand_read = "mq-135-hanwei-co"
+
+[[curve]]
+id = "mq-135-hanwei-co2-extracted"
+sensor = "MQ-135"
+gas = "CO2"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/co2-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-135-hanwei-co2-extracted.toml"
+hand_read = "mq-135-hanwei-co2"
+
+[[curve]]
+id = "mq-135-hanwei-nh4-extracted"
+sensor = "MQ-135"
+gas = "NH4"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/nh4-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-135-hanwei-nh4-extracted.toml"
+hand_read = "mq-135-hanwei-nh4"
+
+[[curve]]
+id = "mq-135-hanwei-toluene-extracted"
+sensor = "MQ-135"
+gas = "toluene"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/toluene-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-135-hanwei-toluene-extracted.toml"
+hand_read = "mq-135-hanwei-toluene"
+
+[[curve]]
 id = "mq-2-hanwei-2009-alcohol"
 sensor = "MQ-2"
 gas = "alcohol"

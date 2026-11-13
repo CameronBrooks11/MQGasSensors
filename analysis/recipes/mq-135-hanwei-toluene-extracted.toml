@@ -1,0 +1,22 @@
+id = "mq-135-hanwei-toluene-extracted"
+sensor = "MQ-135"
+gas = "toluene"
+
+[source]
+datasheet = "mq-135-hanwei"
+page = 2
+
+[frame]
+x = [97.92, 360.24]
+y = [462.72, 688.56]
+ppm = [10, 1000]
+ratio = [0.1, 10]
+
+# Black strokes: plus signs.
+[markers]
+stroke = [0, 0, 0]
+fill = [255, 255, 255]
+count = 3
+shape = "plus"
+# The legend, and the axis ticks, which are black strokes on the frame too.
+exclude = [[313.92, 582.51, 354.96, 664.59], [94, 458, 102, 467], [226, 458, 233, 467], [357, 458, 364, 467], [94, 573, 102, 579], [94, 685, 102, 692]]

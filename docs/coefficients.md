@@ -90,11 +90,17 @@ Each fit is a straight line through digitised points on log-log axes. It describ
 | MQ-131 | NOx | 462.43 | -2.204 | 5.00 to 98.8 ppm | 2.03 to 8.09 | 5 | 0.9954 | 11 % | `mq-131-2009` | read by hand upstream |
 | MQ-131 | O3 | 23.943 | -1.110 | 5.02 to 99.3 ppm | 0.282 to 4.06 | 5 | 0.9996 | 4 % | `mq-131-2009` | read by hand upstream |
 | MQ-135 | acetone | 34.668 | -3.369 | 10.0 to 200 ppm | 0.586 to 1.44 | 3 | 0.9984 | 7 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | acetone | 34.544 | -3.402 | 10.0 to 201 ppm | 0.587 to 1.43 | 3 | 0.9982 | 7 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-acetone-extracted.toml) |
 | MQ-135 | alcohol | 77.255 | -3.180 | 10.0 to 200 ppm | 0.737 to 1.90 | 3 | 0.9998 | 3 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | alcohol | 76.939 | -3.173 | 9.98 to 200 ppm | 0.735 to 1.90 | 3 | 0.9996 | 3 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-alcohol-extracted.toml) |
 | MQ-135 | CO | 605.18 | -3.937 | 9.92 to 200 ppm | 1.34 to 2.85 | 3 | 0.9983 | 7 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | CO | 610.01 | -3.960 | 9.98 to 200 ppm | 1.35 to 2.84 | 3 | 0.9978 | 8 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-co-extracted.toml) |
 | MQ-135 | CO2 | 110.47 | -2.862 | 10.0 to 198 ppm | 0.805 to 2.31 | 3 | 0.9993 | 5 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | CO2 | 109.66 | -2.856 | 10.0 to 200 ppm | 0.800 to 2.30 | 3 | 0.9993 | 5 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-co2-extracted.toml) |
 | MQ-135 | NH4 | 102.20 | -2.473 | 10.0 to 200 ppm | 0.767 to 2.56 | 3 | 0.9999 | 2 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | NH4 | 102.29 | -2.484 | 10.0 to 200 ppm | 0.766 to 2.55 | 3 | 1.0000 | 1 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-nh4-extracted.toml) |
 | MQ-135 | toluene | 44.947 | -3.445 | 10.0 to 200 ppm | 0.643 to 1.54 | 3 | 0.9994 | 4 % | `mq-135-hanwei` | read by hand upstream |
+| MQ-135 | toluene | 44.880 | -3.443 | 10.0 to 200 ppm | 0.642 to 1.54 | 3 | 0.9994 | 4 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-toluene-extracted.toml) |
 | MQ-136 | H2S | 0.13471 | -3.775 | 1.12 to 181 ppm | 0.148 to 0.569 | 280 | 0.9997 | 5 % | `mq-136-winsen-v1.4` | [traced](../analysis/recipes/mq-136-winsen-v1.4-h2s.toml) |
 | MQ-137 | NH3 | 0.13471 | -3.775 | 1.12 to 181 ppm | 0.148 to 0.569 | 280 | 0.9997 | 5 % | `mq-137-winsen-v1.4` | [traced](../analysis/recipes/mq-137-winsen-v1.4-nh3.toml) |
 | MQ-303A | ethanol | 3.4916 | -2.432 | 9.76 to 9710 ppm | 0.0370 to 0.637 | 7 | 0.9994 | 9 % | `mq-303a-hanwei-2006` | read by hand upstream |
@@ -162,6 +168,12 @@ Curves re-derived from a datasheet that also has hand-read points for the same g
 | MQ-8 | CO | `mq-8-hanwei-2009` | 7.3658e+15 | 2.0195e+16 | -7.335 | -7.606 | +2.9 % at 197, +1.0 % at 498, +1.9 % at 795, -0.1 % at 992, +1.3 % at 1490, +0.2 % at 1970, +0.2 % at 2960, +1.5 % at 4940, -0.3 % at 9830 ppm |
 | MQ-8 | H2 | `mq-8-hanwei-2009` | 976.97 | 973.62 | -0.6879 | -0.6902 | +1.2 % at 198, +0.5 % at 500, -0.7 % at 805, +1.7 % at 1000, +0.6 % at 1490, +1.5 % at 2000, -0.3 % at 3000, -0.3 % at 4970, -1.4 % at 9990 ppm |
 | MQ-8 | LPG | `mq-8-hanwei-2009` | 7.9758e+07 | 8.3383e+07 | -3.724 | -3.767 | +1.1 % at 199, +4.8 % at 499, +3.2 % at 803, +3.7 % at 1010, -0.6 % at 1490, +1.7 % at 1990, +1.1 % at 3020, +1.4 % at 5080, +2.2 % at 9930 ppm |
+| MQ-135 | acetone | `mq-135-hanwei` | 34.668 | 34.544 | -3.369 | -3.402 | +0.5 % at 10.0, -0.3 % at 101, -0.3 % at 200 ppm |
+| MQ-135 | alcohol | `mq-135-hanwei` | 77.255 | 76.939 | -3.180 | -3.173 | +0.0 % at 10.0, -0.1 % at 101, +0.4 % at 200 ppm |
+| MQ-135 | CO | `mq-135-hanwei` | 605.18 | 610.01 | -3.937 | -3.960 | +0.4 % at 9.92, +0.3 % at 101, -0.2 % at 200 ppm |
+| MQ-135 | CO2 | `mq-135-hanwei` | 110.47 | 109.66 | -2.862 | -2.856 | +0.1 % at 10.0, +0.3 % at 101, +0.3 % at 198 ppm |
+| MQ-135 | NH4 | `mq-135-hanwei` | 102.20 | 102.29 | -2.473 | -2.484 | +0.4 % at 10.0, -0.3 % at 100, +0.1 % at 200 ppm |
+| MQ-135 | toluene | `mq-135-hanwei` | 44.947 | 44.880 | -3.445 | -3.443 | +0.0 % at 10.0, +0.1 % at 100, +0.0 % at 200 ppm |
 | MQ-303A | ethanol | `mq-303a-hanwei-2006` | 3.4916 | 3.5821 | -2.432 | -2.423 | -0.1 % at 9.76, -1.2 % at 28.9, -1.1 % at 97.1, +0.1 % at 291, +0.0 % at 976, -0.4 % at 2890, +0.3 % at 9710 ppm |
 | MQ-303A | H2 | `mq-303a-hanwei-2006` | 4.1487 | 4.3296 | -2.716 | -2.721 | -0.1 % at 9.76, -2.9 % at 28.9, -2.4 % at 99.0, -1.8 % at 288, -1.9 % at 957, -2.0 % at 2920, -1.6 % at 9620 ppm |
 | MQ-309A | alcohol | `mq-309a-hanwei-2004` | 473620 | 505470 | -3.647 | -3.667 | -1.0 % at 992, -0.8 % at 2970, -1.2 % at 7050 ppm |
