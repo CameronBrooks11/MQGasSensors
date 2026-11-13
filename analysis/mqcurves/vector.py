@@ -25,7 +25,7 @@ program's smoothing, not data, and are not read.
     fill = [255, 0, 255]
     count = 4                        # how many the figure plots
     exclude = [[98.64, 433.44, 169.68, 536.64]]   # optional: boxes to ignore, e.g. the legend
-    # shape = "x"                    # optional: "outline", "x", "star" or "plus"
+    # shape = "x"                    # optional: "outline", "polygon", "round", "x", "star" or "plus"
 
 The datasheet must match the SHA-256 the manifest records, and the page must
 draw a rectangle at the frame's coordinates; otherwise nothing is read.
@@ -36,9 +36,11 @@ after another. Both are read as subpaths, so it does not matter whether the PDF
 puts each marker in its own path object or all of a line's markers in one. Consecutive strokes that start at the same point are one
 marker, centred on that point. That stays right when the frame clips some of
 the strokes away, and keeps apart two markers that sit at the same place.
-Markers that share colours are told apart by `shape`: an "outline" is a
-single outline, an "x" has only diagonal strokes, a "star" adds vertical ones,
-and a "plus" has none.
+Markers that share colours are told apart by `shape`. An "outline" is a single
+outline of any kind: a "polygon" one has only straight sides (a square, a
+triangle), a "round" one is drawn with curves (a circle). Of markers drawn as
+strokes, an "x" has only diagonal strokes, a "star" adds vertical ones, and a
+"plus" has none.
 """
 import ctypes
 import hashlib
@@ -78,6 +80,7 @@ class Shape:
     start: tuple = (0.0, 0.0)
     end: tuple = (0.0, 0.0)
     points: int = 0
+    curved: bool = False
 
     @property
     def is_stroke(self):
@@ -178,17 +181,20 @@ def page_paths(pdf_path, page):
                 seg = raw.FPDFPath_GetPathSegment(h, i)
                 x, y = ctypes.c_float(), ctypes.c_float()
                 raw.FPDFPathSegment_GetPoint(seg, x, y)
-                if raw.FPDFPathSegment_GetType(seg) == raw.FPDF_SEGMENT_MOVETO or not subpaths:
-                    subpaths.append([])
-                subpaths[-1].append((m.a * x.value + m.c * y.value + m.e, m.b * x.value + m.d * y.value + m.f))
+                kind = raw.FPDFPathSegment_GetType(seg)
+                if kind == raw.FPDF_SEGMENT_MOVETO or not subpaths:
+                    subpaths.append(([], [False]))
+                subpaths[-1][0].append((m.a * x.value + m.c * y.value + m.e, m.b * x.value + m.d * y.value + m.f))
+                subpaths[-1][1][0] |= kind == raw.FPDF_SEGMENT_BEZIERTO
             colours = []
             for get in (raw.FPDFPageObj_GetStrokeColor, raw.FPDFPageObj_GetFillColor):
                 r, g, b, a = (ctypes.c_uint() for _ in range(4))
                 get(h, r, g, b, a)
                 colours.append((r.value, g.value, b.value))
-            for pts in subpaths:
+            for pts, (curved,) in subpaths:
                 xs, ys = [q[0] for q in pts], [q[1] for q in pts]
-                out.append(Shape(colours[0], colours[1], min(xs), min(ys), max(xs), max(ys), pts[0], pts[-1], len(pts)))
+                out.append(Shape(colours[0], colours[1], min(xs), min(ys), max(xs), max(ys), pts[0], pts[-1], len(pts),
+                                 curved))
         return out
     finally:
         pdf.close()
@@ -199,7 +205,7 @@ def _inside(p, box):
     return x0 <= p.x0 and p.x1 <= x1 and y0 <= p.y0 and p.y1 <= y1
 
 
-SHAPES = ("outline", "x", "star", "plus")
+SHAPES = ("outline", "polygon", "round", "x", "star", "plus")
 
 
 def _shape(strokes):
@@ -219,6 +225,13 @@ def _shape(strokes):
 
 def _same(a, b):
     return all(abs(u - v) <= TOLERANCE for u, v in zip(a, b, strict=True))
+
+
+def _kind(group):
+    """The shape of one marker: "polygon" or "round" for an outline, else that of its strokes."""
+    if group[0].is_stroke:
+        return _shape(group)
+    return "round" if group[0].curved else "polygon"
 
 
 def _group(paths):
@@ -258,7 +271,7 @@ def markers(paths, r):
               and _inside(p, frame) and not any(_inside(p, box) for box in r.exclude)]
     groups = _group(chosen)
     if r.shape is not None:
-        groups = [g for g in groups if (_shape(g) if g[0].is_stroke else "outline") == r.shape]
+        groups = [g for g in groups if _kind(g) == r.shape or (r.shape == "outline" and not g[0].is_stroke)]
     centres = sorted(_centre(g) for g in groups)
     if len(centres) != r.count:
         raise VectorError(f"{r.id}: expected {r.count} markers, found {len(centres)} at x "
