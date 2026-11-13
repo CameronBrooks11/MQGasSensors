@@ -43,7 +43,7 @@ Two makers publish datasheets for sensors with the same names, and their curves 
 - **Hanwei**, 2004 to 2009. The example sketches' values come from these.
 - **Zhengzhou Winsen**, manuals from 2014 and 2015. The traced curves so far come from these.
 
-The extracted curves so far come from the Hanwei MQ-3, MQ-4, MQ-5, MQ-6 and MQ-8 datasheets, and the located ones from the Hanwei MQ-303A and MQ-309A datasheets.
+The extracted curves so far come from the Hanwei MQ-3, MQ-4, MQ-5, MQ-6, MQ-7 and MQ-8 datasheets, and the located ones from the Hanwei MQ-303A and MQ-309A datasheets.
 
 A coefficient pair is only meaningful together with the datasheet it came from, so the page names the datasheet in every row and never mixes editions. Which edition describes a sensor you have bought depends on who made it.
 

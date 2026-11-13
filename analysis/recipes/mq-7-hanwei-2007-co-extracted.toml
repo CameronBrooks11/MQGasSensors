@@ -1,0 +1,21 @@
+id = "mq-7-hanwei-2007-co-extracted"
+sensor = "MQ-7"
+gas = "CO"
+
+[source]
+datasheet = "mq-7-hanwei-2007"
+page = 2
+
+[frame]
+x = [116.16, 319.2]
+y = [112.8, 295.68]
+ppm = [10, 10000]
+ratio = [0.01, 100]
+
+# Navy outline, navy fill: diamonds.
+[markers]
+stroke = [0, 0, 128]
+fill = [0, 0, 128]
+count = 5
+# The legend.
+exclude = [[137.04, 126.0, 184.08, 185.76]]
