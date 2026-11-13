@@ -4,6 +4,7 @@
     trace <recipe.toml> [--points CSV] [--overlay PNG] trace a curve from its recipe
     fit <points.csv>                                   fit points already digitised
     mark <recipe.toml> ...                             mark a new figure by hand
+    table [--check]                                    write docs/coefficients.md
 """
 import argparse
 import sys
@@ -69,6 +70,12 @@ def cmd_mark(args):
     return mark.run(args)
 
 
+def cmd_table(args):
+    from . import table
+
+    return table.run(check=args.check)
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(prog="mqcurves", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="command", required=True)
@@ -102,6 +109,10 @@ def main(argv=None):
     s.add_argument("--pixels-sha256")
     s.add_argument("--datasheets", type=Path, default=recipe.DATASHEETS)
     s.set_defaults(func=cmd_mark)
+
+    s = sub.add_parser("table", help="write docs/coefficients.md from analysis/curves.toml")
+    s.add_argument("--check", action="store_true", help="fail if the committed file is out of date")
+    s.set_defaults(func=cmd_table)
 
     args = p.parse_args(argv)
     try:

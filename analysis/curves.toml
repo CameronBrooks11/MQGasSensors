@@ -1,0 +1,528 @@
+# Every curve with digitised points, and where the points came from.
+#
+# origin = "upstream": read by hand off the datasheet figure by the authors of
+#   MQSensorsLib, a few marker positions per curve. Copied from
+#   miguel5612/MQSensorsLib_Docs at commit 2faa17ac7ea0 (MIT), with decimal
+#   commas normalised; `upstream_file` is the path there.
+# origin = "traced": produced by `mqcurves trace` from the recipe named in `recipe`.
+#
+# unit: the concentration unit of the figure's horizontal axis. "ppm" unless given.
+
+[[curve]]
+id = "mq-131-2009-cl2"
+sensor = "MQ-131"
+gas = "Cl2"
+datasheet = "mq-131-2009"
+points = "points/mq-131-2009/cl2.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ131/CL2.csv"
+
+[[curve]]
+id = "mq-131-2009-nox"
+sensor = "MQ-131"
+gas = "NOx"
+datasheet = "mq-131-2009"
+points = "points/mq-131-2009/nox.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ131/NOx.csv"
+
+[[curve]]
+id = "mq-131-2009-o3"
+sensor = "MQ-131"
+gas = "O3"
+datasheet = "mq-131-2009"
+points = "points/mq-131-2009/o3.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ131/O3.csv"
+
+[[curve]]
+id = "mq-135-hanwei-acetone"
+sensor = "MQ-135"
+gas = "acetone"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/acetone.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ135/Acetona.csv"
+
+[[curve]]
+id = "mq-135-hanwei-alcohol"
+sensor = "MQ-135"
+gas = "alcohol"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/alcohol.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ135/Alcohol.csv"
+
+[[curve]]
+id = "mq-135-hanwei-co"
+sensor = "MQ-135"
+gas = "CO"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/co.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ135/CO.csv"
+
+[[curve]]
+id = "mq-135-hanwei-co2"
+sensor = "MQ-135"
+gas = "CO2"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/co2.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ135/CO2.csv"
+
+[[curve]]
+id = "mq-135-hanwei-nh4"
+sensor = "MQ-135"
+gas = "NH4"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/nh4.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ135/NH4.csv"
+
+[[curve]]
+id = "mq-135-hanwei-toluene"
+sensor = "MQ-135"
+gas = "toluene"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/toluene.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ135/Tolueno.csv"
+
+[[curve]]
+id = "mq-2-hanwei-2009-alcohol"
+sensor = "MQ-2"
+gas = "alcohol"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/alcohol.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ2/Alcohol.csv"
+
+[[curve]]
+id = "mq-2-hanwei-2009-ch4"
+sensor = "MQ-2"
+gas = "CH4"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/ch4.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ2/CH4.csv"
+
+[[curve]]
+id = "mq-2-hanwei-2009-co"
+sensor = "MQ-2"
+gas = "CO"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/co.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ2/CO.csv"
+
+[[curve]]
+id = "mq-2-hanwei-2009-h2"
+sensor = "MQ-2"
+gas = "H2"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/h2.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ2/H2.csv"
+
+[[curve]]
+id = "mq-2-hanwei-2009-lpg"
+sensor = "MQ-2"
+gas = "LPG"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/lpg.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ2/LPG.csv"
+
+[[curve]]
+id = "mq-2-hanwei-2009-propane"
+sensor = "MQ-2"
+gas = "propane"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/propane.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ2/Propane.csv"
+
+[[curve]]
+id = "mq-3-hanwei-2007-alcohol"
+sensor = "MQ-3"
+gas = "alcohol"
+datasheet = "mq-3-hanwei-2007"
+unit = "mg/L"
+points = "points/mq-3-hanwei-2007/alcohol.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ3/Alcohol.csv"
+
+[[curve]]
+id = "mq-3-hanwei-2007-benzene"
+sensor = "MQ-3"
+gas = "benzene"
+datasheet = "mq-3-hanwei-2007"
+unit = "mg/L"
+points = "points/mq-3-hanwei-2007/benzene.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ3/Benzine.csv"
+
+[[curve]]
+id = "mq-3-hanwei-2007-ch4"
+sensor = "MQ-3"
+gas = "CH4"
+datasheet = "mq-3-hanwei-2007"
+unit = "mg/L"
+points = "points/mq-3-hanwei-2007/ch4.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ3/CH4.csv"
+
+[[curve]]
+id = "mq-3-hanwei-2007-co"
+sensor = "MQ-3"
+gas = "CO"
+datasheet = "mq-3-hanwei-2007"
+unit = "mg/L"
+points = "points/mq-3-hanwei-2007/co.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ3/CO.csv"
+
+[[curve]]
+id = "mq-3-hanwei-2007-hexane"
+sensor = "MQ-3"
+gas = "hexane"
+datasheet = "mq-3-hanwei-2007"
+unit = "mg/L"
+points = "points/mq-3-hanwei-2007/hexane.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ3/Hexane.csv"
+
+[[curve]]
+id = "mq-3-hanwei-2007-lpg"
+sensor = "MQ-3"
+gas = "LPG"
+datasheet = "mq-3-hanwei-2007"
+unit = "mg/L"
+points = "points/mq-3-hanwei-2007/lpg.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ3/LPG.csv"
+
+[[curve]]
+id = "mq-303a-hanwei-2006-ethanol"
+sensor = "MQ-303A"
+gas = "ethanol"
+datasheet = "mq-303a-hanwei-2006"
+points = "points/mq-303a-hanwei-2006/ethanol.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ303A/ethanol.csv"
+
+[[curve]]
+id = "mq-303a-hanwei-2006-h2"
+sensor = "MQ-303A"
+gas = "H2"
+datasheet = "mq-303a-hanwei-2006"
+points = "points/mq-303a-hanwei-2006/h2.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ303A/hydrogen.csv"
+
+[[curve]]
+id = "mq-303a-hanwei-2006-iso-butane"
+sensor = "MQ-303A"
+gas = "iso-butane"
+datasheet = "mq-303a-hanwei-2006"
+points = "points/mq-303a-hanwei-2006/iso-butane.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ303A/iso-butane.csv"
+
+[[curve]]
+id = "mq-309a-hanwei-2004-ch4"
+sensor = "MQ-309A"
+gas = "CH4"
+datasheet = "mq-309a-hanwei-2004"
+points = "points/mq-309a-hanwei-2004/ch4.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ309A/CH4.csv"
+
+[[curve]]
+id = "mq-309a-hanwei-2004-co"
+sensor = "MQ-309A"
+gas = "CO"
+datasheet = "mq-309a-hanwei-2004"
+points = "points/mq-309a-hanwei-2004/co.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ309A/CO.csv"
+
+[[curve]]
+id = "mq-309a-hanwei-2004-h2"
+sensor = "MQ-309A"
+gas = "H2"
+datasheet = "mq-309a-hanwei-2004"
+points = "points/mq-309a-hanwei-2004/h2.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ309A/H2.csv"
+
+[[curve]]
+id = "mq-309a-hanwei-2004-alcohol"
+sensor = "MQ-309A"
+gas = "alcohol"
+datasheet = "mq-309a-hanwei-2004"
+points = "points/mq-309a-hanwei-2004/alcohol.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ309A/alcohol.csv"
+
+[[curve]]
+id = "mq-4-hanwei-2007-ch4"
+sensor = "MQ-4"
+gas = "CH4"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/ch4.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ4/CH4.csv"
+
+[[curve]]
+id = "mq-4-hanwei-2007-co"
+sensor = "MQ-4"
+gas = "CO"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/co.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ4/CO.csv"
+
+[[curve]]
+id = "mq-4-hanwei-2007-h2"
+sensor = "MQ-4"
+gas = "H2"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/h2.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ4/H2.csv"
+
+[[curve]]
+id = "mq-4-hanwei-2007-lpg"
+sensor = "MQ-4"
+gas = "LPG"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/lpg.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ4/LPG.csv"
+
+[[curve]]
+id = "mq-4-hanwei-2007-alcohol"
+sensor = "MQ-4"
+gas = "alcohol"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/alcohol.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ4/alcohol.csv"
+
+[[curve]]
+id = "mq-4-hanwei-2007-smoke"
+sensor = "MQ-4"
+gas = "smoke"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/smoke.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ4/smoke.csv"
+
+[[curve]]
+id = "mq-5-hanwei-2007-ch4"
+sensor = "MQ-5"
+gas = "CH4"
+datasheet = "mq-5-hanwei-2007"
+points = "points/mq-5-hanwei-2007/ch4.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ5/CH4.csv"
+
+[[curve]]
+id = "mq-5-hanwei-2007-co"
+sensor = "MQ-5"
+gas = "CO"
+datasheet = "mq-5-hanwei-2007"
+points = "points/mq-5-hanwei-2007/co.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ5/CO.csv"
+
+[[curve]]
+id = "mq-5-hanwei-2007-h2"
+sensor = "MQ-5"
+gas = "H2"
+datasheet = "mq-5-hanwei-2007"
+points = "points/mq-5-hanwei-2007/h2.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ5/H2.csv"
+
+[[curve]]
+id = "mq-5-hanwei-2007-lpg"
+sensor = "MQ-5"
+gas = "LPG"
+datasheet = "mq-5-hanwei-2007"
+points = "points/mq-5-hanwei-2007/lpg.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ5/LPG.csv"
+
+[[curve]]
+id = "mq-5-hanwei-2007-alcohol"
+sensor = "MQ-5"
+gas = "alcohol"
+datasheet = "mq-5-hanwei-2007"
+points = "points/mq-5-hanwei-2007/alcohol.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ5/alcohol.csv"
+
+[[curve]]
+id = "mq-6-hanwei-2007-alcohol"
+sensor = "MQ-6"
+gas = "alcohol"
+datasheet = "mq-6-hanwei-2007"
+points = "points/mq-6-hanwei-2007/alcohol.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ6/Alcohol.csv"
+
+[[curve]]
+id = "mq-6-hanwei-2007-ch4"
+sensor = "MQ-6"
+gas = "CH4"
+datasheet = "mq-6-hanwei-2007"
+points = "points/mq-6-hanwei-2007/ch4.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ6/CH4.csv"
+
+[[curve]]
+id = "mq-6-hanwei-2007-co"
+sensor = "MQ-6"
+gas = "CO"
+datasheet = "mq-6-hanwei-2007"
+points = "points/mq-6-hanwei-2007/co.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ6/CO.csv"
+
+[[curve]]
+id = "mq-6-hanwei-2007-h2"
+sensor = "MQ-6"
+gas = "H2"
+datasheet = "mq-6-hanwei-2007"
+points = "points/mq-6-hanwei-2007/h2.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ6/H2.csv"
+
+[[curve]]
+id = "mq-6-hanwei-2007-lpg"
+sensor = "MQ-6"
+gas = "LPG"
+datasheet = "mq-6-hanwei-2007"
+points = "points/mq-6-hanwei-2007/lpg.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ6/LPG.csv"
+
+[[curve]]
+id = "mq-7-hanwei-2007-alcohol"
+sensor = "MQ-7"
+gas = "alcohol"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/alcohol.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ7/Alcohol.csv"
+
+[[curve]]
+id = "mq-7-hanwei-2007-ch4"
+sensor = "MQ-7"
+gas = "CH4"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/ch4.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ7/CH4.csv"
+
+[[curve]]
+id = "mq-7-hanwei-2007-co"
+sensor = "MQ-7"
+gas = "CO"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/co.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ7/CO.csv"
+
+[[curve]]
+id = "mq-7-hanwei-2007-h2"
+sensor = "MQ-7"
+gas = "H2"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/h2.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ7/H2.csv"
+
+[[curve]]
+id = "mq-7-hanwei-2007-lpg"
+sensor = "MQ-7"
+gas = "LPG"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/lpg.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ7/LPG.csv"
+
+[[curve]]
+id = "mq-8-hanwei-2009-ch4"
+sensor = "MQ-8"
+gas = "CH4"
+datasheet = "mq-8-hanwei-2009"
+points = "points/mq-8-hanwei-2009/ch4.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ8/CH4.csv"
+
+[[curve]]
+id = "mq-8-hanwei-2009-co"
+sensor = "MQ-8"
+gas = "CO"
+datasheet = "mq-8-hanwei-2009"
+points = "points/mq-8-hanwei-2009/co.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ8/CO.csv"
+
+[[curve]]
+id = "mq-8-hanwei-2009-h2"
+sensor = "MQ-8"
+gas = "H2"
+datasheet = "mq-8-hanwei-2009"
+points = "points/mq-8-hanwei-2009/h2.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ8/H2.csv"
+
+[[curve]]
+id = "mq-8-hanwei-2009-lpg"
+sensor = "MQ-8"
+gas = "LPG"
+datasheet = "mq-8-hanwei-2009"
+points = "points/mq-8-hanwei-2009/lpg.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ8/LPG.csv"
+
+[[curve]]
+id = "mq-8-hanwei-2009-alcohol"
+sensor = "MQ-8"
+gas = "alcohol"
+datasheet = "mq-8-hanwei-2009"
+points = "points/mq-8-hanwei-2009/alcohol.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ8/alcohol.csv"
+
+[[curve]]
+id = "mq-9-hanwei-2008-ch4"
+sensor = "MQ-9"
+gas = "CH4"
+datasheet = "mq-9-hanwei-2008"
+points = "points/mq-9-hanwei-2008/ch4.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ9/CH4.csv"
+
+[[curve]]
+id = "mq-9-hanwei-2008-co"
+sensor = "MQ-9"
+gas = "CO"
+datasheet = "mq-9-hanwei-2008"
+points = "points/mq-9-hanwei-2008/co.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ9/CO.csv"
+
+[[curve]]
+id = "mq-9-hanwei-2008-lpg"
+sensor = "MQ-9"
+gas = "LPG"
+datasheet = "mq-9-hanwei-2008"
+points = "points/mq-9-hanwei-2008/lpg.csv"
+origin = "upstream"
+upstream_file = "WPDigitalizer/MQ9/LPG.csv"
