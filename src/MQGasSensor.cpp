@@ -11,6 +11,7 @@ MQGasSensor::MQGasSensor(String Placa, float Voltage_Resolution, int ADC_Bit_Res
   // this->_type = type; //MQ-2, MQ-3 ... MQ-309A
   // this->_placa = Placa;
   this->_VOLT_RESOLUTION = Voltage_Resolution;
+  this->_VCC = Voltage_Resolution;
   this->_ADC_Bit_Resolution = ADC_Bit_Resolution;
 }
 MQGasSensor::MQGasSensor(String Placa, String type)
@@ -47,6 +48,10 @@ void MQGasSensor::setVoltResolution(float voltage_resolution)
 {
   _VOLT_RESOLUTION = voltage_resolution;
 }
+void MQGasSensor::setVCC(float vcc)
+{
+  _VCC = vcc;
+}
 void MQGasSensor::setPin(int pin)
 {
   this->_pin = pin;
@@ -67,6 +72,10 @@ float MQGasSensor::getRL()
 float MQGasSensor::getVoltResolution()
 {
   return _VOLT_RESOLUTION;
+}
+float MQGasSensor::getVCC()
+{
+  return _VCC;
 }
 String MQGasSensor::getRegressionMethod()
 {
@@ -99,8 +108,11 @@ void MQGasSensor::serialDebug(bool onSetup)
 
     Serial.print("Sensor: ");
     Serial.println(_type);
-    Serial.print("Supply voltage: ");
+    Serial.print("ADC voltage: ");
     Serial.print(_VOLT_RESOLUTION);
+    Serial.println(" VDC");
+    Serial.print("Sensor supply (VCC): ");
+    Serial.print(_VCC);
     Serial.println(" VDC");
     Serial.print("ADC Resolution: ");
     Serial.print(_ADC_Bit_Resolution);
@@ -147,7 +159,7 @@ void MQGasSensor::serialDebug(bool onSetup)
       Serial.print("  |    ");
       Serial.print(_sensor_volt);
       Serial.print("     | RS = ((");
-      Serial.print(_VOLT_RESOLUTION);
+      Serial.print(_VCC);
       Serial.print("*RL)/Voltage) - RL|      ");
       Serial.print(_RS_Calc);
       Serial.print("     | Ratio = RS/R0|    ");
@@ -193,12 +205,14 @@ float MQGasSensor::readSensor(bool isMQ303A, float correctionFactor, bool inject
 {
   // More explained in: https://jayconsystems.com/blog/understanding-a-gas-sensor
 
-  float voltRes = _VOLT_RESOLUTION; // preserve global resolution
+  // Upstream computes this offset from _VOLT_RESOLUTION and then never uses it;
+  // it is applied to the supply voltage here so MQ303A keeps its 0.45V offset.
+  float vcc = _VCC; // preserve sensor supply voltage
   if (isMQ303A)
   {
-    voltRes = voltRes - 0.45; // Calculations for RS using mq303a sensor look wrong #42
+    vcc = vcc - 0.45; // Calculations for RS using mq303a sensor look wrong #42
   }
-  _RS_Calc = ((voltRes * _RL) / _sensor_volt) - _RL; // Get value of RS in a gas
+  _RS_Calc = ((vcc * _RL) / _sensor_volt) - _RL; // Get value of RS in a gas
   if (_RS_Calc < 0)
     _RS_Calc = 0; // No negative values accepted.
   if (!injected)
@@ -222,7 +236,7 @@ float MQGasSensor::readSensor(bool isMQ303A, float correctionFactor, bool inject
 float MQGasSensor::readSensorR0Rs()
 {
   // More explained in: https://jayconsystems.com/blog/understanding-a-gas-sensor
-  _RS_Calc = ((_VOLT_RESOLUTION * _RL) / _sensor_volt) - _RL; // Get value of RS in a gas
+  _RS_Calc = ((_VCC * _RL) / _sensor_volt) - _RL; // Get value of RS in a gas
   if (_RS_Calc < 0)
     _RS_Calc = 0;                // No negative values accepted.
   _ratio = this->_R0 / _RS_Calc; // Get ratio RS_air/RS_gas <- INVERTED for MQ-131 issue 28 https://github.com/CameronBrooks11/MQGasSensors/issues/28
@@ -257,7 +271,7 @@ float MQGasSensor::calibrate(float ratioInCleanAir)
   */
   float RS_air;                                             // Define variable for sensor resistance
   float R0;                                                 // Define variable for R0
-  RS_air = ((_VOLT_RESOLUTION * _RL) / _sensor_volt) - _RL; // Calculate RS in fresh air
+  RS_air = ((_VCC * _RL) / _sensor_volt) - _RL; // Calculate RS in fresh air
   if (RS_air < 0)
     RS_air = 0;                  // No negative values accepted.
   R0 = RS_air / ratioInCleanAir; // Calculate R0
@@ -298,7 +312,7 @@ float MQGasSensor::setRsR0RatioGetPPM(float value)
 float MQGasSensor::getRS()
 {
   // More explained in: https://jayconsystems.com/blog/understanding-a-gas-sensor
-  _RS_Calc = ((_VOLT_RESOLUTION * _RL) / _sensor_volt) - _RL; // Get value of RS in a gas
+  _RS_Calc = ((_VCC * _RL) / _sensor_volt) - _RL; // Get value of RS in a gas
   if (_RS_Calc < 0)
     _RS_Calc = 0; // No negative values accepted.
   return _RS_Calc;
