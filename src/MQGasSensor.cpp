@@ -308,13 +308,14 @@ float MQGasSensor::readSensor(bool isMQ303A, float correctionFactor, bool inject
   // if(_PPM > 10000) _PPM = 99999999; //No negative values accepted or upper datasheet recommendation.
   return _PPM;
 }
-float MQGasSensor::readSensorR0Rs()
+float MQGasSensor::readSensorR0Rs(float correctionFactor)
 {
   // More explained in: https://jayconsystems.com/blog/understanding-a-gas-sensor
   _RS_Calc = ((_VCC * _RL) / _sensor_volt) - _RL; // Get value of RS in a gas
   if (_RS_Calc < 0)
     _RS_Calc = 0;                // No negative values accepted.
   _ratio = this->_R0 / _RS_Calc; // Get ratio RS_air/RS_gas <- INVERTED for MQ-131 issue 28 https://github.com/CameronBrooks11/MQGasSensors/issues/28
+  _ratio += correctionFactor;
   if (_ratio <= 0)
     _ratio = 0; // No negative values accepted or upper datasheet recommendation.
   double ppm;
@@ -346,7 +347,7 @@ float MQGasSensor::readSensorR0Rs()
   // if(_PPM > 10000) _PPM = 99999999; //No negative values accepted or upper datasheet recommendation.
   return _PPM;
 }
-float MQGasSensor::calibrate(float ratioInCleanAir)
+float MQGasSensor::calibrate(float ratioInCleanAir, float correctionFactor)
 {
   // More explained in: https://jayconsystems.com/blog/understanding-a-gas-sensor
   /*
@@ -366,6 +367,7 @@ float MQGasSensor::calibrate(float ratioInCleanAir)
   if (RS_air < 0)
     RS_air = 0;                  // No negative values accepted.
   R0 = RS_air / ratioInCleanAir; // Calculate R0
+  R0 += correctionFactor;
   if (R0 < 0)
     R0 = 0; // No negative values accepted.
   return R0;
