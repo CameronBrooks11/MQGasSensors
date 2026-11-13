@@ -58,8 +58,8 @@ def load_curves(analysis=ANALYSIS, manifest=None):
         seen.add(c["id"])
         if c["datasheet"] not in sheets:
             raise ValueError(f"{c['id']}: datasheet '{c['datasheet']}' is not in the manifest")
-        if c["origin"] not in ("upstream", "traced", "extracted"):
-            raise ValueError(f"{c['id']}: origin must be 'upstream', 'traced' or 'extracted'")
+        if c["origin"] not in ("upstream", "traced", "extracted", "located"):
+            raise ValueError(f"{c['id']}: origin must be 'upstream', 'traced', 'extracted' or 'located'")
         if c["origin"] != "upstream" and not (Path(analysis) / c.get("recipe", "")).is_file():
             raise ValueError(f"{c['id']}: a {c['origin']} curve needs a 'recipe' file")
         c["sheet"] = sheets[c["datasheet"]]
@@ -231,7 +231,7 @@ def render(curves, rows):
         "",
         "**Largest error** is the biggest relative difference, over the fitted points, between the concentration the fit returns and the concentration the datasheet plots at that Rs/R0. It is what approximating the curve by a power law costs, before any error in the sensor itself.",
         "",
-        "**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md). **Extracted** means the marker positions the PDF draws the figure with, read from its drawing commands by the same tool. For both, the link is the recipe that reproduces the points.",
+        "**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md). **Extracted** means the marker positions the PDF draws the figure with, read from its drawing commands by the same tool. **Located** means the centres of a line's hollow markers in a figure stored as an image, found by the same tool. For all three, the link is the recipe that reproduces the points.",
         "",
     ]
     out += compared(curves)

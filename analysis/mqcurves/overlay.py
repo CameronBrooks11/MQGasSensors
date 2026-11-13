@@ -28,12 +28,16 @@ def draw(pixels, x_axis, y_axis, seed, px, py, fit):
     line = [at(float(x), float(y)) for x, y in zip(x_axis.to_pixel(ppm), y_axis.to_pixel(fit.A * ppm**fit.B), strict=True)]
     d.line(line, fill=(0, 0, 0), width=2)
 
-    # The traced centreline, one dot per point, and the seed.
+    # The traced centreline, one dot per point, and the seed. Without a seed the
+    # points are marker centres: a ring and a dot each.
     for x, y in zip(px, py, strict=True):
         cx, cy = at(float(x), float(y))
         d.ellipse([cx - 1.5, cy - 1.5, cx + 1.5, cy + 1.5], fill=(255, 0, 0))
-    sx, sy = at(*seed)
-    d.ellipse([sx - 6, sy - 6, sx + 6, sy + 6], outline=(255, 128, 0), width=2)
+        if seed is None:
+            d.ellipse([cx - 9, cy - 9, cx + 9, cy + 9], outline=(255, 128, 0), width=2)
+    if seed is not None:
+        sx, sy = at(*seed)
+        d.ellipse([sx - 6, sy - 6, sx + 6, sy + 6], outline=(255, 128, 0), width=2)
     return img
 
 

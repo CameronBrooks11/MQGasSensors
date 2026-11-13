@@ -3,16 +3,17 @@
     figures <datasheet.pdf> [--page N] [--save DIR]   list a PDF's embedded images
     trace <recipe.toml> [--points CSV] [--overlay PNG] trace a curve from its recipe
     extract <recipe.toml> [--points CSV] [--overlay PNG] read a curve's markers from a vector figure
+    locate <recipe.toml> [--points CSV] [--overlay PNG]  find a curve's hollow markers in an image figure
     fit <points.csv>                                   fit points already digitised
     mark <recipe.toml> ...                             mark a new figure by hand
     table [--check]                                    write docs/coefficients.md
-    reproduce                                          re-derive every traced or extracted curve and compare
+    reproduce                                          re-derive every curve that has a recipe and compare
 """
 import argparse
 import sys
 from pathlib import Path
 
-from . import figure, overlay, points, recipe, vector
+from . import figure, markers, overlay, points, recipe, vector
 from .trace import fit, trace
 
 
@@ -117,8 +118,25 @@ def cmd_extract(args):
     return 0
 
 
+def cmd_locate(args):
+    r = markers.load(args.recipe)
+    pixels, ppm, ratio, x, y = markers.locate(r, args.datasheets)
+    f = fit(ppm, ratio)
+    report(r.id, f)
+    for p, q in zip(ppm, ratio, strict=True):
+        print(f"  {p:.6g} ppm  Rs/R0 {q:.6g}")
+    if args.points:
+        points.write(args.points, ppm, ratio)
+        print(f"  points written to {args.points}")
+    if args.overlay:
+        args.overlay.parent.mkdir(parents=True, exist_ok=True)
+        overlay.draw(pixels, r.x, r.y, None, x, y, f).save(args.overlay)
+        print(f"  overlay written to {args.overlay} (contains the datasheet figure: do not commit)")
+    return 0
+
+
 def cmd_reproduce(args):
-    """Re-derive every traced or extracted curve from its datasheet and compare with the committed points."""
+    """Re-derive every curve that has a recipe from its datasheet and compare with the committed points."""
     import tempfile
     import tomllib
 
@@ -131,6 +149,9 @@ def cmd_reproduce(args):
         if c["origin"] == "extracted":
             r = vector.load(table.ANALYSIS / c["recipe"])
             ppm, ratio, _, _ = vector.extract(r, r.pdf(args.datasheets))
+            lines, ok = [], True
+        elif c["origin"] == "located":
+            _, ppm, ratio, _, _ = markers.locate(markers.load(table.ANALYSIS / c["recipe"]), args.datasheets)
             lines, ok = [], True
         else:
             r = recipe.load(table.ANALYSIS / c["recipe"])
@@ -145,7 +166,7 @@ def cmd_reproduce(args):
               f"{'identical to' if same else 'DIFFER from'} {c['points']}, {len(lines)} checks {'pass' if ok else 'FAIL'}")
         if not ok:
             print("\n".join(lines))
-    print(f"{len(traced) - failed} of {len(traced)} traced or extracted curves reproduced from their datasheets")
+    print(f"{len(traced) - failed} of {len(traced)} curves with recipes reproduced from their datasheets")
     return 1 if failed else 0
 
 
@@ -190,6 +211,13 @@ def main(argv=None):
     s.add_argument("--datasheets", type=Path, default=vector.DATASHEETS, help="directory of downloaded datasheets")
     s.set_defaults(func=cmd_extract)
 
+    s = sub.add_parser("locate", help="find a curve's hollow markers in a figure stored as an image, and fit it")
+    s.add_argument("recipe", type=Path)
+    s.add_argument("--points", type=Path, metavar="CSV", help="write the plotted values here")
+    s.add_argument("--overlay", type=Path, metavar="PNG", help="write a picture of the markers found over the figure")
+    s.add_argument("--datasheets", type=Path, default=recipe.DATASHEETS, help="directory of downloaded datasheets")
+    s.set_defaults(func=cmd_locate)
+
     s = sub.add_parser("fit", help="fit points that are already digitised")
     s.add_argument("points", type=Path)
     s.set_defaults(func=cmd_fit)
@@ -207,7 +235,7 @@ def main(argv=None):
     s.add_argument("--datasheets", type=Path, default=recipe.DATASHEETS)
     s.set_defaults(func=cmd_mark)
 
-    s = sub.add_parser("reproduce", help="re-derive every traced or extracted curve from its datasheet; fail on any difference")
+    s = sub.add_parser("reproduce", help="re-derive every curve that has a recipe from its datasheet; fail on any difference")
     s.add_argument("--datasheets", type=Path, default=recipe.DATASHEETS)
     s.set_defaults(func=cmd_reproduce)
 

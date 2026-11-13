@@ -1,0 +1,29 @@
+id = "mq-303a-hanwei-2006-ethanol-located"
+sensor = "MQ-303A"
+gas = "ethanol"
+
+[source]
+datasheet = "mq-303a-hanwei-2006"
+page = 2
+pixels_sha256 = "79262b8aea16a5149fe7b3622389815b55e4a4c8d2d058c2490b3f59ce8a6997"
+
+# The decade gridlines, at about 63 px a decade, by least squares.
+[x]
+pixels = [358.4, 610.4]
+values = [1, 10000]
+
+[y]
+pixels = [17, 272]
+values = [10, 0.001]
+
+# Red squares. At 10 ppm the hydrogen triangle covers the top of the square,
+# so its hole is 4 by 2 px instead of 4 by 4 and its centre reads 1 px low.
+[markers]
+colour = [254, 0, 0]
+tolerance = 0
+box = [352, 10, 618, 279]
+# The legend.
+exclude = [[365, 200, 470, 270]]
+area = [6, 20]
+fill = [0.9, 1.0]
+count = 7

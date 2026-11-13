@@ -1,0 +1,29 @@
+id = "mq-309a-hanwei-2004-h2-located"
+sensor = "MQ-309A"
+gas = "H2"
+
+[source]
+datasheet = "mq-309a-hanwei-2004"
+page = 2
+pixels_sha256 = "f248f0c8337c68b2f71318c3a392f9bd5dab56a990686a985d8ff686150fd9a8"
+
+# Fig. 3, the left half of an image stored upside down: Rs/R0 grows
+# downwards. The decade gridlines are 103.5 px apart on both axes.
+[x]
+pixels = [45, 252]
+values = [100, 10000]
+
+[y]
+pixels = [126, 229.5]
+values = [1, 10]
+
+# Red triangles.
+[markers]
+colour = [254, 0, 0]
+tolerance = 0
+box = [38, 46, 259, 268]
+# The legend.
+exclude = [[50, 55, 125, 120]]
+area = [4, 12]
+fill = [0.5, 0.85]
+count = 4
