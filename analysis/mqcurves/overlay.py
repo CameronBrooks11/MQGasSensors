@@ -35,3 +35,35 @@ def draw(pixels, x_axis, y_axis, seed, px, py, fit):
     sx, sy = at(*seed)
     d.ellipse([sx - 6, sy - 6, sx + 6, sy + 6], outline=(255, 128, 0), width=2)
     return img
+
+
+def draw_page(pdf_path, page, frame, x_axis, y_axis, xs, ys, fit, scale=4, margin=30):
+    """The page rendered around a vector figure's frame, with the markers found and the fit.
+
+    `frame`, `xs` and `ys` are in PDF points, y upwards.
+    """
+    import pypdfium2 as pdfium
+
+    pdf = pdfium.PdfDocument(str(pdf_path))
+    try:
+        p = pdf[page - 1]
+        height = p.get_height()
+        img = p.render(scale=scale).to_pil().convert("RGB")
+    finally:
+        pdf.close()
+    d = ImageDraw.Draw(img)
+
+    def at(x, y):
+        return (x * scale, (height - y) * scale)
+
+    ppm = np.logspace(np.log10(fit.ppm_min), np.log10(fit.ppm_max), 200)
+    line = [at(float(x), float(y)) for x, y in zip(x_axis.to_pixel(ppm), y_axis.to_pixel(fit.A * ppm**fit.B), strict=True)]
+    d.line(line, fill=(0, 0, 0), width=2)
+    for x, y in zip(xs, ys, strict=True):
+        cx, cy = at(float(x), float(y))
+        d.ellipse([cx - 10, cy - 10, cx + 10, cy + 10], outline=(255, 128, 0), width=2)
+        d.line([cx - 14, cy, cx + 14, cy], fill=(255, 0, 0), width=1)
+        d.line([cx, cy - 14, cx, cy + 14], fill=(255, 0, 0), width=1)
+    left, top = at(frame[0] - margin, frame[3] + margin)
+    right, bottom = at(frame[2] + margin, frame[1] - margin)
+    return img.crop((int(max(left, 0)), int(max(top, 0)), int(min(right, img.width)), int(min(bottom, img.height))))

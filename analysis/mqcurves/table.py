@@ -9,6 +9,8 @@ import re
 import tomllib
 from pathlib import Path
 
+import numpy as np
+
 from . import points
 from .trace import fit
 
@@ -56,14 +58,39 @@ def load_curves(analysis=ANALYSIS, manifest=None):
         seen.add(c["id"])
         if c["datasheet"] not in sheets:
             raise ValueError(f"{c['id']}: datasheet '{c['datasheet']}' is not in the manifest")
-        if c["origin"] not in ("upstream", "traced"):
-            raise ValueError(f"{c['id']}: origin must be 'upstream' or 'traced'")
-        if c["origin"] == "traced" and not (Path(analysis) / c.get("recipe", "")).is_file():
-            raise ValueError(f"{c['id']}: a traced curve needs a 'recipe' file")
+        if c["origin"] not in ("upstream", "traced", "extracted"):
+            raise ValueError(f"{c['id']}: origin must be 'upstream', 'traced' or 'extracted'")
+        if c["origin"] != "upstream" and not (Path(analysis) / c.get("recipe", "")).is_file():
+            raise ValueError(f"{c['id']}: a {c['origin']} curve needs a 'recipe' file")
         c["sheet"] = sheets[c["datasheet"]]
         c.setdefault("unit", "ppm")
-        c["fit"] = fit(*points.read(Path(analysis) / c["points"]))
+        c["points_data"] = points.read(Path(analysis) / c["points"])
+        c["fit"] = fit(*c["points_data"])
+    by_id = {c["id"]: c for c in curves}
+    for c in curves:
+        if "hand_read" in c:
+            other = by_id.get(c["hand_read"])
+            if other is None or other["origin"] != "upstream" or other["datasheet"] != c["datasheet"]:
+                raise ValueError(f"{c['id']}: hand_read must name a curve read by hand upstream from the same datasheet")
+            c["hand_read"] = other
     return curves
+
+
+def offsets(hand_ppm, hand_ratio, ppm, ratio):
+    """How far each hand-read point lies from a re-derived line, in Rs/R0 at the point's own concentration.
+
+    The line is the re-derived points joined by straight segments on log-log
+    axes, extended along its end segments for a point just past either end.
+    """
+    order = np.argsort(ppm)
+    lx, ly = np.log10(np.asarray(ppm, dtype=float)[order]), np.log10(np.asarray(ratio, dtype=float)[order])
+    out = []
+    for p, q in zip(hand_ppm, hand_ratio, strict=True):
+        x = math.log10(p)
+        i = int(np.clip(np.searchsorted(lx, x) - 1, 0, len(lx) - 2))
+        y = ly[i] + (x - lx[i]) * (ly[i + 1] - ly[i]) / (lx[i + 1] - lx[i])
+        out.append(q / 10**y - 1)
+    return out
 
 
 def sensor_of(variable):
@@ -108,6 +135,9 @@ def audit(curves, pairs):
     document with a different curve, and comparing against it would mislead.
     """
     curves = [c for c in curves if c.get("sheet", {}).get("maker", "Hanwei").startswith("Hanwei")]
+    # A curve re-derived beside hand-read points is compared below, not here,
+    # until one of the two is chosen as the source of the fit.
+    curves = [c for c in curves if "hand_read" not in c]
     rows = []
     for (sensor, a_text, b_text), sketches in sorted(pairs.items(), key=lambda kv: (sensor_key(kv[0][0]), float(kv[0][1]))):
         candidates = [c for c in curves if c["sensor"] == sensor]
@@ -139,6 +169,34 @@ VERDICT = {
 }
 
 
+def compared(curves):
+    """A section comparing each re-derived curve with the hand-read points it re-derives."""
+    pairs = [c for c in curves if "hand_read" in c]
+    if not pairs:
+        return []
+    out = [
+        "## Hand-read points against the datasheet",
+        "",
+        "Curves re-derived from a datasheet that also has hand-read points for the same gas. Both fits are in the table above; this compares them, and says how far each hand-read point lies from the re-derived line, in Rs/R0 at the concentration the point was read at.",
+        "",
+        "| Sensor | Gas | Datasheet | Hand-read a | Re-derived a | Hand-read b | Re-derived b | Hand-read points off the re-derived line |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    for c in sorted(pairs, key=lambda c: (sensor_key(c["sensor"]), c["gas"].lower())):
+        h = c["hand_read"]
+        hp, hr = h["points_data"]
+        off = offsets(hp, hr, *c["points_data"])
+        cells = ", ".join(f"{d * 100:+.1f} % at {sig(p, 3)}" for p, d in zip(hp, off, strict=True))
+        out.append(f"| {c['sensor']} | {c['gas']} | `{c['datasheet']}` | {sig(h['fit'].a)} | {sig(c['fit'].a)} "
+                   f"| {sig(h['fit'].b, 4)} | {sig(c['fit'].b, 4)} | {cells} {c['unit']} |")
+    out += [
+        "",
+        "Re-derived curves are not used in the comparison with the examples below until one source is chosen per curve.",
+        "",
+    ]
+    return out
+
+
 def render(curves, rows):
     out = [
         "# Calibration coefficients",
@@ -156,7 +214,7 @@ def render(curves, rows):
     ]
     for c in sorted(curves, key=lambda c: (sensor_key(c["sensor"]), c["sheet"]["maker"], c["gas"].lower())):
         f = c["fit"]
-        origin = "read by hand upstream" if c["origin"] == "upstream" else f"[traced](../analysis/{c['recipe']})"
+        origin = "read by hand upstream" if c["origin"] == "upstream" else f"[{c['origin']}](../analysis/{c['recipe']})"
         out.append(
             f"| {c['sensor']} | {c['gas']} | {sig(f.a)} | {sig(f.b, 4)} | {sig(f.ppm_min, 3)} to {sig(f.ppm_max, 3)} {c['unit']} "
             f"| {sig(f.ratio_min, 3)} to {sig(f.ratio_max, 3)} | {f.n} | {f.r_squared:.4f} | {f.max_ppm_error * 100:.0f} % | `{c['datasheet']}` | {origin} |"
@@ -173,8 +231,11 @@ def render(curves, rows):
         "",
         "**Largest error** is the biggest relative difference, over the fitted points, between the concentration the fit returns and the concentration the datasheet plots at that Rs/R0. It is what approximating the curve by a power law costs, before any error in the sensor itself.",
         "",
-        "**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md); the link is the recipe that reproduces it.",
+        "**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md). **Extracted** means the marker positions the PDF draws the figure with, read from its drawing commands by the same tool. For both, the link is the recipe that reproduces the points.",
         "",
+    ]
+    out += compared(curves)
+    out += [
         "## Values used in the examples",
         "",
         "Every distinct `setA`/`setB` pair in `examples/`, beside the closest fitted curve for the same sensor. The examples were written from the Hanwei-era datasheets, so only curves from those are compared; a Winsen manual for the same sensor is a different document with a different curve.",

@@ -1,0 +1,20 @@
+id = "mq-4-hanwei-2007-ch4-extracted"
+sensor = "MQ-4"
+gas = "CH4"
+
+[source]
+datasheet = "mq-4-hanwei-2007"
+page = 2
+
+[frame]
+x = [85.2, 353.04]
+y = [427.2, 651.36]
+ppm = [100, 10000]
+ratio = [0.1, 10]
+
+# Navy outline, magenta fill: squares.
+[markers]
+stroke = [0, 0, 128]
+fill = [255, 0, 255]
+count = 4
+exclude = [[98.64, 433.44, 169.68, 536.64]]

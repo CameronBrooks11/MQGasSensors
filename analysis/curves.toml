@@ -5,6 +5,11 @@
 #   miguel5612/MQSensorsLib_Docs at commit 2faa17ac7ea0 (MIT), with decimal
 #   commas normalised; `upstream_file` is the path there.
 # origin = "traced": produced by `mqcurves trace` from the recipe named in `recipe`.
+# origin = "extracted": produced by `mqcurves extract` from the recipe named in
+#   `recipe`: the marker positions of a figure the PDF draws with vector commands.
+# hand_read: for a curve re-derived from a datasheet that also has hand-read
+#   points for the gas, the id of that hand-read curve. The two are compared on
+#   the coefficients page.
 #
 # unit: the concentration unit of the figure's horizontal axis. "ppm" unless given.
 # note: something a reader of the coefficients page should know about this curve.
@@ -320,6 +325,66 @@ datasheet = "mq-4-hanwei-2007"
 points = "points/mq-4-hanwei-2007/smoke.csv"
 origin = "upstream"
 upstream_file = "WPDigitalizer/MQ4/smoke.csv"
+
+[[curve]]
+id = "mq-4-hanwei-2007-alcohol-extracted"
+sensor = "MQ-4"
+gas = "alcohol"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/alcohol-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-4-hanwei-2007-alcohol-extracted.toml"
+hand_read = "mq-4-hanwei-2007-alcohol"
+
+[[curve]]
+id = "mq-4-hanwei-2007-ch4-extracted"
+sensor = "MQ-4"
+gas = "CH4"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/ch4-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-4-hanwei-2007-ch4-extracted.toml"
+hand_read = "mq-4-hanwei-2007-ch4"
+
+[[curve]]
+id = "mq-4-hanwei-2007-co-extracted"
+sensor = "MQ-4"
+gas = "CO"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/co-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-4-hanwei-2007-co-extracted.toml"
+hand_read = "mq-4-hanwei-2007-co"
+
+[[curve]]
+id = "mq-4-hanwei-2007-h2-extracted"
+sensor = "MQ-4"
+gas = "H2"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/h2-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-4-hanwei-2007-h2-extracted.toml"
+hand_read = "mq-4-hanwei-2007-h2"
+
+[[curve]]
+id = "mq-4-hanwei-2007-lpg-extracted"
+sensor = "MQ-4"
+gas = "LPG"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/lpg-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-4-hanwei-2007-lpg-extracted.toml"
+hand_read = "mq-4-hanwei-2007-lpg"
+
+[[curve]]
+id = "mq-4-hanwei-2007-smoke-extracted"
+sensor = "MQ-4"
+gas = "smoke"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/smoke-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-4-hanwei-2007-smoke-extracted.toml"
+hand_read = "mq-4-hanwei-2007-smoke"
 
 [[curve]]
 id = "mq-5-hanwei-2007-ch4"

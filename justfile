@@ -30,6 +30,6 @@ coefficients:
 datasheets:
     scripts/datasheets.py fetch
 
-# Download the datasheets, then re-trace every traced curve and compare with the committed points
+# Download the datasheets, then re-derive every traced or extracted curve and compare with the committed points
 reproduce: datasheets
     cd analysis && uv run --locked python -m mqcurves reproduce

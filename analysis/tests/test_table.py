@@ -5,6 +5,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import numpy as np
+
 from mqcurves import table
 from mqcurves.trace import fit
 
@@ -87,6 +89,41 @@ class EditionTests(unittest.TestCase):
         self.assertEqual(table.audit([winsen, hanwei], pair)[0][5], "same")
 
 
+class ComparisonTests(unittest.TestCase):
+    def test_offset_is_measured_in_ratio_at_the_hand_read_concentration(self):
+        ppm, ratio = [100, 1000, 10000], [4.0, 2.0, 1.0]
+        off = table.offsets([100, 1000, 10**2.5, 10000], [4.0, 2.2, 2 * 2**0.5, 0.9], ppm, ratio)
+        np.testing.assert_allclose(off, [0, 0.1, 0, -0.1], atol=1e-12)
+
+    def test_offset_just_past_an_end_follows_the_end_segment(self):
+        off = table.offsets([10**4.5, 10**1.5], [2**-0.5, 4 * 2**0.5], [100, 1000, 10000], [4.0, 2.0, 1.0])
+        np.testing.assert_allclose(off, [0, 0], atol=1e-12)
+
+    def test_re_derived_curve_is_left_out_of_the_example_audit(self):
+        hand = {"sensor": "MQ-4", "gas": "CH4", "fit": fitted(1012.687, -2.78594)}
+        again = {"sensor": "MQ-4", "gas": "CH4", "fit": fitted(1012.7, -2.786), "hand_read": hand}
+        rows = table.audit([again, hand], {("MQ-4", "1012.7", "-2.786"): ["MQ-4"]})
+        self.assertIs(rows[0][4], hand)
+
+    def test_hand_read_must_name_a_hand_read_curve_of_the_same_datasheet(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            (d / "p.csv").write_text("ppm,ratio\n100,2\n1000,1\n")
+            (d / "r.toml").write_text("")
+            (d / "manifest.toml").write_text('[[datasheet]]\nid = "s1"\n\n[[datasheet]]\nid = "s2"\n')
+            base = ('[[curve]]\nid = "hand"\nsensor = "MQ-0"\ngas = "H2"\ndatasheet = "s1"\npoints = "p.csv"\n'
+                    'origin = "upstream"\n\n[[curve]]\nid = "pdf"\nsensor = "MQ-0"\ngas = "H2"\npoints = "p.csv"\n'
+                    'origin = "extracted"\nrecipe = "r.toml"\n')
+            (d / "curves.toml").write_text(base + 'datasheet = "s1"\nhand_read = "hand"\n')
+            curves = table.load_curves(d, d / "manifest.toml")
+            self.assertEqual(curves[1]["hand_read"]["id"], "hand")
+            for tail in ('datasheet = "s2"\nhand_read = "hand"\n', 'datasheet = "s1"\nhand_read = "nothing"\n',
+                         'datasheet = "s1"\nhand_read = "pdf"\n'):
+                (d / "curves.toml").write_text(base + tail)
+                with self.assertRaisesRegex(ValueError, "hand_read"):
+                    table.load_curves(d, d / "manifest.toml")
+
+
 class RepositoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -98,6 +135,7 @@ class RepositoryTests(unittest.TestCase):
     def test_every_curve_names_a_manifest_datasheet_and_fits(self):
         self.assertEqual(sum(c["origin"] == "upstream" for c in self.curves), 57)
         self.assertEqual(sum(c["origin"] == "traced" for c in self.curves), 5)
+        self.assertEqual(sum(c["origin"] == "extracted" for c in self.curves), 6)
         for c in self.curves:
             self.assertGreaterEqual(c["fit"].n, 3, c["id"])
             self.assertLess(c["fit"].b, 0, c["id"])
@@ -137,7 +175,7 @@ class RepositoryTests(unittest.TestCase):
         with contextlib.redirect_stdout(out):
             code = cli.main(["reproduce"])
         self.assertEqual(code, 0, out.getvalue())
-        self.assertIn("5 of 5", out.getvalue())
+        self.assertIn("11 of 11", out.getvalue())
 
     def test_check_passes_on_the_committed_page(self):
         out = io.StringIO()
