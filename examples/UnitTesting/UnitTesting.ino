@@ -256,6 +256,24 @@ test(MQ303A_VoltResolution)
   assertEqual(MQ303A.getVoltResolution(), vRes);
 }
 
+test(MQ303A_VoltageOffset)
+{
+  MQ303A.setRegressionMethod(1); //_PPM =  a*ratio^b
+  MQ303A.setA(1); MQ303A.setB(1); // PPM equals the ratio RS/R0
+  MQ303A.setR0(1);                // ... which equals RS
+  MQ303A.setRL(10);
+  MQ303A.setVoltResolution(5);
+  MQ303A.setVCC(5);
+  MQ303A.setADC(512);
+  float volt = 512 * 5.0 / 1023;
+
+  float plain = MQ303A.readSensor(false);
+  float offset = MQ303A.readSensor(true);
+
+  // An MQ303A read lowers the supply voltage by 0.45 V in RS = (VCC*RL/volt) - RL
+  assertNear(plain - offset, 0.45 * 10 / volt, 0.01);
+}
+
 test(MQ309A_CO)
 {
   MQ309A.setRegressionMethod(1); //_PPM =  a*ratio^b
