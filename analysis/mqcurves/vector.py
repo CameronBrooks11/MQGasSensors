@@ -25,11 +25,20 @@ program's smoothing, not data, and are not read.
     fill = [255, 0, 255]
     count = 4                        # how many the figure plots
     exclude = [[98.64, 433.44, 169.68, 536.64]]   # optional: boxes to ignore, e.g. the legend
+    # shape = "x"                    # optional: "outline", "x", "star" or "plus"
 
 The datasheet must match the SHA-256 the manifest records, and the page must
-draw a rectangle at the frame's coordinates; otherwise nothing is read. A
-marker is one or more paths of the marker colours whose bounding boxes touch,
-and its centre is the centre of their joint bounding box.
+draw a rectangle at the frame's coordinates; otherwise nothing is read.
+
+A marker is drawn either as one outline (a square, a circle), centred on its
+bounding box, or as straight strokes out from its centre (a cross), drawn one
+after another. Both are read as subpaths, so it does not matter whether the PDF
+puts each marker in its own path object or all of a line's markers in one. Consecutive strokes that start at the same point are one
+marker, centred on that point. That stays right when the frame clips some of
+the strokes away, and keeps apart two markers that sit at the same place.
+Markers that share colours are told apart by `shape`: an "outline" is a
+single outline, an "x" has only diagonal strokes, a "star" adds vertical ones,
+and a "plus" has none.
 """
 import ctypes
 import hashlib
@@ -48,8 +57,6 @@ MANIFEST = ROOT / "datasheets" / "manifest.toml"
 # Coordinates are compared within this many points: well under the 0.24 pt
 # grid the figures checked so far are drawn on.
 TOLERANCE = 0.01
-# Paths of one marker touch; markers of one line are tens of points apart.
-TOUCH = 0.5
 # A path larger than this in either direction is a line, not a marker.
 MAX_MARKER = 12.0
 
@@ -68,6 +75,13 @@ class Shape:
     y0: float
     x1: float
     y1: float
+    start: tuple = (0.0, 0.0)
+    end: tuple = (0.0, 0.0)
+    points: int = 0
+
+    @property
+    def is_stroke(self):
+        return self.points == 2
 
 
 @dataclass(frozen=True)
@@ -84,6 +98,7 @@ class Recipe:
     fill: tuple
     count: int
     exclude: tuple
+    shape: str | None
     path: Path
 
     def pdf(self, datasheets=DATASHEETS, manifest=MANIFEST):
@@ -126,19 +141,26 @@ def load(path):
         exclude = tuple(tuple(float(v) for v in box) for box in m.get("exclude", []))
         if any(len(box) != 4 for box in exclude):
             raise VectorError("[markers] exclude must be a list of [x0, y0, x1, y1]")
+        shape = m.get("shape")
+        if shape not in (None, *SHAPES):
+            raise VectorError(f"[markers] shape must be one of {', '.join(SHAPES)}")
         return Recipe(
             id=doc["id"], sensor=doc["sensor"], gas=doc["gas"],
             datasheet=doc["source"]["datasheet"], page=int(doc["source"]["page"]),
             frame=(x0, y0, x1, y1), x=Axis(x0, pa, x1, pb), y=Axis(y0, ra, y1, rb),
             stroke=_colour(m, "stroke"), fill=_colour(m, "fill"), count=int(m["count"]),
-            exclude=exclude, path=path,
+            exclude=exclude, shape=shape, path=path,
         )
     except KeyError as err:
         raise VectorError(f"{path}: missing {err}") from err
 
 
 def page_paths(pdf_path, page):
-    """Every top-level path object on a page (numbered from 1)."""
+    """Every subpath of every top-level path object on a page (numbered from 1), in drawing order.
+
+    A subpath starts at each move. Some PDF writers draw one marker per path
+    object, others all of a line's markers as the subpaths of one.
+    """
     import pypdfium2 as pdfium
     import pypdfium2.raw as raw
 
@@ -151,20 +173,22 @@ def page_paths(pdf_path, page):
             h = obj.raw
             m = raw.FS_MATRIX()
             raw.FPDFPageObj_GetMatrix(h, m)
-            xs, ys = [], []
+            subpaths = []
             for i in range(raw.FPDFPath_CountSegments(h)):
+                seg = raw.FPDFPath_GetPathSegment(h, i)
                 x, y = ctypes.c_float(), ctypes.c_float()
-                raw.FPDFPathSegment_GetPoint(raw.FPDFPath_GetPathSegment(h, i), x, y)
-                xs.append(m.a * x.value + m.c * y.value + m.e)
-                ys.append(m.b * x.value + m.d * y.value + m.f)
-            if not xs:
-                continue
+                raw.FPDFPathSegment_GetPoint(seg, x, y)
+                if raw.FPDFPathSegment_GetType(seg) == raw.FPDF_SEGMENT_MOVETO or not subpaths:
+                    subpaths.append([])
+                subpaths[-1].append((m.a * x.value + m.c * y.value + m.e, m.b * x.value + m.d * y.value + m.f))
             colours = []
             for get in (raw.FPDFPageObj_GetStrokeColor, raw.FPDFPageObj_GetFillColor):
                 r, g, b, a = (ctypes.c_uint() for _ in range(4))
                 get(h, r, g, b, a)
                 colours.append((r.value, g.value, b.value))
-            out.append(Shape(colours[0], colours[1], min(xs), min(ys), max(xs), max(ys)))
+            for pts in subpaths:
+                xs, ys = [q[0] for q in pts], [q[1] for q in pts]
+                out.append(Shape(colours[0], colours[1], min(xs), min(ys), max(xs), max(ys), pts[0], pts[-1], len(pts)))
         return out
     finally:
         pdf.close()
@@ -175,38 +199,67 @@ def _inside(p, box):
     return x0 <= p.x0 and p.x1 <= x1 and y0 <= p.y0 and p.y1 <= y1
 
 
+SHAPES = ("outline", "x", "star", "plus")
+
+
+def _shape(strokes):
+    """"x", "star" or "plus" for a marker's strokes, by the directions they point in."""
+    kinds = set()
+    for p in strokes:
+        dx, dy = abs(p.end[0] - p.start[0]), abs(p.end[1] - p.start[1])
+        kinds.add("vertical" if dx < 0.25 * dy else "horizontal" if dy < 0.25 * dx else "diagonal")
+    if kinds == {"diagonal"}:
+        return "x"
+    if "diagonal" in kinds and "vertical" in kinds:
+        return "star"
+    if "diagonal" not in kinds:
+        return "plus"
+    return None
+
+
+def _same(a, b):
+    return all(abs(u - v) <= TOLERANCE for u, v in zip(a, b, strict=True))
+
+
+def _group(paths):
+    """Split subpaths, in drawing order, into markers: each a list of subpaths.
+
+    Consecutive strokes from the same point are one marker, and so are
+    consecutive outlines with the same bounding box: one marker drawn twice,
+    once filled and once stroked.
+    """
+    groups = []
+    for p in paths:
+        q = groups[-1][-1] if groups else None
+        if q and p.is_stroke and q.is_stroke and _same(p.start, q.start):
+            groups[-1].append(p)
+        elif q and not p.is_stroke and not q.is_stroke and _same((p.x0, p.y0, p.x1, p.y1), (q.x0, q.y0, q.x1, q.y1)):
+            groups[-1].append(p)
+        else:
+            groups.append([p])
+    return groups
+
+
+def _centre(group):
+    if group[0].is_stroke:
+        return group[0].start
+    p = group[0]
+    return ((p.x0 + p.x1) / 2, (p.y0 + p.y1) / 2)
+
+
 def markers(paths, r):
     """Centres of the recipe's markers inside its frame, sorted by x, in points."""
-    if not any(all(abs(a - b) <= TOLERANCE for a, b in zip((p.x0, p.y0, p.x1, p.y1), r.frame, strict=True))
-               for p in paths):
+    if not any(_same((p.x0, p.y0, p.x1, p.y1), r.frame) for p in paths):
         raise VectorError(f"{r.id}: no rectangle drawn at the frame {list(r.frame)} on page {r.page}")
     frame = (r.frame[0] - MAX_MARKER, r.frame[1] - MAX_MARKER, r.frame[2] + MAX_MARKER, r.frame[3] + MAX_MARKER)
+    # A subpath larger than a marker is a line, a legend sample or a box, whatever its colours.
     chosen = [p for p in paths if p.stroke == r.stroke and p.fill == r.fill
+              and p.x1 - p.x0 <= MAX_MARKER and p.y1 - p.y0 <= MAX_MARKER
               and _inside(p, frame) and not any(_inside(p, box) for box in r.exclude)]
-    for p in chosen:
-        if p.x1 - p.x0 > MAX_MARKER or p.y1 - p.y0 > MAX_MARKER:
-            raise VectorError(f"{r.id}: a path of the marker colours spans {p.x1 - p.x0:.1f} by {p.y1 - p.y0:.1f} pt "
-                              f"at x {p.x0:.2f}; that is a line, not a marker")
-
-    # Join paths whose boxes touch: one marker can be drawn as several strokes.
-    group = list(range(len(chosen)))
-
-    def root(i):
-        while group[i] != i:
-            group[i] = group[group[i]]
-            i = group[i]
-        return i
-
-    for i, a in enumerate(chosen):
-        for j in range(i):
-            b = chosen[j]
-            if a.x0 <= b.x1 + TOUCH and b.x0 <= a.x1 + TOUCH and a.y0 <= b.y1 + TOUCH and b.y0 <= a.y1 + TOUCH:
-                group[root(i)] = root(j)
-    boxes = {}
-    for i, p in enumerate(chosen):
-        x0, y0, x1, y1 = boxes.get(root(i), (p.x0, p.y0, p.x1, p.y1))
-        boxes[root(i)] = (min(x0, p.x0), min(y0, p.y0), max(x1, p.x1), max(y1, p.y1))
-    centres = sorted(((x0 + x1) / 2, (y0 + y1) / 2) for x0, y0, x1, y1 in boxes.values())
+    groups = _group(chosen)
+    if r.shape is not None:
+        groups = [g for g in groups if (_shape(g) if g[0].is_stroke else "outline") == r.shape]
+    centres = sorted(_centre(g) for g in groups)
     if len(centres) != r.count:
         raise VectorError(f"{r.id}: expected {r.count} markers, found {len(centres)} at x "
                           f"{[round(x, 2) for x, _ in centres]}")

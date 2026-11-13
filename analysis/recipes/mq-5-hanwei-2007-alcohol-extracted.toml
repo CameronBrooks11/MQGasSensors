@@ -1,0 +1,21 @@
+id = "mq-5-hanwei-2007-alcohol-extracted"
+sensor = "MQ-5"
+gas = "alcohol"
+
+[source]
+datasheet = "mq-5-hanwei-2007"
+page = 2
+
+[frame]
+x = [95.04, 359.76]
+y = [449.76, 680.88]
+ppm = [100, 10000]
+ratio = [0.1, 10]
+
+# Purple strokes: stars. The yellow fill is unused.
+[markers]
+stroke = [128, 0, 128]
+fill = [255, 255, 0]
+count = 9
+# The legend.
+exclude = [[105.36, 453.6, 167.52, 541.92]]

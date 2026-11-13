@@ -1,0 +1,21 @@
+id = "mq-6-hanwei-2007-lpg-extracted"
+sensor = "MQ-6"
+gas = "LPG"
+
+[source]
+datasheet = "mq-6-hanwei-2007"
+page = 2
+
+[frame]
+x = [86.64, 354.48]
+y = [414.0, 642.24]
+ppm = [100, 10000]
+ratio = [0.1, 10]
+
+# Navy outline, navy fill: diamonds.
+[markers]
+stroke = [0, 0, 128]
+fill = [0, 0, 128]
+count = 9
+# The legend.
+exclude = [[90.48, 421.2, 162.24, 507.84]]

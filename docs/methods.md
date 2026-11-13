@@ -32,7 +32,7 @@ The datasheets are copyrighted and are not stored in this repository, and neithe
 
 **Traced.** Curves in figures stored as images are read by the tool in [`analysis/`](../analysis/README.md). It takes the figure's pixels straight from the PDF, collects the connected pixels of the line's colour starting from a marked point, and averages them column by column. Pixel positions become values through an axis calibration fitted to the figure's gridlines. Every input is in a recipe file, so the whole chain from step 1 is repeatable.
 
-**Extracted.** Some datasheets draw the figure with PDF drawing commands, so the position of every marker is in the file. The same tool reads the centres of one gas's markers, picked out by their colours, and converts them through the plot frame's coordinates. These are the values the manufacturer plotted, to the precision of the drawing, with no pixels involved. Where hand-read points exist for the same curve, the coefficients page compares the two.
+**Extracted.** Some datasheets draw the figure with PDF drawing commands, so the position of every marker is in the file. The same tool reads the centres of one gas's markers, picked out by their colours, and converts them through the plot frame's coordinates. These are the values the manufacturer plotted, to the precision of the drawing, with no pixels involved. A marker the legend is drawn over is still in the file and is read; on the MQ-3 sheet the legend covers three of the ten markers on three lines, which is why the hand-read points for those lines skip from about 1 to 6 mg/L. Where hand-read points exist for the same curve, the coefficients page compares the two.
 
 ## Two editions of the datasheets
 
@@ -41,7 +41,7 @@ Two makers publish datasheets for sensors with the same names, and their curves 
 - **Hanwei**, 2004 to 2009. The example sketches' values come from these.
 - **Zhengzhou Winsen**, manuals from 2014 and 2015. The traced curves so far come from these.
 
-The extracted curves so far come from the Hanwei MQ-4 datasheet.
+The extracted curves so far come from the Hanwei MQ-3, MQ-4, MQ-5, MQ-6 and MQ-8 datasheets.
 
 A coefficient pair is only meaningful together with the datasheet it came from, so the page names the datasheet in every row and never mixes editions. Which edition describes a sensor you have bought depends on who made it.
 
