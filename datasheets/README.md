@@ -36,6 +36,8 @@ scripts/datasheets.py verify
 
 tests every mirror of every entry, not only the first that works, and reports each one that is unreachable or serves different bytes.
 
+The `Datasheet mirrors` workflow runs the same command on the 3rd of each month, on demand from the Actions tab, and on any pull request that changes the manifest or the fetch script. It fails when a datasheet has no working mirror left, and raises a warning for each mirror that fails while another still works. The pull request gate itself never downloads datasheets.
+
 ## Adding a datasheet
 
 Add an entry with the file's size and SHA-256, at least one `wayback` mirror first, and any `github` mirror last. Then run `scripts/datasheets.py verify --only <id>`; every mirror listed must pass.
