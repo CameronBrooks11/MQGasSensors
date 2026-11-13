@@ -13,3 +13,7 @@ setup:
 # Compile every example against this working tree; skips what is not installed
 check:
     scripts/examples.sh check
+
+# Run the unit tests on a simulated Mega 2560 (needs simavr)
+test:
+    scripts/test.sh

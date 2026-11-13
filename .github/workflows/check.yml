@@ -26,3 +26,9 @@ jobs:
 
       - name: Check (compile every example)
         run: just check
+
+      - name: Install simavr
+        run: sudo apt-get update && sudo apt-get install -y simavr
+
+      - name: Test (unit tests on a simulated Mega 2560)
+        run: just test
