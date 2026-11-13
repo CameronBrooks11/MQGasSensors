@@ -52,6 +52,6 @@ void loop() {
     }
     else
     {
-        Serial.println("Status: Normal")
+        Serial.println("Status: Normal");
     }
 }
