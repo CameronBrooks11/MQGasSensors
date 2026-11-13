@@ -219,18 +219,18 @@ float MQGasSensor::readSensor(bool isMQ303A, float correctionFactor, bool inject
     _ratio = _RS_Calc / this->_R0; // Get ratio RS_gas/RS_air
   _ratio += correctionFactor;
   if (_ratio <= 0)
-    _ratio = 0; // No negative values accepted or upper datasheet recomendation.
+    _ratio = 0; // No negative values accepted or upper datasheet recommendation.
   if (_regressionMethod == 1)
-    _PPM = _a * pow(_ratio, _b); // <- Source excel analisis https://github.com/CameronBrooks11/MQGasSensors_Docs/tree/master/Internal_design_documents
+    _PPM = _a * pow(_ratio, _b); // <- Source excel analysis https://github.com/CameronBrooks11/MQGasSensors_Docs/tree/master/Internal_design_documents
   else
   {
-    // https://jayconsystems.com/blog/understanding-a-gas-sensor <- Source of linear ecuation
+    // https://jayconsystems.com/blog/understanding-a-gas-sensor <- Source of linear equation
     double ppm_log = (log10(_ratio) - _b) / _a; // Get ppm value in linear scale according to the the ratio value
     _PPM = pow(10, ppm_log);                    // Convert ppm value to log scale
   }
   if (_PPM < 0)
-    _PPM = 0; // No negative values accepted or upper datasheet recomendation.
-  // if(_PPM > 10000) _PPM = 99999999; //No negative values accepted or upper datasheet recomendation.
+    _PPM = 0; // No negative values accepted or upper datasheet recommendation.
+  // if(_PPM > 10000) _PPM = 99999999; //No negative values accepted or upper datasheet recommendation.
   return _PPM;
 }
 float MQGasSensor::readSensorR0Rs()
@@ -241,18 +241,18 @@ float MQGasSensor::readSensorR0Rs()
     _RS_Calc = 0;                // No negative values accepted.
   _ratio = this->_R0 / _RS_Calc; // Get ratio RS_air/RS_gas <- INVERTED for MQ-131 issue 28 https://github.com/CameronBrooks11/MQGasSensors/issues/28
   if (_ratio <= 0)
-    _ratio = 0; // No negative values accepted or upper datasheet recomendation.
+    _ratio = 0; // No negative values accepted or upper datasheet recommendation.
   if (_regressionMethod == 1)
-    _PPM = _a * pow(_ratio, _b); // <- Source excel analisis https://github.com/CameronBrooks11/MQGasSensors_Docs/tree/master/Internal_design_documents
+    _PPM = _a * pow(_ratio, _b); // <- Source excel analysis https://github.com/CameronBrooks11/MQGasSensors_Docs/tree/master/Internal_design_documents
   else
   {
-    // https://jayconsystems.com/blog/understanding-a-gas-sensor <- Source of linear ecuation
+    // https://jayconsystems.com/blog/understanding-a-gas-sensor <- Source of linear equation
     double ppm_log = (log10(_ratio) - _b) / _a; // Get ppm value in linear scale according to the the ratio value
     _PPM = pow(10, ppm_log);                    // Convert ppm value to log scale
   }
   if (_PPM < 0)
-    _PPM = 0; // No negative values accepted or upper datasheet recomendation.
-  // if(_PPM > 10000) _PPM = 99999999; //No negative values accepted or upper datasheet recomendation.
+    _PPM = 0; // No negative values accepted or upper datasheet recommendation.
+  // if(_PPM > 10000) _PPM = 99999999; //No negative values accepted or upper datasheet recommendation.
   return _PPM;
 }
 float MQGasSensor::calibrate(float ratioInCleanAir)
