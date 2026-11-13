@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Fail if a tracked file is a Git LFS pointer instead of the file itself.
+# Fail if a tracked file is a Git LFS pointer instead of the file itself, or if
+# a Markdown file links to a path in the repository that does not exist.
 #
 # The repository does not use LFS. A pointer left behind looks like a normal
 # file in a listing and renders as a broken image.
@@ -13,3 +14,4 @@ if [ -n "$pointers" ]; then
   exit 1
 fi
 echo "assets: no Git LFS pointers among $(git ls-files | wc -l) tracked files"
+python3 scripts/check-links.py

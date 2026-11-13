@@ -21,7 +21,7 @@ A robust Arduino library for interfacing with MQ-series gas sensors, enabling ac
 - Preheat and baseline calibration for MQ sensors.
 - Calculate sensor resistance (Rs) and baseline resistance (R0).
 - Support for multiple MQ-series sensors (e.g., MQ-2, MQ-7, MQ-135).
-- [Semi-automated method](https://github.com/CameronBrooks11/MQGasSensorsAnalysis) for deriving the regression parameters (a and b) from the manufacturer datasheet.
+- Calibration coefficients traced to their datasheets: [every `a` and `b`](docs/coefficients.md) is listed with the datasheet curve it was fitted from, and can be [re-derived](docs/methods.md) with one command.
 
 <!-- TABLE OF CONTENTS -->
 
@@ -48,7 +48,7 @@ A robust Arduino library for interfacing with MQ-series gas sensors, enabling ac
 
 ## Getting Started
 
-See the [MQGasSensorsAnalysis](https://github.com/CameronBrooks11/MQGasSensorsAnalysis.git) repository for information on how this library determines the regression parameters based on the datasheet graphs.
+The values passed to `setA` and `setB` come from the sensor's datasheet. [docs/coefficients.md](docs/coefficients.md) lists them per sensor and gas, and [docs/methods.md](docs/methods.md) explains how they are derived.
 
 ```c++
 //Include the library
@@ -169,6 +169,8 @@ The ESP32 WROOM 32D does not need an external power supply. A0 goes to PIN36, Vc
 
 ## Sensor Manufacturers
 
+These links are for reading. The exact files the coefficients were derived from, with checksums and archived mirrors, are in [`datasheets/manifest.toml`](datasheets/manifest.toml); `just datasheets` downloads them. See [datasheets/README.md](datasheets/README.md).
+
 | Sensor  | Manufacture        | URL Datasheet                                                                                                   |
 | ------- | ------------------ | --------------------------------------------------------------------------------------------------------------- |
 | MQ-2    | HANWEI Electronics | [datasheet](https://www.pololu.com/file/0J309/MQ2.pdf)                                                          |
@@ -206,13 +208,13 @@ Cite their work as:
 ### Attribution
 
 - **Authors**
-  - _Miguel A. Califa U._ - [_GitHub_](https://github.com/miguel5612) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050477)
-  - _Ghiordy F. Contreras C._ - [_GitHub_](https://github.com/Ghiordy) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050476)
-  - _Yersson R. Carrillo A._ - [_GitHub_](https://github.com/Yercar18/Dronefenix) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001637655)
+  - _Miguel A. Califa U._ - [_GitHub_](https://github.com/miguel5612) - [CV](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050477)
+  - _Ghiordy F. Contreras C._ - [_GitHub_](https://github.com/Ghiordy) - [CV](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000050476)
+  - _Yersson R. Carrillo A._ - [_GitHub_](https://github.com/Yercar18/Dronefenix) - [CV](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001637655)
 - **Contributors**
   - _Andres A. Martinez._ - [_Github_](https://github.com/andresmacsi) - [CV](https://www.linkedin.com/in/andr%C3%A9s-acevedo-mart%C3%ADnez-73ab35185/?originalSubdomain=co)
-  - _Juan A. Rodríguez._ - [_Github_](https://github.com/Obiot24)
-  - _Mario A. Rodríguez O._ - [_GitHub_](https://github.com/MarioAndresR) - [CV](https://scienti.colciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000111304)
+  - _Juan A. Rodríguez._
+  - _Mario A. Rodríguez O._ - [_GitHub_](https://github.com/MarioAndresR) - [CV](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000111304)
 - **Reviewers**
 - _PhD. Jacipt A Ramón V._ - [CV](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000512702)
 
