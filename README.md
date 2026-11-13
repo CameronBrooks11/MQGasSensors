@@ -2,12 +2,12 @@
 <!--
 *** Markdown "reference style" links are used for readability.
 *** Links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom for reference variables declarations (check-url, issues-url, etc.).
+*** See the bottom for reference variables declarations (check-url, release-url, etc.).
 *** For more information, visit: https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
 [![Check][check-shield]][check-url]
-[![Issues][issues-shield]][issues-url]
+[![Release][release-shield]][release-url]
 [![MIT License][license-shield]][license-url]
 
 # MQGasSensors
@@ -221,9 +221,9 @@ See also the list of [contributors](https://github.com/miguel5612/MQSensorsLib/g
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[check-shield]: https://img.shields.io/github/actions/workflow/status/CameronBrooks11/MQGasSensors/check.yml?branch=master&label=build%20%26%20tests&style=flat-square
+[check-shield]: https://img.shields.io/github/actions/workflow/status/CameronBrooks11/MQGasSensors/check.yml?branch=master&label=build%20%26%20tests
 [check-url]: https://github.com/CameronBrooks11/MQGasSensors/actions/workflows/check.yml
-[issues-shield]: https://img.shields.io/github/issues/CameronBrooks11/MQGasSensors.svg?style=flat-square
-[issues-url]: https://github.com/CameronBrooks11/MQGasSensors/issues
-[license-shield]: https://img.shields.io/github/license/CameronBrooks11/MQGasSensors.svg?style=flat-square
+[release-shield]: https://img.shields.io/github/v/release/CameronBrooks11/MQGasSensors
+[release-url]: https://github.com/CameronBrooks11/MQGasSensors/releases/latest
+[license-shield]: https://img.shields.io/github/license/CameronBrooks11/MQGasSensors
 [license-url]: https://github.com/CameronBrooks11/MQGasSensors/blob/master/LICENSE
