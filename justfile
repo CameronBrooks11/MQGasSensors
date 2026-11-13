@@ -10,8 +10,9 @@ default:
 setup:
     scripts/examples.sh setup
 
-# Compile every example against this working tree; skips what is not installed
+# Check tracked assets, then compile every example; skips what is not installed
 check:
+    scripts/check-assets.sh
     scripts/examples.sh check
 
 # Run the unit tests on a simulated Mega 2560 (needs simavr)

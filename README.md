@@ -174,10 +174,10 @@ The ESP32 WROOM 32D does not need an external power supply. A0 goes to PIN36, Vc
 | MQ-2    | HANWEI Electronics | [datasheet](https://www.pololu.com/file/0J309/MQ2.pdf)                                                          |
 | MQ-3    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/MQ-3.pdf)                                               |
 | MQ-4    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-4.pdf)                                     |
-| MQ-5    | HANWEI Electronics | [datasheet](https://www.parallax.com/sites/default/files/downloads/605-00009-MQ-5-Datasheet.pdf)                |
-| MQ-6    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-6.pdf)                                     |
+| MQ-5    | HANWEI Electronics | [datasheet](https://web.archive.org/web/20131102061827/http://www.parallax.com/sites/default/files/downloads/605-00009-MQ-5-Datasheet.pdf) |
+| MQ-6    | HANWEI Electronics | [datasheet](https://web.archive.org/web/20120113122419/http://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-6.pdf) |
 | MQ-7    | HANWEI Electronics | [datasheet](https://www.sparkfun.com/datasheets/Sensors/Biometric/MQ-7.pdf)                                     |
-| MQ-8    | HANWEI Electronics | [datasheet](https://dlnmh9ip6v2uc.cloudfront.net/datasheets/Sensors/Biometric/MQ-8.pdf)                         |
+| MQ-8    | HANWEI Electronics | [datasheet](https://web.archive.org/web/20130531234925/http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Sensors/Biometric/MQ-8.pdf) |
 | MQ-9    | HANWEI Electronics | [datasheet](http://www.haoyuelectronics.com/Attachment/MQ-9/MQ9.pdf)                                            |
 | MQ-131  | HANWEI Electronics | [datasheet](http://www.sensorsportal.com/DOWNLOADS/MQ131.pdf)                                                   |
 | MQ-135  | HANWEI Electronics | [datasheet](https://www.electronicoscaldas.com/datasheet/MQ-135_Hanwei.pdf)                                     |
