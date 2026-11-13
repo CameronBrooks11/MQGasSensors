@@ -93,15 +93,22 @@ Each fit is a straight line through digitised points on log-log axes. It describ
 | MQ-136 | H2S | 0.13471 | -3.775 | 1.12 to 181 ppm | 0.148 to 0.569 | 280 | 0.9997 | 5 % | `mq-136-winsen-v1.4` | [traced](../analysis/recipes/mq-136-winsen-v1.4-h2s.toml) |
 | MQ-137 | NH3 | 0.13471 | -3.775 | 1.12 to 181 ppm | 0.148 to 0.569 | 280 | 0.9997 | 5 % | `mq-137-winsen-v1.4` | [traced](../analysis/recipes/mq-137-winsen-v1.4-nh3.toml) |
 | MQ-303A | ethanol | 3.4916 | -2.432 | 9.76 to 9710 ppm | 0.0370 to 0.637 | 7 | 0.9994 | 9 % | `mq-303a-hanwei-2006` | read by hand upstream |
+| MQ-303A | ethanol | 3.5821 | -2.423 | 10.0 to 10000 ppm | 0.0364 to 0.631 | 7 | 0.9993 | 10 % | `mq-303a-hanwei-2006` | [located](../analysis/recipes/mq-303a-hanwei-2006-ethanol-located.toml) |
 | MQ-303A | H2 | 4.1487 | -2.716 | 9.76 to 9620 ppm | 0.0581 to 0.735 | 7 | 0.9998 | 5 % | `mq-303a-hanwei-2006` | read by hand upstream |
+| MQ-303A | H2 | 4.3296 | -2.721 | 10.0 to 10000 ppm | 0.0582 to 0.729 | 7 | 0.9999 | 5 % | `mq-303a-hanwei-2006` | [located](../analysis/recipes/mq-303a-hanwei-2006-h2-located.toml) |
 | MQ-303A | iso-butane | 5.3977 | -3.001 | 95.3 to 9530 ppm | 0.0853 to 0.391 | 5 | 0.9984 | 9 % | `mq-303a-hanwei-2006` | read by hand upstream |
 | MQ-309A | alcohol | 473620 | -3.647 | 992 to 7050 ppm | 3.13 to 5.37 | 3 | 0.9948 | 8 % | `mq-309a-hanwei-2004` | read by hand upstream |
+| MQ-309A | alcohol | 505470 | -3.667 | 989 to 7010 ppm | 3.18 to 5.42 | 3 | 0.9957 | 7 % | `mq-309a-hanwei-2004` | [located](../analysis/recipes/mq-309a-hanwei-2004-alcohol-located.toml) |
 | MQ-309A | CH4 | 980.24 | -1.680 | 298 to 6980 ppm | 0.310 to 2.03 | 4 | 1.0000 | 1 % | `mq-309a-hanwei-2004` | read by hand upstream |
+| MQ-309A | CH4 | 1017.0 | -1.680 | 301 to 6930 ppm | 0.318 to 2.06 | 4 | 1.0000 | 1 % | `mq-309a-hanwei-2004` | [located](../analysis/recipes/mq-309a-hanwei-2004-ch4-located.toml) |
 | MQ-309A | CO | 1.4136e+06 | -4.010 | 997 to 7050 ppm | 3.71 to 6.05 | 3 | 0.9949 | 8 % | `mq-309a-hanwei-2004` | read by hand upstream |
+| MQ-309A | CO | 1.6313e+06 | -4.076 | 989 to 7010 ppm | 3.76 to 6.06 | 3 | 0.9889 | 11 % | `mq-309a-hanwei-2004` | [located](../analysis/recipes/mq-309a-hanwei-2004-co-located.toml) |
 | MQ-309A | H2 | 1532.9 | -1.951 | 299 to 6990 ppm | 0.460 to 2.33 | 4 | 0.9997 | 3 % | `mq-309a-hanwei-2004` | read by hand upstream |
+| MQ-309A | H2 | 1586.2 | -1.953 | 297 to 7010 ppm | 0.469 to 2.38 | 4 | 0.9996 | 4 % | `mq-309a-hanwei-2004` | [located](../analysis/recipes/mq-309a-hanwei-2004-h2-located.toml) |
 
 Notes:
 
+- **MQ-303A iso-butane** (`mq-303a-hanwei-2006`): Kept as read by hand. The figure draws its grey gridlines over this line and its star markers, breaking both at every gridline, so neither can be followed automatically.
 - **MQ-137 NH3** (`mq-137-winsen-v1.4`): The line the MQ137 manual prints for NH3 is identical, pixel for pixel along the curve, to the line the MQ136 manual prints for H2S; the two figures differ only in the legend and a CO line. The traced points and the fit are therefore the same as MQ-136 H2S. Whether the manufacturer measured the same response or reused the chart is not known.
 
 The concentration is in the unit of the datasheet figure's horizontal axis. Where that is not ppm, the value the library returns is in that unit too, whatever the sketch calls it: the MQ-3 curves are drawn against mg/L.
@@ -110,7 +117,7 @@ The concentration is in the unit of the datasheet figure's horizontal axis. Wher
 
 **Largest error** is the biggest relative difference, over the fitted points, between the concentration the fit returns and the concentration the datasheet plots at that Rs/R0. It is what approximating the curve by a power law costs, before any error in the sensor itself.
 
-**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md). **Extracted** means the marker positions the PDF draws the figure with, read from its drawing commands by the same tool. For both, the link is the recipe that reproduces the points.
+**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md). **Extracted** means the marker positions the PDF draws the figure with, read from its drawing commands by the same tool. **Located** means the centres of a line's hollow markers in a figure stored as an image, found by the same tool. For all three, the link is the recipe that reproduces the points.
 
 ## Hand-read points against the datasheet
 
@@ -145,6 +152,12 @@ Curves re-derived from a datasheet that also has hand-read points for the same g
 | MQ-8 | CO | `mq-8-hanwei-2009` | 7.3658e+15 | 2.0195e+16 | -7.335 | -7.606 | +2.9 % at 197, +1.0 % at 498, +1.9 % at 795, -0.1 % at 992, +1.3 % at 1490, +0.2 % at 1970, +0.2 % at 2960, +1.5 % at 4940, -0.3 % at 9830 ppm |
 | MQ-8 | H2 | `mq-8-hanwei-2009` | 976.97 | 973.62 | -0.6879 | -0.6902 | +1.2 % at 198, +0.5 % at 500, -0.7 % at 805, +1.7 % at 1000, +0.6 % at 1490, +1.5 % at 2000, -0.3 % at 3000, -0.3 % at 4970, -1.4 % at 9990 ppm |
 | MQ-8 | LPG | `mq-8-hanwei-2009` | 7.9758e+07 | 8.3383e+07 | -3.724 | -3.767 | +1.1 % at 199, +4.8 % at 499, +3.2 % at 803, +3.7 % at 1010, -0.6 % at 1490, +1.7 % at 1990, +1.1 % at 3020, +1.4 % at 5080, +2.2 % at 9930 ppm |
+| MQ-303A | ethanol | `mq-303a-hanwei-2006` | 3.4916 | 3.5821 | -2.432 | -2.423 | -0.1 % at 9.76, -1.2 % at 28.9, -1.1 % at 97.1, +0.1 % at 291, +0.0 % at 976, -0.4 % at 2890, +0.3 % at 9710 ppm |
+| MQ-303A | H2 | `mq-303a-hanwei-2006` | 4.1487 | 4.3296 | -2.716 | -2.721 | -0.1 % at 9.76, -2.9 % at 28.9, -2.4 % at 99.0, -1.8 % at 288, -1.9 % at 957, -2.0 % at 2920, -1.6 % at 9620 ppm |
+| MQ-309A | alcohol | `mq-309a-hanwei-2004` | 473620 | 505470 | -3.647 | -3.667 | -1.0 % at 992, -0.8 % at 2970, -1.2 % at 7050 ppm |
+| MQ-309A | CH4 | `mq-309a-hanwei-2004` | 980.24 | 1017.0 | -1.680 | -1.680 | -2.3 % at 298, -1.7 % at 989, -2.7 % at 2970, -2.0 % at 6980 ppm |
+| MQ-309A | CO | `mq-309a-hanwei-2004` | 1.4136e+06 | 1.6313e+06 | -4.010 | -4.076 | -0.1 % at 997, -1.9 % at 2970, -1.0 % at 7050 ppm |
+| MQ-309A | H2 | `mq-309a-hanwei-2004` | 1532.9 | 1586.2 | -1.951 | -1.953 | -1.9 % at 299, -1.5 % at 984, -1.4 % at 2940, -2.1 % at 6990 ppm |
 
 Re-derived curves are not used in the comparison with the examples below until one source is chosen per curve.
 

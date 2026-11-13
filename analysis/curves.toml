@@ -7,6 +7,8 @@
 # origin = "traced": produced by `mqcurves trace` from the recipe named in `recipe`.
 # origin = "extracted": produced by `mqcurves extract` from the recipe named in
 #   `recipe`: the marker positions of a figure the PDF draws with vector commands.
+# origin = "located": produced by `mqcurves locate` from the recipe named in
+#   `recipe`: the centres of hollow markers in a figure stored as an image.
 # hand_read: for a curve re-derived from a datasheet that also has hand-read
 #   points for the gas, the id of that hand-read curve. The two are compared on
 #   the coefficients page.
@@ -301,6 +303,27 @@ datasheet = "mq-303a-hanwei-2006"
 points = "points/mq-303a-hanwei-2006/iso-butane.csv"
 origin = "upstream"
 upstream_file = "WPDigitalizer/MQ303A/iso-butane.csv"
+note = "Kept as read by hand. The figure draws its grey gridlines over this line and its star markers, breaking both at every gridline, so neither can be followed automatically."
+
+[[curve]]
+id = "mq-303a-hanwei-2006-ethanol-located"
+sensor = "MQ-303A"
+gas = "ethanol"
+datasheet = "mq-303a-hanwei-2006"
+points = "points/mq-303a-hanwei-2006/ethanol-located.csv"
+origin = "located"
+recipe = "recipes/mq-303a-hanwei-2006-ethanol-located.toml"
+hand_read = "mq-303a-hanwei-2006-ethanol"
+
+[[curve]]
+id = "mq-303a-hanwei-2006-h2-located"
+sensor = "MQ-303A"
+gas = "H2"
+datasheet = "mq-303a-hanwei-2006"
+points = "points/mq-303a-hanwei-2006/h2-located.csv"
+origin = "located"
+recipe = "recipes/mq-303a-hanwei-2006-h2-located.toml"
+hand_read = "mq-303a-hanwei-2006-h2"
 
 [[curve]]
 id = "mq-309a-hanwei-2004-ch4"
@@ -337,6 +360,46 @@ datasheet = "mq-309a-hanwei-2004"
 points = "points/mq-309a-hanwei-2004/alcohol.csv"
 origin = "upstream"
 upstream_file = "WPDigitalizer/MQ309A/alcohol.csv"
+
+[[curve]]
+id = "mq-309a-hanwei-2004-alcohol-located"
+sensor = "MQ-309A"
+gas = "alcohol"
+datasheet = "mq-309a-hanwei-2004"
+points = "points/mq-309a-hanwei-2004/alcohol-located.csv"
+origin = "located"
+recipe = "recipes/mq-309a-hanwei-2004-alcohol-located.toml"
+hand_read = "mq-309a-hanwei-2004-alcohol"
+
+[[curve]]
+id = "mq-309a-hanwei-2004-ch4-located"
+sensor = "MQ-309A"
+gas = "CH4"
+datasheet = "mq-309a-hanwei-2004"
+points = "points/mq-309a-hanwei-2004/ch4-located.csv"
+origin = "located"
+recipe = "recipes/mq-309a-hanwei-2004-ch4-located.toml"
+hand_read = "mq-309a-hanwei-2004-ch4"
+
+[[curve]]
+id = "mq-309a-hanwei-2004-co-located"
+sensor = "MQ-309A"
+gas = "CO"
+datasheet = "mq-309a-hanwei-2004"
+points = "points/mq-309a-hanwei-2004/co-located.csv"
+origin = "located"
+recipe = "recipes/mq-309a-hanwei-2004-co-located.toml"
+hand_read = "mq-309a-hanwei-2004-co"
+
+[[curve]]
+id = "mq-309a-hanwei-2004-h2-located"
+sensor = "MQ-309A"
+gas = "H2"
+datasheet = "mq-309a-hanwei-2004"
+points = "points/mq-309a-hanwei-2004/h2-located.csv"
+origin = "located"
+recipe = "recipes/mq-309a-hanwei-2004-h2-located.toml"
+hand_read = "mq-309a-hanwei-2004-h2"
 
 [[curve]]
 id = "mq-4-hanwei-2007-ch4"

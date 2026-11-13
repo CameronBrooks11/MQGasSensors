@@ -98,6 +98,32 @@ exclude = [[98.64, 433.44, 169.68, 536.64]]   # optional: boxes to ignore, e.g. 
 
 Nothing is read unless the PDF matches the SHA-256 in the manifest, the page draws a rectangle at the frame's coordinates, and exactly `count` markers of those colours are found. A path larger than a marker is never read as one, whatever its colours: it is a line, a legend sample or a box. A marker drawn as several strokes, such as a cross, is joined into one, and is centred where its strokes start, which stays right when the frame clips some of them. Markers that share colours are told apart with `shape`: `outline`, `x`, `star` or `plus`. A marker the legend is drawn over is still in the file and is read, so `exclude` should cover only the legend's own markers where the legend sits over data.
 
+## Hollow markers in figures stored as images
+
+Where an image figure plots each value as a hollow marker (a square, a triangle, a circle), the marker's centre is the value, and
+
+```
+uv run python -m mqcurves locate recipes/<curve>.toml --points points.csv --overlay out/curve.png
+```
+
+finds it. Each hollow marker encloses a small patch of background, and the centre of that patch's bounding box is the centre of the marker. A line through the marker does not change what it encloses, and two markers drawn one over the other still enclose a patch each. The figure and its axes are given as for a traced curve; the markers by their colour, the plot area, and the size of their holes:
+
+```toml
+[markers]
+colour = [254, 0, 0]             # the outline's colour
+tolerance = 0                    # allowed difference per channel
+box = [352, 10, 618, 279]        # the plot area in pixels, plus a marker's width
+exclude = [[365, 200, 470, 270]] # optional: boxes to ignore, e.g. the legend
+area = [6, 20]                   # pixels a marker's hole may have
+fill = [0.9, 1.0]                # the hole's share of its bounding box
+count = 7
+# close = 1                      # optional: thicken the outline first, to close gaps
+```
+
+`area` leaves out the larger patches that lines enclose where they meet. `fill` tells markers of one colour apart: a square's hole fills its bounding box, a triangle's between a half and three quarters of it. Where an outline has a one-pixel gap its hole leaks out; `close` thickens every outline by that many pixels first. That shrinks every hole from every side, which leaves a symmetric hole's centre where it was; on the MQ-309A CO circles, whose outlines are uneven, one centre moves by half a pixel.
+
+Marker outlines drawn as strokes, such as crosses and stars, enclose nothing and are not found this way.
+
 ## Commands
 
 | Command | What it does |
@@ -105,10 +131,11 @@ Nothing is read unless the PDF matches the SHA-256 in the manifest, the page dra
 | `figures <pdf> [--page N] [--save DIR]` | List a PDF's embedded images with their size and `pixels_sha256` |
 | `trace <recipe> [--points CSV] [--overlay PNG]` | Trace and fit a curve from its recipe |
 | `extract <recipe> [--points CSV] [--overlay PNG]` | Read a curve's markers from a figure drawn as vectors, and fit it |
+| `locate <recipe> [--points CSV] [--overlay PNG]` | Find a curve's hollow markers in a figure stored as an image, and fit it |
 | `fit <points.csv>` | Fit points that are already digitised |
 | `mark <recipe> --id … --sensor … --gas … (--image F \| --datasheet ID --page N --pixels-sha256 H)` | Mark a new figure by clicking, and write its recipe |
 | `table [--check]` | Write `docs/coefficients.md`, or fail if it is out of date |
-| `reproduce` | Re-derive every traced or extracted curve from its datasheet and compare with the committed points |
+| `reproduce` | Re-derive every curve that has a recipe from its datasheet and compare with the committed points |
 
 `mark` opens a window and needs matplotlib: `uv sync --extra interactive`.
 
@@ -116,13 +143,13 @@ An overlay shows the traced points, the fitted line and the axis reference posit
 
 ## Points and the coefficients page
 
-[`curves.toml`](curves.toml) lists every curve that has digitised points: its sensor, gas, datasheet and the CSV under `points/` that holds them. A curve's points are read by hand by the authors of MQSensorsLib (a few marker positions each), traced from the figure's pixels by this tool, or extracted from the figure's drawing commands by this tool. A curve re-derived from a datasheet that also has hand-read points names them in `hand_read`, and the coefficients page compares the two.
+[`curves.toml`](curves.toml) lists every curve that has digitised points: its sensor, gas, datasheet and the CSV under `points/` that holds them. A curve's points are read by hand by the authors of MQSensorsLib (a few marker positions each), traced from the figure's pixels by this tool, extracted from the figure's drawing commands, or located as the centres of hollow markers in the figure's pixels. A curve re-derived from a datasheet that also has hand-read points names them in `hand_read`, and the coefficients page compares the two.
 
 ```
 just coefficients
 ```
 
-fits every curve and writes [`docs/coefficients.md`](../docs/coefficients.md). For a traced or extracted curve, the recipe is in `recipes/` and
+fits every curve and writes [`docs/coefficients.md`](../docs/coefficients.md). For every curve but a hand-read one, the recipe is in `recipes/` and
 
 ```
 just reproduce
@@ -134,7 +161,7 @@ The coefficients page also lists every `setA`/`setB` pair used in `examples/` be
 
 ## Limits
 
-- **Resolution.** A figure is only as precise as its pixels. In a 400 by 305 pixel figure spanning two decades vertically, one pixel is about 1.8 % in Rs/R0. A vector figure is as precise as its coordinates: the MQ-4 figure is drawn on a 0.24 pt grid. Its markers are plotted at 200, 1000, 5000 and 10000 ppm, and their centres sit up to 0.49 pt from where the frame puts those concentrations, 0.83 % in concentration. Rs/R0 is drawn to the same grid.
+- **Resolution.** A figure is only as precise as its pixels. In a 400 by 305 pixel figure spanning two decades vertically, one pixel is about 1.8 % in Rs/R0. A vector figure is as precise as its coordinates: the MQ-4 figure is drawn on a 0.24 pt grid. Its markers are plotted at 200, 1000, 5000 and 10000 ppm, and their centres sit up to 0.49 pt from where the frame puts those concentrations, 0.83 % in concentration. Rs/R0 is drawn to the same grid. Located markers are as precise as the image: in the MQ-303A figure one pixel is 3.7 % in Rs/R0, in the MQ-309A figure 2.2 %. Where one marker covers part of another, the covered one's centre can move by a pixel.
 - **A power law is an approximation.** Some datasheet curves bend on log-log axes, and several are drawn as straight segments between a handful of plotted values. The fit is then a best straight line over the traced range. The coefficients page gives, for each curve, the largest difference between the fit and the points: up to 20 % in concentration for the curves traced so far. Coefficients should not be used outside the range of the points.
 - **Markers.** Where a line carries markers, their pixels are part of the trace. A symmetric marker does not move the centre of the stroke; a triangle shifts it slightly over the few columns it covers.
 - **A datasheet curve is typical, not individual.** It describes a nominal sensor under the conditions the datasheet states. No fit here has been validated against hardware.
@@ -145,4 +172,4 @@ The coefficients page also lists every `setA`/`setB` pair used in `examples/` be
 just test
 ```
 
-The tracer's tests draw a figure with a known curve that covers only part of the plot, trace it, and check that both coefficients come back. The extractor's tests write a PDF that draws a figure with known values, a legend and a marker made of strokes, and read the values back. Neither needs a datasheet. Further tests read real datasheets and run only where `just datasheets` has been run.
+The tracer's tests draw a figure with a known curve that covers only part of the plot, trace it, and check that both coefficients come back. The extractor's tests write a PDF that draws a figure with known values, a legend and a marker made of strokes, and read the values back. The marker finder's tests draw squares and triangles of one colour, one over another, with gridlines and a legend, and find each centre. None needs a datasheet. Further tests read real datasheets and run only where `just datasheets` has been run.
