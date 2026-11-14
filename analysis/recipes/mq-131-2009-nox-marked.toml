@@ -1,0 +1,25 @@
+id = "mq-131-2009-nox-marked"
+sensor = "MQ-131"
+gas = "NOx"
+
+# Magenta line, filled squares.
+# Marker centres read by eye, as [x, y] pixels of the image as stored, at
+# 5, 10, 20, 50 and 100 ppm.
+markers = [[89, 89], [114, 100], [139.5, 108], [173.5, 118], [198, 127]]
+
+[source]
+datasheet = "mq-131-2009"
+page = 2
+pixels_sha256 = "b13335edc49104eb153cbe4fb11990744ab878374f8c7c2f58baca4cb37bad9d"
+
+# A JPEG. Fitted by least squares to every gridline across, none more than
+# 0.6 px off, 84.4 px a decade; up, to the decade gridlines and the frame's
+# top edge at 100, none more than 0.4 px off, 63.5 px a decade.
+# The vertical axis is R0/Rs, not Rs/R0: the values here are R0/Rs.
+[x]
+pixels = [30.01, 283.21]
+values = [1, 1000]
+
+[y]
+pixels = [19.62, 210.18]
+values = [100, 0.1]

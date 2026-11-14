@@ -126,6 +126,19 @@ class ComparisonTests(unittest.TestCase):
         self.assertIs(row[4], marked)
         self.assertIs(row[8], marked)
 
+    def test_provenance_tells_confirmed_partly_checked_and_unchecked_sensors_apart(self):
+        def hand(ident, sensor):
+            return {"id": ident, "sensor": sensor, "gas": ident, "datasheet": "sheet", "origin": "upstream",
+                    "points_data": ([100, 1000], [2.0, 1.0])}
+        a, b, c, d = hand("a", "MQ-1"), hand("b", "MQ-1"), hand("c", "MQ-2"), hand("d", "MQ-3")
+        for h in (a, c):
+            h["superseded_by"] = {"id": h["id"] + "-again", "sensor": h["sensor"], "origin": "marked",
+                                  "points_data": ([100, 1000], [2.2, 1.0]), "hand_read": h}
+        text = "\n".join(table.provenance([a, b, c, d, a["superseded_by"], c["superseded_by"]]))
+        self.assertIn("| MQ-1 | `sheet` | 2 | 1 | 9.1 % in Rs/R0 | read from this datasheet, where checked |", text)
+        self.assertIn("| MQ-2 | `sheet` | 1 | 1 | 9.1 % in Rs/R0 | read from this datasheet |", text)
+        self.assertIn("| MQ-3 | `sheet` | 1 | 0 |  | not checked |", text)
+
     def test_difference_from_a_fit_is_the_largest_over_its_range(self):
         f = fitted(100.0, -2.0)
         self.assertAlmostEqual(table.difference_from(100.0, -2.0, f), 0.0, places=9)
@@ -165,7 +178,7 @@ class RepositoryTests(unittest.TestCase):
         self.assertEqual(sum(c["origin"] == "traced" for c in self.curves), 5)
         self.assertEqual(sum(c["origin"] == "extracted" for c in self.curves), 38)
         self.assertEqual(sum(c["origin"] == "located" for c in self.curves), 6)
-        self.assertEqual(sum(c["origin"] == "marked" for c in self.curves), 12)
+        self.assertEqual(sum(c["origin"] == "marked" for c in self.curves), 18)
         for c in self.curves:
             self.assertGreaterEqual(c["fit"].n, 3, c["id"])
             self.assertLess(c["fit"].b, 0, c["id"])
@@ -190,7 +203,6 @@ class RepositoryTests(unittest.TestCase):
         text = "\n".join(table.provenance(self.curves))
         self.assertIn("| MQ-4 | `mq-4-hanwei-2007` | 6 | 6 | 2.1 % in Rs/R0 | read from this datasheet |", text)
         self.assertIn("| MQ-2 | `mq-2-hanwei-2009` | 6 | 6 | 3.7 % in Rs/R0 | read from this datasheet |", text)
-        self.assertIn("| MQ-9 | `mq-9-hanwei-2008` | 3 | 0 |  | not checked |", text)
         self.assertIn("| MQ-303A | `mq-303a-hanwei-2006` | 3 | 2 | 2.9 % in Rs/R0 | read from this datasheet, where checked |", text)
 
     def test_committed_page_is_up_to_date(self):
@@ -220,7 +232,7 @@ class RepositoryTests(unittest.TestCase):
         with contextlib.redirect_stdout(out):
             code = cli.main(["reproduce"])
         self.assertEqual(code, 0, out.getvalue())
-        self.assertIn("61 of 61", out.getvalue())
+        self.assertIn("67 of 67", out.getvalue())
 
     def test_check_passes_on_the_committed_page(self):
         out = io.StringIO()

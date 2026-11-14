@@ -46,6 +46,39 @@ origin = "upstream"
 upstream_file = "WPDigitalizer/MQ131/O3.csv"
 
 [[curve]]
+id = "mq-131-2009-cl2-marked"
+sensor = "MQ-131"
+gas = "Cl2"
+datasheet = "mq-131-2009"
+points = "points/mq-131-2009/cl2-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-131-2009-cl2-marked.toml"
+hand_read = "mq-131-2009-cl2"
+note = "Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it."
+
+[[curve]]
+id = "mq-131-2009-nox-marked"
+sensor = "MQ-131"
+gas = "NOx"
+datasheet = "mq-131-2009"
+points = "points/mq-131-2009/nox-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-131-2009-nox-marked.toml"
+hand_read = "mq-131-2009-nox"
+note = "Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it."
+
+[[curve]]
+id = "mq-131-2009-o3-marked"
+sensor = "MQ-131"
+gas = "O3"
+datasheet = "mq-131-2009"
+points = "points/mq-131-2009/o3-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-131-2009-o3-marked.toml"
+hand_read = "mq-131-2009-o3"
+note = "Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it."
+
+[[curve]]
 id = "mq-135-hanwei-acetone"
 sensor = "MQ-135"
 gas = "acetone"
@@ -1044,6 +1077,36 @@ datasheet = "mq-9-hanwei-2008"
 points = "points/mq-9-hanwei-2008/lpg.csv"
 origin = "upstream"
 upstream_file = "WPDigitalizer/MQ9/LPG.csv"
+
+[[curve]]
+id = "mq-9-hanwei-2008-ch4-marked"
+sensor = "MQ-9"
+gas = "CH4"
+datasheet = "mq-9-hanwei-2008"
+points = "points/mq-9-hanwei-2008/ch4-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-9-hanwei-2008-ch4-marked.toml"
+hand_read = "mq-9-hanwei-2008-ch4"
+
+[[curve]]
+id = "mq-9-hanwei-2008-co-marked"
+sensor = "MQ-9"
+gas = "CO"
+datasheet = "mq-9-hanwei-2008"
+points = "points/mq-9-hanwei-2008/co-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-9-hanwei-2008-co-marked.toml"
+hand_read = "mq-9-hanwei-2008-co"
+
+[[curve]]
+id = "mq-9-hanwei-2008-lpg-marked"
+sensor = "MQ-9"
+gas = "LPG"
+datasheet = "mq-9-hanwei-2008"
+points = "points/mq-9-hanwei-2008/lpg-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-9-hanwei-2008-lpg-marked.toml"
+hand_read = "mq-9-hanwei-2008-lpg"
 
 [[curve]]
 id = "mq-8-winsen-v1.3-h2"
