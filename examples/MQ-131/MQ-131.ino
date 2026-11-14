@@ -32,7 +32,10 @@
 #define pin A0 //Analog input 0 of your arduino
 #define type "MQ-131" //MQ131
 #define ADC_Bit_Resolution 10 // For arduino UNO/MEGA/NANO
-#define RatioMQ131CleanAir 15 //RS / R0 = 15 ppm
+// The datasheet's figure plots R0/Rs, which reads 12.0 in clean air (its AIR
+// line). calibrate() takes Rs/R0, so it gets the inverse. readSensorR0Rs()
+// below then computes R0/Rs, the ratio the O3 coefficients were fitted to.
+#define RatioMQ131CleanAir (1.0 / 12.0) // Rs/R0 in clean air
 //#define calibration_button 13 //Pin to calibrate your sensor
 
 //Declare Sensor

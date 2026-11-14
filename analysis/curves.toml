@@ -76,7 +76,7 @@ points = "points/mq-131-2009/o3-marked.csv"
 origin = "marked"
 recipe = "recipes/mq-131-2009-o3-marked.toml"
 hand_read = "mq-131-2009-o3"
-note = "Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it."
+note = "Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it. The AIR line lies on pixel row 78 of the figure, R0/Rs 12.0 (11.6 to 12.5 a pixel either way); examples/MQ-131 calibrates with its inverse."
 
 [[curve]]
 id = "mq-135-hanwei-acetone"

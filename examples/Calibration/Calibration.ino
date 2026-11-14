@@ -34,7 +34,7 @@ double          alcoholPPM          =   (0);
 //#define RatioMQ7CleanAir 27.5 //RS / R0 = 27.5 ppm  
 //#define RatioMQ8CleanAir 70   //RS / R0 = 70 ppm   
 //#define RatioMQ9CleanAir 9.6  //RS / R0 = 9.6 ppm    
-//#define RatioMQ131CleanAir 15 //RS / R0 = 15 ppm
+//#define RatioMQ131CleanAir (1.0 / 12.0) // Rs/R0 in clean air: the MQ-131 figure gives R0/Rs 12.0
 //#define RatioMQ135CleanAir 3.6//RS / R0 = 3.6 ppm     
 //#define RatioMQ303CleanAir 1  //RS / R0 = 1 ppm    
 //#define RatioMQ309CleanAir 11 //RS / R0 = 11 ppm    
