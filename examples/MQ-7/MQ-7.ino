@@ -48,16 +48,17 @@ void setup() {
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ7.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ7.setA(99.042); MQ7.setB(-1.518); // Configure the equation to calculate CO concentration value
+  MQ7.setA(98.691); MQ7.setB(-1.528); // Configure the equation to calculate CO concentration value
 
   /*
     Exponential regression:
-  GAS     | a      | b
-  H2      | 69.014  | -1.374
-  LPG     | 700000000 | -7.703
-  CH4     | 60000000000000 | -10.54
-  CO      | 99.042 | -1.518
-  Alcohol | 40000000000000000 | -12.35
+  Gas     | a          | b
+  alcohol | 1.4350e+19 | -14.58
+  CH4     | 5.5816e+13 | -10.49
+  CO      | 98.691     | -1.528
+  H2      | 70.057     | -1.365
+  LPG     | 7.7057e+08 | -7.570
+  From docs/coefficients.md, the fits to the mq-7-hanwei-2007 datasheet.
   */
   
   /*****************************  MQ Init ********************************************/ 

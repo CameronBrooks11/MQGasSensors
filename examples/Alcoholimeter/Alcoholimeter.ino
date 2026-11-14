@@ -33,7 +33,7 @@
 #define         RatioMQ3CleanAir        (60) //RS / R0 = 60 ppm
 
 /*****************************Globals***********************************************/
-double          alcoholPPM          =   (0);
+double          alcoholMgL          =   (0); // mg/L: the unit of the MQ-3 datasheet's figure
 /**************************Object_Sensor********************************************/
 MQGasSensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 
@@ -43,16 +43,18 @@ void setup() {
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ3.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ3.setA(0.3934); MQ3.setB(-1.504); //Configure the equation to calculate Alcohol concentration value
+  MQ3.setA(0.39304); MQ3.setB(-1.495); //Configure the equation to calculate alcohol concentration value
   /*
     Exponential regression:
-  Gas    | a      | b     
-  LPG    | 44771  | -3.245
-  CH4    | 2*10^31| 19.01
-  CO     | 521853 | -3.821
-  Alcohol| 0.3934 | -1.504
-  Benzene| 4.8387 | -2.68
-  Hexane | 7585.3 | -2.849
+  Gas     | a          | b
+  alcohol | 0.39304    | -1.495
+  benzene | 4.7380     | -2.688
+  CH4     | 3.8391e+32 | -19.76
+  CO      | 715790     | -3.895
+  hexane  | 7121.4     | -2.825
+  LPG     | 55529      | -3.281
+  From docs/coefficients.md, the fits to the mq-3-hanwei-2007 datasheet.
+  Concentrations are in mg/L, not ppm, as on that datasheet's figure.
   */
 
   /* 
@@ -89,8 +91,8 @@ void setup() {
 void loop() {
   MQ3.update(); // Update data, the arduino will read the voltage from the analog pin
   float correctionFactor = 0; // Optional environmental correction
-  alcoholPPM = MQ3.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
-  Serial.print("Alcohol now (PPM): ");
-  Serial.println(alcoholPPM);
+  alcoholMgL = MQ3.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
+  Serial.print("Alcohol now (mg/L): ");
+  Serial.println(alcoholMgL);
   delay(500); //Sampling frequency
 }

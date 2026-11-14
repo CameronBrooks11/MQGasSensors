@@ -42,17 +42,18 @@ void setup() {
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ135.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ135.setA(102.2); MQ135.setB(-2.473); // Configure the equation to to calculate NH4 concentration
+  MQ135.setA(102.29); MQ135.setB(-2.484); // Configure the equation to to calculate NH4 concentration
 
   /*
     Exponential regression:
-  GAS      | a      | b
-  CO       | 605.18 | -3.937  
-  Alcohol  | 77.255 | -3.18 
-  CO2      | 110.47 | -2.862
-  Toluen  | 44.947 | -3.445
-  NH4      | 102.2  | -2.473
-  Aceton  | 34.668 | -3.369
+  Gas     | a          | b
+  acetone | 34.544     | -3.402
+  alcohol | 76.939     | -3.173
+  CO      | 610.01     | -3.960
+  CO2     | 109.66     | -2.856
+  NH4     | 102.29     | -2.484
+  toluene | 44.880     | -3.443
+  From docs/coefficients.md, the fits to the mq-135-hanwei datasheet.
   */
   
   /*****************************  MQ Init ********************************************/ 

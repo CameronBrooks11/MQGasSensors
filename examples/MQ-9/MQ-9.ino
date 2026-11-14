@@ -45,14 +45,15 @@ void setup() {
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ9.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ9.setA(1000.5); MQ9.setB(-2.186); // Configure the equation to to calculate LPG concentration
+  MQ9.setA(971.09); MQ9.setB(-2.140); // Configure the equation to to calculate LPG concentration
 
   /*
     Exponential regression:
-  GAS     | a      | b
-  LPG     | 1000.5 | -2.186
-  CH4     | 4269.6 | -2.648
-  CO      | 599.65 | -2.244
+  Gas | a          | b
+  CH4 | 4224.5     | -2.596
+  CO  | 580.02     | -2.220
+  LPG | 971.09     | -2.140
+  From docs/coefficients.md, the fits to the mq-9-hanwei-2008 datasheet.
   */
   
   /*****************************  MQ Init ********************************************/ 

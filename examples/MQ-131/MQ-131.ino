@@ -47,14 +47,15 @@ void setup() {
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ131.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ131.setA(23.943); MQ131.setB(-1.11); // Configure the equation to to calculate O3 concentration
+  MQ131.setA(24.264); MQ131.setB(-1.117); // Configure the equation to to calculate O3 concentration
 
   /*
     Exponential regression:
-  GAS     | a      | b
-  NOx     | -462.43 | -2.204
-  CL2     | 47.209 | -1.186
-  O3      | 23.943 | -1.11
+  Gas | a          | b
+  Cl2 | 48.425     | -1.181
+  NOx | 470.06     | -2.218
+  O3  | 24.264     | -1.117
+  From docs/coefficients.md, the fits to the mq-131-2009 datasheet.
   */
 
 

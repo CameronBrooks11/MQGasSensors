@@ -61,16 +61,18 @@ void setup()
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ2.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ2.setA(987.99); MQ2.setB(-2.162); // Configure the equation to to calculate H2 concentration
+  MQ2.setA(980.95); MQ2.setB(-2.112); // Configure the equation to to calculate H2 concentration
   
 /*
     Exponential regression:
-    Gas    | a      | b
-    H2     | 987.99 | -2.162
-    LPG    | 574.25 | -2.222
-    CO     | 36974  | -3.109
-    Alcohol| 3616.1 | -2.675
-    Propane| 658.71 | -2.168
+    Gas     | a          | b
+    alcohol | 3553.2     | -2.707
+    CH4     | 4189.7     | -2.628
+    CO      | 29571      | -2.974
+    H2      | 980.95     | -2.112
+    LPG     | 564.77     | -2.151
+    propane | 645.86     | -2.166
+    From docs/coefficients.md, the fits to the mq-2-hanwei-2009 datasheet.
   */
 
   /*****************************  MQ Init ********************************************/ 

@@ -42,15 +42,16 @@ void setup() {
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ6.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ6.setA(2127.2); MQ6.setB(-2.526); // Configure the equation to to calculate CH4 concentration
+  MQ6.setA(2195.3); MQ6.setB(-2.507); // Configure the equation to to calculate CH4 concentration
   /*
     Exponential regression:
-  GAS     | a      | b
-  H2      | 88158  | -3.597
-  LPG     | 1009.2 | -2.35
-  CH4     | 2127.2 | -2.526
-  CO      | 1000000000000000 | -13.5
-  Alcohol | 50000000 | -6.017
+  Gas     | a          | b
+  alcohol | 5.2963e+07 | -6.004
+  CH4     | 2195.3     | -2.507
+  CO      | 1.5935e+14 | -12.53
+  H2      | 93440      | -3.640
+  LPG     | 1025.1     | -2.368
+  From docs/coefficients.md, the fits to the mq-6-hanwei-2007 datasheet.
   */
   
   /*****************************  MQ Init ********************************************/ 
