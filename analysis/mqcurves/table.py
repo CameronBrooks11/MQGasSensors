@@ -73,7 +73,26 @@ def load_curves(analysis=ANALYSIS, manifest=None):
             if other is None or other["origin"] != "upstream" or other["datasheet"] != c["datasheet"]:
                 raise ValueError(f"{c['id']}: hand_read must name a curve read by hand upstream from the same datasheet")
             c["hand_read"] = other
+            other["superseded_by"] = c
     return curves
+
+
+def source_curves(curves):
+    """The curves the page fits from: every curve but a hand-read one that has been re-derived.
+
+    A curve re-derived from its datasheet is the source of its fit; the hand-read
+    points it re-derives are kept as a comparison.
+    """
+    return [c for c in curves if "superseded_by" not in c]
+
+
+def difference_from(a, b, f):
+    """Largest relative difference in concentration between a * ratio**b and fit `f`, over the fit's Rs/R0 range.
+
+    Two power laws differ by a power law, so the largest difference is at one
+    end of the range.
+    """
+    return float(max(abs(a * r**b / (f.a * r**f.b) - 1) for r in (f.ratio_min, f.ratio_max)))
 
 
 def offsets(hand_ppm, hand_ratio, ppm, ratio):
@@ -128,29 +147,38 @@ def judge(a_text, b_text, f):
 
 
 def audit(curves, pairs):
-    """One row per example pair: its closest curve for that sensor and the verdict.
+    """One row per example pair: the curve it was written from, and how far it is from the datasheet.
 
     The examples were written from Hanwei-era datasheets, so only curves from
     those are candidates. A Winsen manual for the same sensor is a different
     document with a different curve, and comparing against it would mislead.
+
+    The pair is matched to the closest hand-read fit for its sensor, which is
+    where the examples' values came from, and judged against it. Where the
+    sensor has no hand-read curve, it is matched to the closest source curve
+    instead. The same gas's source curve, re-derived where it has been, then
+    gives the largest difference in concentration between the pair and that
+    curve's fit, over the curve's range.
+
+    Each row is (sensor, a text, b text, sketches, matched curve, verdict,
+    error in a, error in b, source curve, largest difference in concentration).
     """
     curves = [c for c in curves if c.get("sheet", {}).get("maker", "Hanwei").startswith("Hanwei")]
-    # A curve re-derived beside hand-read points is compared below, not here,
-    # until one of the two is chosen as the source of the fit.
-    curves = [c for c in curves if "hand_read" not in c]
     rows = []
     for (sensor, a_text, b_text), sketches in sorted(pairs.items(), key=lambda kv: (sensor_key(kv[0][0]), float(kv[0][1]))):
-        candidates = [c for c in curves if c["sensor"] == sensor]
         if float(a_text) <= 0:
-            rows.append((sensor, a_text, b_text, sketches, None, "not a power law", None, None))
+            rows.append((sensor, a_text, b_text, sketches, None, "not a power law", None, None, None, None))
             continue
+        hand = [c for c in curves if c["sensor"] == sensor and c["origin"] == "upstream"]
+        candidates = hand or [c for c in source_curves(curves) if c["sensor"] == sensor]
         if not candidates:
-            rows.append((sensor, a_text, b_text, sketches, None, "no points", None, None))
+            rows.append((sensor, a_text, b_text, sketches, None, "no points", None, None, None, None))
             continue
         a, b = float(a_text), float(b_text)
         best = min(candidates, key=lambda c: abs(c["fit"].b - b) / abs(b) + abs(math.log10(c["fit"].a / a)))
         verdict, err_a, err_b = judge(a_text, b_text, best["fit"])
-        rows.append((sensor, a_text, b_text, sketches, best, verdict, err_a, err_b))
+        source = best.get("superseded_by", best)
+        rows.append((sensor, a_text, b_text, sketches, best, verdict, err_a, err_b, source, difference_from(a, b, source["fit"])))
     return rows
 
 
@@ -177,7 +205,7 @@ def compared(curves):
     out = [
         "## Hand-read points against the datasheet",
         "",
-        "Curves re-derived from a datasheet that also has hand-read points for the same gas. Both fits are in the table above; this compares them, and says how far each hand-read point lies from the re-derived line, in Rs/R0 at the concentration the point was read at.",
+        "Curves re-derived from a datasheet that also has hand-read points for the same gas. The re-derived fit is the one in the table above; the hand-read fit is kept here for comparison, with how far each hand-read point lies from the re-derived line, in Rs/R0 at the concentration the point was read at.",
         "",
         "| Sensor | Gas | Datasheet | Hand-read a | Re-derived a | Hand-read b | Re-derived b | Hand-read points off the re-derived line |",
         "|---|---|---|---|---|---|---|---|",
@@ -189,11 +217,33 @@ def compared(curves):
         cells = ", ".join(f"{d * 100:+.1f} % at {sig(p, 3)}" for p, d in zip(hp, off, strict=True))
         out.append(f"| {c['sensor']} | {c['gas']} | `{c['datasheet']}` | {sig(h['fit'].a)} | {sig(c['fit'].a)} "
                    f"| {sig(h['fit'].b, 4)} | {sig(c['fit'].b, 4)} | {cells} {c['unit']} |")
-    out += [
+    out += [""]
+    return out
+
+
+def provenance(curves):
+    """Per sensor: whether its hand-read points were confirmed to come from the datasheet named for them."""
+    hand = [c for c in curves if c["origin"] == "upstream"]
+    out = [
+        "## Where the hand-read points come from",
         "",
-        "Re-derived curves are not used in the comparison with the examples below until one source is chosen per curve.",
+        "For each sensor with hand-read points: how many of its hand-read curves have been re-derived from the datasheet named for them, and the largest difference between a hand-read point and the re-derived line. A hand-read curve that has not been re-derived keeps its points as the source of its fit.",
         "",
+        "| Sensor | Datasheet | Hand-read curves | Re-derived | Largest difference | Finding |",
+        "|---|---|---|---|---|---|",
     ]
+    for (sensor, sheet) in sorted({(c["sensor"], c["datasheet"]) for c in hand}, key=lambda k: sensor_key(k[0])):
+        mine = [c for c in hand if c["sensor"] == sensor and c["datasheet"] == sheet]
+        done = [c["superseded_by"] for c in mine if "superseded_by" in c]
+        if done:
+            worst = max(max(abs(o) for o in offsets(*c["hand_read"]["points_data"], *c["points_data"])) for c in done)
+            largest = f"{worst * 100:.1f} % in Rs/R0"
+            finding = ("read from this datasheet" if len(done) == len(mine)
+                       else "read from this datasheet, where checked")
+        else:
+            largest, finding = "", "not checked"
+        out.append(f"| {sensor} | `{sheet}` | {len(mine)} | {len(done)} | {largest} | {finding} |")
+    out += [""]
     return out
 
 
@@ -209,10 +259,12 @@ def render(curves, rows):
         "",
         "## Fitted curves",
         "",
+        "One row per curve. Where a curve has been re-derived from its datasheet, that is the source of its fit, and the hand-read points for the same gas are kept below as a comparison. Where it has not, the hand-read points are the source.",
+        "",
         "| Sensor | Gas | a | b | Concentration range | Rs/R0 range | Points | r² | Largest error | Datasheet | Points from |",
         "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
-    for c in sorted(curves, key=lambda c: (sensor_key(c["sensor"]), c["sheet"]["maker"], c["gas"].lower())):
+    for c in sorted(source_curves(curves), key=lambda c: (sensor_key(c["sensor"]), c["sheet"]["maker"], c["gas"].lower())):
         f = c["fit"]
         origin = "read by hand upstream" if c["origin"] == "upstream" else f"[{c['origin']}](../analysis/{c['recipe']})"
         out.append(
@@ -235,23 +287,28 @@ def render(curves, rows):
         "",
     ]
     out += compared(curves)
+    out += provenance(curves)
     out += [
         "## Values used in the examples",
         "",
-        "Every distinct `setA`/`setB` pair in `examples/`, beside the closest fitted curve for the same sensor. The examples were written from the Hanwei-era datasheets, so only curves from those are compared; a Winsen manual for the same sensor is a different document with a different curve.",
+        "Every distinct `setA`/`setB` pair in `examples/`. The examples were written from the Hanwei-era datasheets, so only curves from those are compared; a Winsen manual for the same sensor is a different document with a different curve.",
         "",
-        "| Sensor | setA | setB | Closest curve | Fitted a | Fitted b | Difference in a | Verdict | Sketches |",
-        "|---|---|---|---|---|---|---|---|---|",
+        "Each pair is matched to the closest hand-read fit for its sensor, which is where the examples' values came from, and the verdict says how it relates to that fit. **Difference from the datasheet fit** then compares the pair with the fit of the same gas's source curve, re-derived where it has been: the biggest relative difference in the concentration the two return, over that curve's Rs/R0 range. It is what using the example's value costs against the best power law for the datasheet's curve; how far that power law is from the curve itself is the curve's **Largest error** above.",
+        "",
+        "| Sensor | setA | setB | Gas | Matched fit a | Matched fit b | Difference in a | Verdict | Difference from the datasheet fit | Source of that curve | Sketches |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     counts = {}
-    for sensor, a, b, sketches, best, verdict, err_a, _ in rows:
+    for sensor, a, b, sketches, best, verdict, err_a, _, source, error in rows:
         counts[verdict] = counts.get(verdict, 0) + 1
         if best:
             f = best["fit"]
-            cells = f"{best['gas']} | {sig(f.a)} | {sig(f.b, 4)} | {err_a * 100:.1f} %"
+            origin = "read by hand upstream" if source["origin"] == "upstream" else source["origin"]
+            cells = (f"{best['gas']} | {sig(f.a)} | {sig(f.b, 4)} | {err_a * 100:.1f} % | {VERDICT[verdict]} "
+                     f"| {error * 100:.0f} % | {origin}")
         else:
-            cells = " | | | "
-        out.append(f"| {sensor} | {a} | {b} | {cells} | {VERDICT[verdict]} | {', '.join(sketches)} |")
+            cells = f" | | | | {VERDICT[verdict]} | | "
+        out.append(f"| {sensor} | {a} | {b} | {cells} | {', '.join(sketches)} |")
     out += ["", "| Verdict | Pairs |", "|---|---|"]
     out += [f"| {VERDICT[v]} | {counts[v]} |" for v in VERDICT if v in counts]
     out += [

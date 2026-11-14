@@ -73,7 +73,7 @@ class ExampleScanTests(unittest.TestCase):
         self.assertIsNone(table.sensor_of("sensor"))
 
     def test_linear_and_unknown_sensors_get_their_own_verdicts(self):
-        curves = [{"sensor": "MQ-4", "gas": "CH4", "fit": fitted(1012.687, -2.78594)}]
+        curves = [{"sensor": "MQ-4", "gas": "CH4", "origin": "upstream", "fit": fitted(1012.687, -2.78594)}]
         rows = table.audit(curves, {("MQ-4", "-0.318", "1.133"): ["x"], ("MQ-136", "36.737", "-3.536"): ["y"],
                                     ("MQ-4", "1012.7", "-2.786"): ["z"]})
         self.assertEqual({(r[0], r[5]) for r in rows},
@@ -82,8 +82,8 @@ class ExampleScanTests(unittest.TestCase):
 
 class EditionTests(unittest.TestCase):
     def test_example_values_are_not_compared_with_another_makers_curve(self):
-        hanwei = {"sensor": "MQ-136", "gas": "H2S", "fit": fitted(36.737, -3.536), "sheet": {"maker": "Hanwei"}}
-        winsen = {"sensor": "MQ-136", "gas": "H2S", "fit": fitted(0.13543, -3.7705), "sheet": {"maker": "Winsen"}}
+        hanwei = {"sensor": "MQ-136", "gas": "H2S", "origin": "upstream", "fit": fitted(36.737, -3.536), "sheet": {"maker": "Hanwei"}}
+        winsen = {"sensor": "MQ-136", "gas": "H2S", "origin": "traced", "fit": fitted(0.13543, -3.7705), "sheet": {"maker": "Winsen"}}
         pair = {("MQ-136", "36.737", "-3.536"): ["MQ-136"]}
         self.assertEqual(table.audit([winsen], pair)[0][5], "no points")
         self.assertEqual(table.audit([winsen, hanwei], pair)[0][5], "same")
@@ -99,11 +99,39 @@ class ComparisonTests(unittest.TestCase):
         off = table.offsets([10**4.5, 10**1.5], [2**-0.5, 4 * 2**0.5], [100, 1000, 10000], [4.0, 2.0, 1.0])
         np.testing.assert_allclose(off, [0, 0], atol=1e-12)
 
-    def test_re_derived_curve_is_left_out_of_the_example_audit(self):
-        hand = {"sensor": "MQ-4", "gas": "CH4", "fit": fitted(1012.687, -2.78594)}
-        again = {"sensor": "MQ-4", "gas": "CH4", "fit": fitted(1012.7, -2.786), "hand_read": hand}
-        rows = table.audit([again, hand], {("MQ-4", "1012.7", "-2.786"): ["MQ-4"]})
-        self.assertIs(rows[0][4], hand)
+    def re_derived(self):
+        hand = {"id": "hand", "sensor": "MQ-4", "gas": "CH4", "origin": "upstream", "fit": fitted(1012.687, -2.78594)}
+        again = {"id": "again", "sensor": "MQ-4", "gas": "CH4", "origin": "extracted", "fit": fitted(990.22, -2.8257),
+                 "hand_read": hand}
+        hand["superseded_by"] = again
+        return hand, again
+
+    def test_re_derived_curve_is_the_source_and_its_hand_read_one_is_not(self):
+        hand, again = self.re_derived()
+        other = {"id": "other", "sensor": "MQ-2", "gas": "H2", "origin": "upstream", "fit": fitted(982.04, -2.131)}
+        self.assertEqual([c["id"] for c in table.source_curves([hand, again, other])], ["again", "other"])
+
+    def test_example_is_matched_to_its_hand_read_fit_and_measured_against_the_re_derived_one(self):
+        hand, again = self.re_derived()
+        row = table.audit([again, hand], {("MQ-4", "1012.7", "-2.786"): ["MQ-4"]})[0]
+        self.assertIs(row[4], hand)
+        self.assertEqual(row[5], "same")
+        self.assertIs(row[8], again)
+        self.assertAlmostEqual(row[9], table.difference_from(1012.7, -2.786, again["fit"]))
+        self.assertGreater(row[9], 0.01)
+
+    def test_sensor_without_hand_read_points_is_matched_to_its_source_curve(self):
+        marked = {"id": "m", "sensor": "MQ-136", "gas": "H2S", "origin": "marked", "fit": fitted(36.716, -3.481)}
+        row = table.audit([marked], {("MQ-136", "36.737", "-3.536"): ["MQ-136"]})[0]
+        self.assertIs(row[4], marked)
+        self.assertIs(row[8], marked)
+
+    def test_difference_from_a_fit_is_the_largest_over_its_range(self):
+        f = fitted(100.0, -2.0)
+        self.assertAlmostEqual(table.difference_from(100.0, -2.0, f), 0.0, places=9)
+        self.assertAlmostEqual(table.difference_from(110.0, -2.0, f), 0.1, places=9)
+        # A different slope differs most at an end of the Rs/R0 range, 0.2 to 2.
+        self.assertAlmostEqual(table.difference_from(100.0, -2.1, f), 0.2 ** -0.1 - 1, places=9)
 
     def test_hand_read_must_name_a_hand_read_curve_of_the_same_datasheet(self):
         with tempfile.TemporaryDirectory() as d:
@@ -149,6 +177,20 @@ class RepositoryTests(unittest.TestCase):
             f = self.curve(ident)
             self.assertAlmostEqual(f.a / a, 1.0, delta=6e-5, msg=ident)  # half a unit in the fifth figure
             self.assertAlmostEqual(f.b, b, delta=5e-4, msg=ident)
+
+    def test_page_lists_each_curve_once(self):
+        page = table.OUTPUT.read_text()
+        fitted_rows = page.split("## Fitted curves")[1].split("Notes:")[0]
+        keys = [tuple(cell.strip() for cell in line.split("|")[1:3]) + (line.split("`")[1],)
+                for line in fitted_rows.splitlines() if line.startswith("| MQ")]
+        self.assertEqual(len(keys), len(set(keys)))
+        self.assertEqual(len(keys), len(table.source_curves(self.curves)))
+
+    def test_provenance_says_which_hand_read_points_were_confirmed(self):
+        text = "\n".join(table.provenance(self.curves))
+        self.assertIn("| MQ-4 | `mq-4-hanwei-2007` | 6 | 6 | 2.1 % in Rs/R0 | read from this datasheet |", text)
+        self.assertIn("| MQ-2 | `mq-2-hanwei-2009` | 6 | 0 |  | not checked |", text)
+        self.assertIn("| MQ-303A | `mq-303a-hanwei-2006` | 3 | 2 | 2.9 % in Rs/R0 | read from this datasheet, where checked |", text)
 
     def test_committed_page_is_up_to_date(self):
         self.assertEqual(table.OUTPUT.read_text(), table.generate(),
