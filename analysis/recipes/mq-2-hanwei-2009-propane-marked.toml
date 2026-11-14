@@ -1,0 +1,26 @@
+id = "mq-2-hanwei-2009-propane-marked"
+sensor = "MQ-2"
+gas = "propane"
+
+# Teal line, plus-shaped markers mostly hidden by the LPG squares drawn over
+# them; each centre is placed from the arm that shows above its square, so
+# these are the least certain readings on the figure.
+# Marker centres read by eye, as [x, y] pixels of the image as stored, at
+# 200, 500, 800, 1000, 1500, 2000, 3000, 5000 and 10000 ppm.
+markers = [[95, 116], [156, 142], [188, 154], [204, 160], [230, 170.5], [250.5, 178.5], [278, 190], [312, 204.5], [359.5, 226]]
+
+[source]
+datasheet = "mq-2-hanwei-2009"
+page = 2
+pixels_sha256 = "cbcf51bb5d8a6c268253dbb4d2b74b540e90366a20fd86d1e07aa0d49f9d0c92"
+
+# A JPEG. Fitted by least squares to every gridline clear of the legend, none
+# more than 0.9 px off: 156.1 px a decade across, 139.0 px a decade up. The
+# frame's right and top edges fall at the fit's 10000 ppm and Rs/R0 10.
+[x]
+pixels = [47.10, 359.35]
+values = [100, 10000]
+
+[y]
+pixels = [8.95, 286.95]
+values = [10, 0.1]

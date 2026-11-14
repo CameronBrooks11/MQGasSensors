@@ -1,0 +1,24 @@
+id = "mq-2-hanwei-2009-alcohol-marked"
+sensor = "MQ-2"
+gas = "alcohol"
+
+# Purple line, x-shaped markers just under the CH4 triangles.
+# Marker centres read by eye, as [x, y] pixels of the image as stored, at
+# 200, 500, 800, 1000, 1500, 2000, 3000, 5000 and 10000 ppm.
+markers = [[95, 85], [156, 105], [188, 115.5], [204, 119.5], [230.5, 127.5], [250.5, 134], [278, 142.5], [312, 155], [359.5, 173.5]]
+
+[source]
+datasheet = "mq-2-hanwei-2009"
+page = 2
+pixels_sha256 = "cbcf51bb5d8a6c268253dbb4d2b74b540e90366a20fd86d1e07aa0d49f9d0c92"
+
+# A JPEG. Fitted by least squares to every gridline clear of the legend, none
+# more than 0.9 px off: 156.1 px a decade across, 139.0 px a decade up. The
+# frame's right and top edges fall at the fit's 10000 ppm and Rs/R0 10.
+[x]
+pixels = [47.10, 359.35]
+values = [100, 10000]
+
+[y]
+pixels = [8.95, 286.95]
+values = [10, 0.1]

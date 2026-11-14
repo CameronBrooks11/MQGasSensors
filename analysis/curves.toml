@@ -214,6 +214,67 @@ origin = "upstream"
 upstream_file = "WPDigitalizer/MQ2/Propane.csv"
 
 [[curve]]
+id = "mq-2-hanwei-2009-alcohol-marked"
+sensor = "MQ-2"
+gas = "alcohol"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/alcohol-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-2-hanwei-2009-alcohol-marked.toml"
+hand_read = "mq-2-hanwei-2009-alcohol"
+
+[[curve]]
+id = "mq-2-hanwei-2009-ch4-marked"
+sensor = "MQ-2"
+gas = "CH4"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/ch4-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-2-hanwei-2009-ch4-marked.toml"
+hand_read = "mq-2-hanwei-2009-ch4"
+
+[[curve]]
+id = "mq-2-hanwei-2009-co-marked"
+sensor = "MQ-2"
+gas = "CO"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/co-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-2-hanwei-2009-co-marked.toml"
+hand_read = "mq-2-hanwei-2009-co"
+
+[[curve]]
+id = "mq-2-hanwei-2009-h2-marked"
+sensor = "MQ-2"
+gas = "H2"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/h2-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-2-hanwei-2009-h2-marked.toml"
+hand_read = "mq-2-hanwei-2009-h2"
+
+[[curve]]
+id = "mq-2-hanwei-2009-lpg-marked"
+sensor = "MQ-2"
+gas = "LPG"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/lpg-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-2-hanwei-2009-lpg-marked.toml"
+hand_read = "mq-2-hanwei-2009-lpg"
+
+[[curve]]
+id = "mq-2-hanwei-2009-propane-marked"
+sensor = "MQ-2"
+gas = "propane"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/propane-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-2-hanwei-2009-propane-marked.toml"
+hand_read = "mq-2-hanwei-2009-propane"
+note = "Read by eye from a JPEG. The plus-shaped markers are mostly hidden by the LPG squares drawn over them."
+
+[[curve]]
 id = "mq-3-hanwei-2007-alcohol"
 sensor = "MQ-3"
 gas = "alcohol"

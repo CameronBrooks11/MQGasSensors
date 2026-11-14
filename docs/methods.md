@@ -34,9 +34,9 @@ The datasheets are copyrighted and are not stored in this repository, and neithe
 
 **Extracted.** Some datasheets draw the figure with PDF drawing commands, so the position of every marker is in the file. The same tool reads the centres of one gas's markers, picked out by their colours, and converts them through the plot frame's coordinates. These are the values the manufacturer plotted, to the precision of the drawing, with no pixels involved. A marker the legend is drawn over is still in the file and is read; on the MQ-3 sheet the legend covers three of the ten markers on three lines, which is why the hand-read points for those lines skip from about 1 to 6 mg/L. Where hand-read points exist for the same curve, the coefficients page compares the two.
 
-**Located.** In a figure stored as an image whose markers are hollow outlines, the same tool finds each marker as the patch of background its outline encloses, and takes the centre of that patch. Markers of one colour are told apart by the shape of the patch. These are the plotted values to the precision of the image's pixels. Where a figure's markers cannot be found this way, the hand-read points are kept and the reason is recorded beside the curve.
+**Located.** In a figure stored as an image whose markers are hollow outlines, the same tool finds each marker as the patch of background its outline encloses, and takes the centre of that patch. Markers of one colour are told apart by the shape of the patch. These are the plotted values to the precision of the image's pixels. Where a figure's markers cannot be found this way, they are read by eye as below, or the hand-read points are kept and the reason is recorded beside the curve.
 
-**Marked.** Where neither method can follow a figure and there are no hand-read points either, the marker centres are read by eye and recorded as pixel positions in the recipe, with the figure's pixel hash and gridline calibration. This is still a person's reading, good to about a pixel, but each position can be checked against the exact figure on an overlay, which the hand-read points cannot.
+**Marked.** Where neither method can follow a figure, the marker centres are read by eye and recorded as pixel positions in the recipe, with the figure's pixel hash and gridline calibration. This is still a person's reading, good to about a pixel, but each position can be checked against the exact figure on an overlay, which the hand-read points cannot.
 
 ## Which points a fit comes from
 
@@ -53,7 +53,7 @@ Two makers publish datasheets for sensors with the same names, and their curves 
 - **Hanwei**, 2004 to 2009. The example sketches' values come from these.
 - **Zhengzhou Winsen**, manuals from 2014 and 2015. The traced curves so far come from these.
 
-The extracted curves so far come from the Hanwei MQ-3, MQ-4, MQ-5, MQ-6, MQ-7, MQ-8 and MQ-135 datasheets, the located ones from the Hanwei MQ-303A and MQ-309A datasheets, and the marked ones from the Hanwei MQ-136 and MQ-137 datasheets, which print the same figure with different legends.
+The extracted curves so far come from the Hanwei MQ-3, MQ-4, MQ-5, MQ-6, MQ-7, MQ-8 and MQ-135 datasheets, the located ones from the Hanwei MQ-303A and MQ-309A datasheets, and the marked ones from the Hanwei MQ-2 datasheet and the Hanwei MQ-136 and MQ-137 datasheets, which print the same figure with different legends.
 
 A coefficient pair is only meaningful together with the datasheet it came from, so the page names the datasheet in every row and never mixes editions. Which edition describes a sensor you have bought depends on who made it.
 
