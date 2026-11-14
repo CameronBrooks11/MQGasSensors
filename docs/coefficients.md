@@ -101,7 +101,13 @@ Each fit is a straight line through digitised points on log-log axes. It describ
 | MQ-135 | NH4 | 102.29 | -2.484 | 10.0 to 200 ppm | 0.766 to 2.55 | 3 | 1.0000 | 1 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-nh4-extracted.toml) |
 | MQ-135 | toluene | 44.947 | -3.445 | 10.0 to 200 ppm | 0.643 to 1.54 | 3 | 0.9994 | 4 % | `mq-135-hanwei` | read by hand upstream |
 | MQ-135 | toluene | 44.880 | -3.443 | 10.0 to 200 ppm | 0.642 to 1.54 | 3 | 0.9994 | 4 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-toluene-extracted.toml) |
+| MQ-136 | CO | 605.09 | -3.909 | 9.99 to 200 ppm | 1.35 to 2.87 | 3 | 0.9969 | 10 % | `mq-136-hanwei-2004` | [marked](../analysis/recipes/mq-136-hanwei-2004-co-marked.toml) |
+| MQ-136 | H2S | 36.716 | -3.481 | 10.1 to 201 ppm | 0.602 to 1.44 | 3 | 0.9972 | 9 % | `mq-136-hanwei-2004` | [marked](../analysis/recipes/mq-136-hanwei-2004-h2s-marked.toml) |
+| MQ-136 | NH4 | 103.49 | -2.479 | 10.1 to 198 ppm | 0.776 to 2.57 | 3 | 0.9998 | 3 % | `mq-136-hanwei-2004` | [marked](../analysis/recipes/mq-136-hanwei-2004-nh4-marked.toml) |
 | MQ-136 | H2S | 0.13471 | -3.775 | 1.12 to 181 ppm | 0.148 to 0.569 | 280 | 0.9997 | 5 % | `mq-136-winsen-v1.4` | [traced](../analysis/recipes/mq-136-winsen-v1.4-h2s.toml) |
+| MQ-137 | C2H6O | 103.49 | -2.479 | 10.1 to 198 ppm | 0.776 to 2.57 | 3 | 0.9998 | 3 % | `mq-137-hanwei-2004` | [marked](../analysis/recipes/mq-137-hanwei-2004-c2h6o-marked.toml) |
+| MQ-137 | CO | 605.09 | -3.909 | 9.99 to 200 ppm | 1.35 to 2.87 | 3 | 0.9969 | 10 % | `mq-137-hanwei-2004` | [marked](../analysis/recipes/mq-137-hanwei-2004-co-marked.toml) |
+| MQ-137 | NH3 | 36.716 | -3.481 | 10.1 to 201 ppm | 0.602 to 1.44 | 3 | 0.9972 | 9 % | `mq-137-hanwei-2004` | [marked](../analysis/recipes/mq-137-hanwei-2004-nh3-marked.toml) |
 | MQ-137 | NH3 | 0.13471 | -3.775 | 1.12 to 181 ppm | 0.148 to 0.569 | 280 | 0.9997 | 5 % | `mq-137-winsen-v1.4` | [traced](../analysis/recipes/mq-137-winsen-v1.4-nh3.toml) |
 | MQ-303A | ethanol | 3.4916 | -2.432 | 9.76 to 9710 ppm | 0.0370 to 0.637 | 7 | 0.9994 | 9 % | `mq-303a-hanwei-2006` | read by hand upstream |
 | MQ-303A | ethanol | 3.5821 | -2.423 | 10.0 to 10000 ppm | 0.0364 to 0.631 | 7 | 0.9993 | 10 % | `mq-303a-hanwei-2006` | [located](../analysis/recipes/mq-303a-hanwei-2006-ethanol-located.toml) |
@@ -121,6 +127,8 @@ Notes:
 
 - **MQ-303A iso-butane** (`mq-303a-hanwei-2006`): Kept as read by hand. The figure draws its grey gridlines over this line and its star markers, breaking both at every gridline, so neither can be followed automatically.
 - **MQ-137 NH3** (`mq-137-winsen-v1.4`): The line the MQ137 manual prints for NH3 is identical, pixel for pixel along the curve, to the line the MQ136 manual prints for H2S; the two figures differ only in the legend and a CO line. The traced points and the fit are therefore the same as MQ-136 H2S. Whether the manufacturer measured the same response or reused the chart is not known.
+- **MQ-136 H2S** (`mq-136-hanwei-2004`): Read by eye from a JPEG. The MQ-137 datasheet draws the same figure, pixel for pixel, with this line labelled NH3. The sheet defines R0 at 10 ppm H2S, but this line reads Rs/R0 1.44 there.
+- **MQ-137 NH3** (`mq-137-hanwei-2004`): Read by eye from a JPEG. The MQ-136 datasheet draws the same figure, pixel for pixel, with this line labelled H2S. The sheet defines R0 at 10 ppm NH3, but this line reads Rs/R0 1.44 there.
 
 The concentration is in the unit of the datasheet figure's horizontal axis. Where that is not ppm, the value the library returns is in that unit too, whatever the sketch calls it: the MQ-3 curves are drawn against mg/L.
 
@@ -128,7 +136,7 @@ The concentration is in the unit of the datasheet figure's horizontal axis. Wher
 
 **Largest error** is the biggest relative difference, over the fitted points, between the concentration the fit returns and the concentration the datasheet plots at that Rs/R0. It is what approximating the curve by a power law costs, before any error in the sensor itself.
 
-**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md). **Extracted** means the marker positions the PDF draws the figure with, read from its drawing commands by the same tool. **Located** means the centres of a line's hollow markers in a figure stored as an image, found by the same tool. For all three, the link is the recipe that reproduces the points.
+**Read by hand upstream** means a few marker positions per curve, digitised by the authors of MQSensorsLib and copied from `miguel5612/MQSensorsLib_Docs` (MIT). **Traced** means every pixel column of the line, by the tool in [`analysis/`](../analysis/README.md). **Extracted** means the marker positions the PDF draws the figure with, read from its drawing commands by the same tool. **Located** means the centres of a line's hollow markers in a figure stored as an image, found by the same tool. **Marked** means marker centres read by eye from a figure stored as an image where neither tool can follow it, recorded as pixel positions so each can be checked against the figure. For all four, the link is the recipe that reproduces the points.
 
 ## Hand-read points against the datasheet
 
@@ -216,7 +224,7 @@ Every distinct `setA`/`setB` pair in `examples/`, beside the closest fitted curv
 | MQ-135 | 102.2 | -2.473 | NH4 | 102.20 | -2.473 | 0.0 % | same as the fit | MQ-135, MQ-135-ALL, MQ-135-CorrectionFactorDHT11, MQ135-ADS1115 |
 | MQ-135 | 110.47 | -2.862 | CO2 | 110.47 | -2.862 | 0.0 % | same as the fit | MQ-135-ALL, MQ135-ADS1115, UnitTesting |
 | MQ-135 | 605.18 | -3.937 | CO | 605.18 | -3.937 | 0.0 % | same as the fit | MQ-135-ALL, MQ135-ADS1115 |
-| MQ-136 | 36.737 | -3.536 |  | | |  | no digitised points from a Hanwei-era datasheet | MQ-136, UnitTesting |
+| MQ-136 | 36.737 | -3.536 | H2S | 36.716 | -3.481 | 0.1 % | does not match any curve | MQ-136, UnitTesting |
 | MQ-303A | 1 | 1 | ethanol | 3.4916 | -2.432 | 71.4 % | does not match any curve | UnitTesting |
 | MQ-303A | 3.4916 | -2.432 | ethanol | 3.4916 | -2.432 | 0.0 % | same as the fit | UnitTesting |
 | MQ-303A | 6.2144 | -2.894 | iso-butane | 5.3977 | -3.001 | 15.1 % | does not match any curve | MQ-303A |
@@ -227,8 +235,7 @@ Every distinct `setA`/`setB` pair in `examples/`, beside the closest fitted curv
 | same as the fit | 18 |
 | the fit, rounded coarsely | 5 |
 | near the fit, not equal | 2 |
-| does not match any curve | 5 |
-| no digitised points from a Hanwei-era datasheet | 1 |
+| does not match any curve | 6 |
 | linear-model example | 1 |
 
 - **Same as the fit**: the example's value equals the fitted value at the precision the example writes it.

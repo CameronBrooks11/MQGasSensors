@@ -26,7 +26,7 @@ just coefficients   # 4 and 5: fit every curve and write the page
 
 The datasheets are copyrighted and are not stored in this repository, and neither are figures cut from them. The digitised points, which are numbers read off a figure, are.
 
-## Four ways the points were obtained
+## Five ways the points were obtained
 
 **Read by hand upstream.** The coefficients the example sketches use were derived by the authors of [MQSensorsLib](https://github.com/miguel5612/MQSensorsLib), who read a few marker positions per line off each figure. Their points are kept here unchanged, and fitting them gives back the values in the sketches. For these curves the chain starts at step 3: which figure the points were read from is recorded, but the reading cannot be repeated.
 
@@ -36,6 +36,8 @@ The datasheets are copyrighted and are not stored in this repository, and neithe
 
 **Located.** In a figure stored as an image whose markers are hollow outlines, the same tool finds each marker as the patch of background its outline encloses, and takes the centre of that patch. Markers of one colour are told apart by the shape of the patch. These are the plotted values to the precision of the image's pixels. Where a figure's markers cannot be found this way, the hand-read points are kept and the reason is recorded beside the curve.
 
+**Marked.** Where neither method can follow a figure and there are no hand-read points either, the marker centres are read by eye and recorded as pixel positions in the recipe, with the figure's pixel hash and gridline calibration. This is still a person's reading, good to about a pixel, but each position can be checked against the exact figure on an overlay, which the hand-read points cannot.
+
 ## Two editions of the datasheets
 
 Two makers publish datasheets for sensors with the same names, and their curves differ.
@@ -43,7 +45,7 @@ Two makers publish datasheets for sensors with the same names, and their curves 
 - **Hanwei**, 2004 to 2009. The example sketches' values come from these.
 - **Zhengzhou Winsen**, manuals from 2014 and 2015. The traced curves so far come from these.
 
-The extracted curves so far come from the Hanwei MQ-3, MQ-4, MQ-5, MQ-6, MQ-7, MQ-8 and MQ-135 datasheets, and the located ones from the Hanwei MQ-303A and MQ-309A datasheets.
+The extracted curves so far come from the Hanwei MQ-3, MQ-4, MQ-5, MQ-6, MQ-7, MQ-8 and MQ-135 datasheets, the located ones from the Hanwei MQ-303A and MQ-309A datasheets, and the marked ones from the Hanwei MQ-136 and MQ-137 datasheets, which print the same figure with different legends.
 
 A coefficient pair is only meaningful together with the datasheet it came from, so the page names the datasheet in every row and never mixes editions. Which edition describes a sensor you have bought depends on who made it.
 

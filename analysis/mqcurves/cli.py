@@ -4,6 +4,7 @@
     trace <recipe.toml> [--points CSV] [--overlay PNG] trace a curve from its recipe
     extract <recipe.toml> [--points CSV] [--overlay PNG] read a curve's markers from a vector figure
     locate <recipe.toml> [--points CSV] [--overlay PNG]  find a curve's hollow markers in an image figure
+    marked <recipe.toml> [--points CSV] [--overlay PNG]  convert marker positions read by eye from an image figure
     fit <points.csv>                                   fit points already digitised
     mark <recipe.toml> ...                             mark a new figure by hand
     table [--check]                                    write docs/coefficients.md
@@ -13,7 +14,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from . import figure, markers, overlay, points, recipe, vector
+from . import figure, marked, markers, overlay, points, recipe, vector
 from .trace import fit, trace
 
 
@@ -120,7 +121,16 @@ def cmd_extract(args):
 
 def cmd_locate(args):
     r = markers.load(args.recipe)
-    pixels, ppm, ratio, x, y = markers.locate(r, args.datasheets)
+    return show_markers(args, r, *markers.locate(r, args.datasheets))
+
+
+def cmd_marked(args):
+    r = marked.load(args.recipe)
+    return show_markers(args, r, *marked.read(r, args.datasheets))
+
+
+def show_markers(args, r, pixels, ppm, ratio, x, y):
+    """Report marker centres in an image figure, and write their points and overlay if asked."""
     f = fit(ppm, ratio)
     report(r.id, f)
     for p, q in zip(ppm, ratio, strict=True):
@@ -152,6 +162,9 @@ def cmd_reproduce(args):
             lines, ok = [], True
         elif c["origin"] == "located":
             _, ppm, ratio, _, _ = markers.locate(markers.load(table.ANALYSIS / c["recipe"]), args.datasheets)
+            lines, ok = [], True
+        elif c["origin"] == "marked":
+            _, ppm, ratio, _, _ = marked.read(marked.load(table.ANALYSIS / c["recipe"]), args.datasheets)
             lines, ok = [], True
         else:
             r = recipe.load(table.ANALYSIS / c["recipe"])
@@ -217,6 +230,13 @@ def main(argv=None):
     s.add_argument("--overlay", type=Path, metavar="PNG", help="write a picture of the markers found over the figure")
     s.add_argument("--datasheets", type=Path, default=recipe.DATASHEETS, help="directory of downloaded datasheets")
     s.set_defaults(func=cmd_locate)
+
+    s = sub.add_parser("marked", help="convert marker positions read by eye from a figure stored as an image, and fit them")
+    s.add_argument("recipe", type=Path)
+    s.add_argument("--points", type=Path, metavar="CSV", help="write the plotted values here")
+    s.add_argument("--overlay", type=Path, metavar="PNG", help="write a picture of the marked positions over the figure")
+    s.add_argument("--datasheets", type=Path, default=recipe.DATASHEETS, help="directory of downloaded datasheets")
+    s.set_defaults(func=cmd_marked)
 
     s = sub.add_parser("fit", help="fit points that are already digitised")
     s.add_argument("points", type=Path)
