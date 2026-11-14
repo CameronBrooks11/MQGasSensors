@@ -51,14 +51,14 @@ One row per curve. Where a curve has been re-derived from its datasheet, that is
 | MQ-8 | H2 | 973.62 | -0.6902 | 200 to 9990 ppm | 0.0291 to 8.46 | 9 | 0.9970 | 12 % | `mq-8-hanwei-2009` | [extracted](../analysis/recipes/mq-8-hanwei-2009-h2-extracted.toml) |
 | MQ-8 | LPG | 8.3383e+07 | -3.767 | 199 to 9990 ppm | 12.6 to 34.4 | 9 | 0.9445 | 40 % | `mq-8-hanwei-2009` | [extracted](../analysis/recipes/mq-8-hanwei-2009-lpg-extracted.toml) |
 | MQ-8 | H2 | 2.1898 | -2.587 | 101 to 9900 ppm | 0.0404 to 0.248 | 321 | 0.9952 | 20 % | `mq-8-winsen-v1.3` | [traced](../analysis/recipes/mq-8-winsen-v1.3-h2.toml) |
-| MQ-9 | CH4 | 4269.6 | -2.648 | 198 to 9890 ppm | 0.704 to 3.10 | 9 | 0.9978 | 9 % | `mq-9-hanwei-2008` | read by hand upstream |
-| MQ-9 | CO | 599.65 | -2.244 | 198 to 988 ppm | 0.795 to 1.64 | 4 | 0.9996 | 2 % | `mq-9-hanwei-2008` | read by hand upstream |
-| MQ-9 | LPG | 993.68 | -2.147 | 200 to 9980 ppm | 0.338 to 2.06 | 9 | 0.9994 | 5 % | `mq-9-hanwei-2008` | read by hand upstream |
+| MQ-9 | CH4 | 4224.5 | -2.596 | 201 to 9950 ppm | 0.689 to 3.14 | 9 | 0.9976 | 12 % | `mq-9-hanwei-2008` | [marked](../analysis/recipes/mq-9-hanwei-2008-ch4-marked.toml) |
+| MQ-9 | CO | 580.02 | -2.220 | 199 to 990 ppm | 0.783 to 1.62 | 4 | 0.9993 | 2 % | `mq-9-hanwei-2008` | [marked](../analysis/recipes/mq-9-hanwei-2008-co-marked.toml) |
+| MQ-9 | LPG | 971.09 | -2.140 | 201 to 10000 ppm | 0.333 to 2.04 | 9 | 0.9995 | 5 % | `mq-9-hanwei-2008` | [marked](../analysis/recipes/mq-9-hanwei-2008-lpg-marked.toml) |
 | MQ-9B | CH4 | 3.4756 | -2.593 | 473 to 8430 ppm | 0.0499 to 0.153 | 120 | 0.9996 | 5 % | `mq-9b-winsen-v1.4` | [traced](../analysis/recipes/mq-9b-winsen-v1.4-ch4.toml) |
 | MQ-9B | CO | 0.72228 | -1.821 | 11.7 to 864 ppm | 0.0219 to 0.223 | 174 | 0.9986 | 13 % | `mq-9b-winsen-v1.4` | [traced](../analysis/recipes/mq-9b-winsen-v1.4-co.toml) |
-| MQ-131 | Cl2 | 47.209 | -1.186 | 4.96 to 99.2 ppm | 0.497 to 5.97 | 5 | 0.9914 | 14 % | `mq-131-2009` | read by hand upstream |
-| MQ-131 | NOx | 462.43 | -2.204 | 5.00 to 98.8 ppm | 2.03 to 8.09 | 5 | 0.9954 | 11 % | `mq-131-2009` | read by hand upstream |
-| MQ-131 | O3 | 23.943 | -1.110 | 5.02 to 99.3 ppm | 0.282 to 4.06 | 5 | 0.9996 | 4 % | `mq-131-2009` | read by hand upstream |
+| MQ-131 | Cl2 | 48.425 | -1.181 | 5.00 to 99.2 ppm | 0.505 to 6.05 | 5 | 0.9903 | 16 % | `mq-131-2009` | [marked](../analysis/recipes/mq-131-2009-cl2-marked.toml) |
+| MQ-131 | NOx | 470.06 | -2.218 | 5.00 to 97.8 ppm | 2.04 to 8.09 | 5 | 0.9951 | 12 % | `mq-131-2009` | [marked](../analysis/recipes/mq-131-2009-nox-marked.toml) |
+| MQ-131 | O3 | 24.264 | -1.117 | 5.00 to 99.2 ppm | 0.288 to 3.99 | 5 | 0.9991 | 4 % | `mq-131-2009` | [marked](../analysis/recipes/mq-131-2009-o3-marked.toml) |
 | MQ-135 | acetone | 34.544 | -3.402 | 10.0 to 201 ppm | 0.587 to 1.43 | 3 | 0.9982 | 7 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-acetone-extracted.toml) |
 | MQ-135 | alcohol | 76.939 | -3.173 | 9.98 to 200 ppm | 0.735 to 1.90 | 3 | 0.9996 | 3 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-alcohol-extracted.toml) |
 | MQ-135 | CO | 610.01 | -3.960 | 9.98 to 200 ppm | 1.35 to 2.84 | 3 | 0.9978 | 8 % | `mq-135-hanwei` | [extracted](../analysis/recipes/mq-135-hanwei-co-extracted.toml) |
@@ -83,6 +83,9 @@ One row per curve. Where a curve has been re-derived from its datasheet, that is
 
 Notes:
 
+- **MQ-131 Cl2** (`mq-131-2009`): Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it.
+- **MQ-131 NOx** (`mq-131-2009`): Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it.
+- **MQ-131 O3** (`mq-131-2009`): Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it.
 - **MQ-2 propane** (`mq-2-hanwei-2009`): Read by eye from a JPEG. The plus-shaped markers are mostly hidden by the LPG squares drawn over them.
 - **MQ-303A iso-butane** (`mq-303a-hanwei-2006`): Kept as read by hand. The figure draws its grey gridlines over this line and its star markers, breaking both at every gridline, so neither can be followed automatically.
 - **MQ-137 NH3** (`mq-137-winsen-v1.4`): The line the MQ137 manual prints for NH3 is identical, pixel for pixel along the curve, to the line the MQ136 manual prints for H2S; the two figures differ only in the legend and a CO line. The traced points and the fit are therefore the same as MQ-136 H2S. Whether the manufacturer measured the same response or reused the chart is not known.
@@ -141,6 +144,12 @@ Curves re-derived from a datasheet that also has hand-read points for the same g
 | MQ-8 | CO | `mq-8-hanwei-2009` | 7.3658e+15 | 2.0195e+16 | -7.335 | -7.606 | +2.9 % at 197, +1.0 % at 498, +1.9 % at 795, -0.1 % at 992, +1.3 % at 1490, +0.2 % at 1970, +0.2 % at 2960, +1.5 % at 4940, -0.3 % at 9830 ppm |
 | MQ-8 | H2 | `mq-8-hanwei-2009` | 976.97 | 973.62 | -0.6879 | -0.6902 | +1.2 % at 198, +0.5 % at 500, -0.7 % at 805, +1.7 % at 1000, +0.6 % at 1490, +1.5 % at 2000, -0.3 % at 3000, -0.3 % at 4970, -1.4 % at 9990 ppm |
 | MQ-8 | LPG | `mq-8-hanwei-2009` | 7.9758e+07 | 8.3383e+07 | -3.724 | -3.767 | +1.1 % at 199, +4.8 % at 499, +3.2 % at 803, +3.7 % at 1010, -0.6 % at 1490, +1.7 % at 1990, +1.1 % at 3020, +1.4 % at 5080, +2.2 % at 9930 ppm |
+| MQ-9 | CH4 | `mq-9-hanwei-2008` | 4269.6 | 4224.5 | -2.648 | -2.596 | -1.8 % at 198, -1.8 % at 495, -0.2 % at 801, +0.7 % at 1000, -0.4 % at 1500, -1.9 % at 1980, +0.7 % at 2990, -0.6 % at 5000, +1.9 % at 9890 ppm |
+| MQ-9 | CO | `mq-9-hanwei-2008` | 599.65 | 580.02 | -2.244 | -2.220 | +0.7 % at 198, +2.2 % at 492, +1.4 % at 789, +1.5 % at 988 ppm |
+| MQ-9 | LPG | `mq-9-hanwei-2008` | 993.68 | 971.09 | -2.147 | -2.140 | +0.7 % at 200, +0.7 % at 495, +1.4 % at 802, +0.9 % at 996, +2.0 % at 1500, +0.8 % at 1990, +1.3 % at 2990, +1.1 % at 4960, +1.4 % at 9980 ppm |
+| MQ-131 | Cl2 | `mq-131-2009` | 47.209 | 48.425 | -1.186 | -1.181 | -1.8 % at 4.96, -2.8 % at 9.82, -3.0 % at 19.7, -2.2 % at 49.5, -1.7 % at 99.2 ppm |
+| MQ-131 | NOx | `mq-131-2009` | 462.43 | 470.06 | -2.204 | -2.218 | +0.1 % at 5.00, +2.2 % at 9.81, -1.9 % at 19.6, -0.0 % at 49.9, +0.1 % at 98.8 ppm |
+| MQ-131 | O3 | `mq-131-2009` | 23.943 | 24.264 | -1.110 | -1.117 | +1.9 % at 5.02, -3.7 % at 9.84, -0.7 % at 19.7, -1.2 % at 50.1, -2.0 % at 99.3 ppm |
 | MQ-135 | acetone | `mq-135-hanwei` | 34.668 | 34.544 | -3.369 | -3.402 | +0.5 % at 10.0, -0.3 % at 101, -0.3 % at 200 ppm |
 | MQ-135 | alcohol | `mq-135-hanwei` | 77.255 | 76.939 | -3.180 | -3.173 | +0.0 % at 10.0, -0.1 % at 101, +0.4 % at 200 ppm |
 | MQ-135 | CO | `mq-135-hanwei` | 605.18 | 610.01 | -3.937 | -3.960 | +0.4 % at 9.92, +0.3 % at 101, -0.2 % at 200 ppm |
@@ -167,8 +176,8 @@ For each sensor with hand-read points: how many of its hand-read curves have bee
 | MQ-6 | `mq-6-hanwei-2007` | 5 | 5 | 2.8 % in Rs/R0 | read from this datasheet |
 | MQ-7 | `mq-7-hanwei-2007` | 5 | 5 | 4.6 % in Rs/R0 | read from this datasheet |
 | MQ-8 | `mq-8-hanwei-2009` | 5 | 5 | 4.8 % in Rs/R0 | read from this datasheet |
-| MQ-9 | `mq-9-hanwei-2008` | 3 | 0 |  | not checked |
-| MQ-131 | `mq-131-2009` | 3 | 0 |  | not checked |
+| MQ-9 | `mq-9-hanwei-2008` | 3 | 3 | 2.2 % in Rs/R0 | read from this datasheet |
+| MQ-131 | `mq-131-2009` | 3 | 3 | 3.7 % in Rs/R0 | read from this datasheet |
 | MQ-135 | `mq-135-hanwei` | 6 | 6 | 0.5 % in Rs/R0 | read from this datasheet |
 | MQ-303A | `mq-303a-hanwei-2006` | 3 | 2 | 2.9 % in Rs/R0 | read from this datasheet, where checked |
 | MQ-309A | `mq-309a-hanwei-2004` | 4 | 4 | 2.7 % in Rs/R0 | read from this datasheet |
@@ -198,10 +207,10 @@ Each pair is matched to the closest hand-read fit for its sensor, which is where
 | MQ-6 | 2127.2 | -2.526 | CH4 | 2127.2 | -2.526 | 0.0 % | same as the fit | 5 % | extracted | MQ-6, MQ-Board, UnitTesting |
 | MQ-7 | 99.042 | -1.518 | CO | 99.042 | -1.518 | 0.0 % | same as the fit | 2 % | extracted | MQ-7, MQ-Board, UnitTesting |
 | MQ-8 | 976.97 | -0.688 | H2 | 976.97 | -0.6879 | 0.0 % | same as the fit | 1 % | extracted | MQ-8, MQ-Board, UnitTesting |
-| MQ-9 | 599.65 | -2.244 | CO | 599.65 | -2.244 | 0.0 % | same as the fit | 0 % | read by hand upstream | MQ-9-ALL, UnitTesting |
-| MQ-9 | 1000.5 | -2.186 | LPG | 993.68 | -2.147 | 0.7 % | near the fit, not equal | 5 % | read by hand upstream | MQ-9, MQ-9-ALL, MQ-Board |
-| MQ-9 | 4269.6 | -2.648 | CH4 | 4269.6 | -2.648 | 0.0 % | same as the fit | 0 % | read by hand upstream | MQ-9-ALL |
-| MQ-131 | 23.943 | -1.11 | O3 | 23.943 | -1.110 | 0.0 % | same as the fit | 0 % | read by hand upstream | MQ-131, UnitTesting |
+| MQ-9 | 599.65 | -2.244 | CO | 599.65 | -2.244 | 0.0 % | same as the fit | 4 % | marked | MQ-9-ALL, UnitTesting |
+| MQ-9 | 1000.5 | -2.186 | LPG | 993.68 | -2.147 | 0.7 % | near the fit, not equal | 8 % | marked | MQ-9, MQ-9-ALL, MQ-Board |
+| MQ-9 | 4269.6 | -2.648 | CH4 | 4269.6 | -2.648 | 0.0 % | same as the fit | 5 % | marked | MQ-9-ALL |
+| MQ-131 | 23.943 | -1.11 | O3 | 23.943 | -1.110 | 0.0 % | same as the fit | 2 % | marked | MQ-131, UnitTesting |
 | MQ-135 | 34.668 | -3.369 | acetone | 34.668 | -3.369 | 0.0 % | same as the fit | 2 % | extracted | MQ-135-ALL, MQ135-ADS1115 |
 | MQ-135 | 44.947 | -3.445 | toluene | 44.947 | -3.445 | 0.0 % | same as the fit | 0 % | extracted | MQ-135-ALL, MQ135-ADS1115 |
 | MQ-135 | 77.255 | -3.18 | alcohol | 77.255 | -3.180 | 0.0 % | same as the fit | 1 % | extracted | MQ-135-ALL, MQ135-ADS1115 |

@@ -1,0 +1,23 @@
+id = "mq-9-hanwei-2008-lpg-marked"
+sensor = "MQ-9"
+gas = "LPG"
+
+# Navy line, filled diamonds.
+# Marker centres read by eye, as [x, y] pixels of the image as stored, at
+# 200, 500, 800, 1000, 1500, 2000, 3000, 5000 and 10000 ppm.
+markers = [[72, 88.5], [125, 106], [153, 115], [166, 119.5], [189, 128], [206, 133.5], [230, 142.5], [260, 153], [300, 167]]
+
+[source]
+datasheet = "mq-9-hanwei-2008"
+page = 2
+pixels_sha256 = "4fc9f5f0dc321e39f4075e06b482a92a3adc1d34bc551bc2de2d6abc00e1ada3"
+
+# A JPEG. Fitted by least squares to every gridline clear of the legend, none
+# more than 1 px off: 134.2 px a decade across, 99.5 px a decade up.
+[x]
+pixels = [31.37, 299.82]
+values = [100, 10000]
+
+[y]
+pixels = [19.89, 218.93]
+values = [10, 0.1]
