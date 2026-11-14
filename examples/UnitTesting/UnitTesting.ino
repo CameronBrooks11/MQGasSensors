@@ -43,6 +43,7 @@
 #define         RatioMQ8CleanAir          (70) //RS / R0 = 70 ppm   
 #define         RatioMQ9CleanAir          (9.6) //RS / R0 = 9.6 ppm 
 #define         RatioMQ136CleanAir        (3.6) //RS / R0 = 9.6 ppm 
+#define         RatioMQ131CleanAir        (1.0 / 12.0) // Rs/R0 in clean air: the MQ-131 figure gives R0/Rs 12.0
 #define         ADC_Bit_Resolution        (10) // 10 bit ADC 
 #define         Voltage_Resolution        (5) // Volt resolution to calc the voltage
 #define         Type                      ("Arduino Mega 2560") //Board used
@@ -206,6 +207,20 @@ test(MQ131_O3)
   assertEqual(PPM,ppmExp);
 }
 
+
+test(MQ131_CleanAir)
+{
+  // Calibrate in clean air as examples/MQ-131 does, then read the same air.
+  MQ131.setRegressionMethod(1); //_PPM =  a*ratio^b
+  MQ131.setA(23.943); MQ131.setB(-1.11);
+  MQ131.init();
+  MQ131.externalADCUpdate(1.0);
+  MQ131.setR0(MQ131.calibrate(RatioMQ131CleanAir));
+
+  float PPM = MQ131.readSensorR0Rs();
+
+  assertLess(PPM, 5); // below 5 ppm, the lowest concentration the figure plots
+}
 
 test(MQ135_CO2)
 {

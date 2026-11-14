@@ -85,7 +85,7 @@ Notes:
 
 - **MQ-131 Cl2** (`mq-131-2009`): Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it.
 - **MQ-131 NOx** (`mq-131-2009`): Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it.
-- **MQ-131 O3** (`mq-131-2009`): Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it.
+- **MQ-131 O3** (`mq-131-2009`): Read by eye from a JPEG. The figure plots R0/Rs, not Rs/R0, so the ratio these coefficients take is R0/Rs, as `readSensorR0Rs` computes it. The AIR line lies on pixel row 78 of the figure, R0/Rs 12.0 (11.6 to 12.5 a pixel either way); examples/MQ-131 calibrates with its inverse.
 - **MQ-2 propane** (`mq-2-hanwei-2009`): Read by eye from a JPEG. The plus-shaped markers are mostly hidden by the LPG squares drawn over them.
 - **MQ-303A iso-butane** (`mq-303a-hanwei-2006`): Kept as read by hand. The figure draws its grey gridlines over this line and its star markers, breaking both at every gridline, so neither can be followed automatically.
 - **MQ-137 NH3** (`mq-137-winsen-v1.4`): The line the MQ137 manual prints for NH3 is identical, pixel for pixel along the curve, to the line the MQ136 manual prints for H2S; the two figures differ only in the legend and a CO line. The traced points and the fit are therefore the same as MQ-136 H2S. Whether the manufacturer measured the same response or reused the chart is not known.
