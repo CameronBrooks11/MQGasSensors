@@ -14,7 +14,7 @@
 
 A robust Arduino library for interfacing with MQ-series gas sensors, enabling accurate gas concentration measurements with ease. Supports calibration, resistance calculations, and real-time gas concentration derivation for various gases.
 
-**Status:** version 1.1.0. Every example is compiled for its board and the unit tests run on a simulated Arduino Mega on each change. This version has not yet been validated against physical sensors. The library began as a fork of [MQSensorsLib](https://github.com/miguel5612/MQSensorsLib) and is now developed independently; see [Acknowledgment](#acknowledgment).
+**Status:** version 1.2.0. Every example is compiled for its board and the unit tests run on a simulated Arduino Mega on each change. This version has not yet been validated against physical sensors. The library began as a fork of [MQSensorsLib](https://github.com/miguel5612/MQSensorsLib) and is now developed independently; see [Acknowledgment](#acknowledgment).
 
 ## Features
 
