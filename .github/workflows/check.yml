@@ -14,10 +14,10 @@ jobs:
     # Pinned: simavr comes from this release's apt archive.
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install just
-        uses: extractions/setup-just@v2
+        uses: extractions/setup-just@v4
         with:
           just-version: "1.40.0"
 

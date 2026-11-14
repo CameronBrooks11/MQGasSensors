@@ -37,7 +37,7 @@ jobs:
     # minutes from a home line the same day. Why it is slower here is not known.
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Fails only when a datasheet has no working mirror left.
       - name: Verify every mirror
@@ -68,10 +68,10 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install just
-        uses: extractions/setup-just@v2
+        uses: extractions/setup-just@v4
         with:
           just-version: "1.40.0"
 
