@@ -77,6 +77,56 @@ def load_curves(analysis=ANALYSIS, manifest=None):
     return curves
 
 
+AIR_DEFINE = re.compile(r"#define\s+RatioMQ(\w+?)CleanAir\s+\(?\s*([0-9.]+(?:\s*/\s*[0-9.]+)?)\s*\)?")
+
+
+def load_air(analysis=ANALYSIS, manifest=None):
+    """Every clean-air reading in curves.toml: the Rs/R0 at which a datasheet draws its AIR line."""
+    manifest = manifest or ROOT / "datasheets" / "manifest.toml"
+    with open(manifest, "rb") as f:
+        sheets = {d["id"]: d for d in tomllib.load(f)["datasheet"]}
+    with open(Path(analysis) / "curves.toml", "rb") as f:
+        entries = tomllib.load(f).get("air", [])
+    for e in entries:
+        if e["datasheet"] not in sheets:
+            raise ValueError(f"{e['id']}: datasheet '{e['datasheet']}' is not in the manifest")
+        if e["origin"] not in ("extracted", "marked"):
+            raise ValueError(f"{e['id']}: origin must be 'extracted' or 'marked'")
+        if not (Path(analysis) / e.get("recipe", "")).is_file():
+            raise ValueError(f"{e['id']}: a clean-air reading needs a 'recipe' file")
+        _, ratio = points.read(Path(analysis) / e["points"])
+        if len(set(ratio)) != 1:
+            raise ValueError(f"{e['id']}: an AIR line's points must share one Rs/R0")
+        e["value"] = float(ratio[0])
+        e["sheet"] = sheets[e["datasheet"]]
+        e.setdefault("axis", "Rs/R0")
+    return entries
+
+
+def air_number(text):
+    """The value a RatioMQxCleanAir define gives, e.g. '9.83' or '1.0 / 12.0'."""
+    parts = [float(p) for p in text.split("/")]
+    return parts[0] / parts[1] if len(parts) == 2 else parts[0]
+
+
+def example_air(examples=None):
+    """{(sensor, value text): sorted sketch names} for every RatioMQxCleanAir define in examples/."""
+    found = {}
+    for ino in sorted((examples or ROOT / "examples").rglob("*.ino")):
+        for name, text in AIR_DEFINE.findall(ino.read_text(errors="replace")):
+            sensor = {"303": "MQ-303A", "309": "MQ-309A"}.get(name, f"MQ-{name}")
+            found.setdefault((sensor, " ".join(text.split())), set()).add(ino.parent.name)
+    return {k: sorted(v) for k, v in found.items()}
+
+
+def air_expected(e):
+    """The number calibrate() should get for this reading: Rs/R0 in clean air, to three figures."""
+    if "defined" in e:
+        return float(e["defined"])
+    value = float(sig(e["value"], 3))
+    return 1 / value if e["axis"] == "R0/Rs" else value
+
+
 def source_curves(curves):
     """The curves the page fits from: every curve but a hand-read one that has been re-derived.
 
@@ -245,7 +295,31 @@ def provenance(curves):
     return out
 
 
-def render(curves, rows):
+def air_section(airs, defines):
+    """The clean-air ratio each datasheet draws, beside the one the examples calibrate with."""
+    out = [
+        "## Clean air",
+        "",
+        "Each example calibrates R0 with `calibrate(RatioMQxCleanAir)`, which sets R0 = Rs in clean air / that ratio, so the ratio scales every reading after it. The datasheets draw it as an AIR line, read here with the same tools as the curves; MQ-303A and MQ-309A draw it as a single marked level. The examples use each value to three significant figures, inverted where the figure plots R0/Rs.",
+        "",
+        "| Sensor | Datasheet | Axis | Clean air on the figure | Points from | Examples define | Sketches |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for e in sorted(airs, key=lambda e: sensor_key(e["sensor"])):
+        value = sig(e["value"], 4) + (" (1 by the axis's definition)" if "defined" in e else "")
+        mine = [(t, s) for (sensor, t), s in defines.items() if sensor == e["sensor"]]
+        texts = ", ".join(f"`{t}`" for t, _ in mine) or "none"
+        sketches = ", ".join(sorted({x for _, s in mine for x in s}))
+        out.append(f"| {e['sensor']} | `{e['datasheet']}` | {e['axis']} | {value} "
+                   f"| [{e['origin']}](../analysis/{e['recipe']}) | {texts} | {sketches} |")
+    notes = [e for e in airs if e.get("note")]
+    if notes:
+        out += ["", "Notes:", ""]
+        out += [f"- **{e['sensor']}** (`{e['datasheet']}`): {e['note']}" for e in sorted(notes, key=lambda e: sensor_key(e["sensor"]))]
+    return out + [""]
+
+
+def render(curves, rows, air=None):
     out = [
         "# Calibration coefficients",
         "",
@@ -317,12 +391,14 @@ def render(curves, rows):
         "- **Does not match any curve**: no digitised curve for the sensor gives this pair.",
         "",
     ]
+    if air is not None:
+        out += air_section(*air)
     return "\n".join(out)
 
 
 def generate():
     curves = load_curves()
-    return render(curves, audit(curves, example_pairs()))
+    return render(curves, audit(curves, example_pairs()), (load_air(), example_air()))
 
 
 def run(check=False, output=OUTPUT):

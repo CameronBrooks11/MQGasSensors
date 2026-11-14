@@ -1,0 +1,23 @@
+id = "mq-9-hanwei-2008-air-marked"
+sensor = "MQ-9"
+gas = "air"
+
+# The light blue AIR line, one pixel row, 21, with small markers on rows 20 and 21: the
+# line's row, read at its markers, 200 to 10000 ppm.
+# Positions read by eye, as [x, y] pixels of the image as stored.
+markers = [[72, 21], [125, 21], [153, 21], [166, 21], [189, 21], [206, 21], [230, 21], [260, 21], [300, 21]]
+
+[source]
+datasheet = "mq-9-hanwei-2008"
+page = 2
+pixels_sha256 = "4fc9f5f0dc321e39f4075e06b482a92a3adc1d34bc551bc2de2d6abc00e1ada3"
+
+# A JPEG. Fitted by least squares to every gridline clear of the legend, none
+# more than 1 px off: 134.2 px a decade across, 99.5 px a decade up.
+[x]
+pixels = [31.37, 299.82]
+values = [100, 10000]
+
+[y]
+pixels = [19.89, 218.93]
+values = [10, 0.1]

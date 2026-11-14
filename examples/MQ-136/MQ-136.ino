@@ -26,7 +26,7 @@
 #define pin A0 //Analog input 0 of your arduino
 #define type "MQ-136" //MQ136
 #define ADC_Bit_Resolution 10 // For arduino UNO/MEGA/NANO
-#define RatioMQ136CleanAir 3.6//RS / R0 = 3.6 ppm  
+#define RatioMQ136CleanAir 3.55 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 //#define calibration_button 13 //Pin to calibrate your sensor
 
 //Declare Sensor

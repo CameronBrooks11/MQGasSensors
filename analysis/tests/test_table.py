@@ -173,6 +173,39 @@ class ComparisonTests(unittest.TestCase):
                     table.load_curves(d, d / "manifest.toml")
 
 
+class CleanAirTests(unittest.TestCase):
+    def test_air_line_is_its_one_ratio_and_one_that_slopes_is_refused(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            (d / "r.toml").write_text("")
+            (d / "manifest.toml").write_text('[[datasheet]]\nid = "s1"\nmaker = "Hanwei"\n')
+            (d / "curves.toml").write_text('curve = []\n\n[[air]]\nid = "a"\nsensor = "MQ-0"\ndatasheet = "s1"\n'
+                                           'points = "p.csv"\norigin = "marked"\nrecipe = "r.toml"\n')
+            (d / "p.csv").write_text("ppm,ratio\n100,9.5\n1000,9.5\n")
+            [air] = table.load_air(d, d / "manifest.toml")
+            self.assertEqual((air["value"], air["axis"]), (9.5, "Rs/R0"))
+            (d / "p.csv").write_text("ppm,ratio\n100,9.5\n1000,9.4\n")
+            with self.assertRaisesRegex(ValueError, "share one Rs/R0"):
+                table.load_air(d, d / "manifest.toml")
+
+    def test_defines_are_read_in_every_form_the_examples_write(self):
+        with tempfile.TemporaryDirectory() as d:
+            sketch = Path(d) / "S" / "S.ino"
+            sketch.parent.mkdir()
+            sketch.write_text("#define         RatioMQ2CleanAir        (9.51) // note\n"
+                              "#define RatioMQ135CleanAir 3.60// note\n"
+                              "//#define RatioMQ309CleanAir 11.1 // note\n"
+                              "#define RatioMQ131CleanAir (1.0 / 12.0) // note\n")
+            self.assertEqual(table.example_air(Path(d)), {("MQ-2", "9.51"): ["S"], ("MQ-135", "3.60"): ["S"],
+                                                          ("MQ-309A", "11.1"): ["S"], ("MQ-131", "1.0 / 12.0"): ["S"]})
+        self.assertAlmostEqual(table.air_number("1.0 / 12.0"), 1 / 12)
+
+    def test_expected_value_is_three_figures_inverted_for_r0_over_rs_or_as_defined(self):
+        self.assertEqual(table.air_expected({"value": 9.5073, "axis": "Rs/R0"}), 9.51)
+        self.assertEqual(table.air_expected({"value": 12.048, "axis": "R0/Rs"}), 1 / 12.0)
+        self.assertEqual(table.air_expected({"value": 0.991, "axis": "Rs/Rs(air)", "defined": 1.0}), 1.0)
+
+
 class RepositoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -228,6 +261,15 @@ class RepositoryTests(unittest.TestCase):
             checked += 1
         self.assertGreater(checked, 25)
 
+    def test_every_example_clean_air_ratio_is_its_datasheet_value(self):
+        airs = {e["sensor"]: e for e in table.load_air()}
+        defines = table.example_air()
+        self.assertGreater(len(defines), 10)
+        for (sensor, text), sketches in defines.items():
+            self.assertIn(sensor, airs, f"{sensor} has no clean-air reading, used in {', '.join(sketches)}")
+            self.assertAlmostEqual(table.air_number(text), table.air_expected(airs[sensor]), places=9,
+                                   msg=f"{sensor} {text} in {', '.join(sketches)}")
+
     def test_every_example_coefficient_table_lists_its_sensors_datasheet_fits(self):
         head = re.compile(r"^\s*(?:Gas|GAS)\s*\|\s*a\s*\|\s*b\s*$")
         row = re.compile(r"^\s*(\S[^|]*?)\s*\|\s*(\S+)\s*\|\s*(\S+)\s*$")
@@ -279,7 +321,7 @@ class RepositoryTests(unittest.TestCase):
         with contextlib.redirect_stdout(out):
             code = cli.main(["reproduce"])
         self.assertEqual(code, 0, out.getvalue())
-        self.assertIn("67 of 67", out.getvalue())
+        self.assertIn("80 of 80 recipes", out.getvalue())
 
     def test_check_passes_on_the_committed_page(self):
         out = io.StringIO()

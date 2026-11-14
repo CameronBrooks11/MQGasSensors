@@ -1,0 +1,23 @@
+id = "mq-309a-hanwei-2004-air-marked"
+sensor = "MQ-309A"
+gas = "air"
+
+# The "in air" marker on Fig. 3: a bar, row 234, x 65 to 87, with a small triangle on it,
+# rows 232 to 234. The bar's row at its two ends. The axis is Rs/Rs(1000 ppm CH4).
+# Positions read by eye, as [x, y] pixels of the image as stored.
+markers = [[65, 234], [87, 234]]
+
+[source]
+datasheet = "mq-309a-hanwei-2004"
+page = 2
+pixels_sha256 = "f248f0c8337c68b2f71318c3a392f9bd5dab56a990686a985d8ff686150fd9a8"
+
+# Fig. 3, the left half of an image stored upside down: Rs/R0 grows
+# downwards. The decade gridlines are 103.5 px apart on both axes.
+[x]
+pixels = [45, 252]
+values = [100, 10000]
+
+[y]
+pixels = [126, 229.5]
+values = [1, 10]

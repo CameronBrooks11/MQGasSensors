@@ -26,18 +26,18 @@
 /*****************************Globals***********************************************/
 double          alcoholPPM          =   (0);
 //Defaults, uncomment if you need
-#define RatioMQ2CleanAir 9.83 //RS / R0 = 9.83 ppm 
-//#define RatioMQ3CleanAir 60   //RS / R0 = 60 ppm 
-//#define RatioMQ4CleanAir 4.4  //RS / R0 = 4.4 ppm 
-//#define RatioMQ5CleanAir 6.5  //RS / R0 = 6.5 ppm 
-//#define RatioMQ6CleanAir 10   //RS / R0 = 10 ppm 
-//#define RatioMQ7CleanAir 27.5 //RS / R0 = 27.5 ppm  
-//#define RatioMQ8CleanAir 70   //RS / R0 = 70 ppm   
-//#define RatioMQ9CleanAir 9.6  //RS / R0 = 9.6 ppm    
+#define RatioMQ2CleanAir 9.51 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+//#define RatioMQ3CleanAir 59.9 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+//#define RatioMQ4CleanAir 4.43 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+//#define RatioMQ5CleanAir 6.49 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+//#define RatioMQ6CleanAir 9.86 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+//#define RatioMQ7CleanAir 26.1 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+//#define RatioMQ8CleanAir 69.5 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+//#define RatioMQ9CleanAir 9.75 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 //#define RatioMQ131CleanAir (1.0 / 12.0) // Rs/R0 in clean air: the MQ-131 figure gives R0/Rs 12.0
-//#define RatioMQ135CleanAir 3.6//RS / R0 = 3.6 ppm     
-//#define RatioMQ303CleanAir 1  //RS / R0 = 1 ppm    
-//#define RatioMQ309CleanAir 11 //RS / R0 = 11 ppm    
+//#define RatioMQ135CleanAir 3.60 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+//#define RatioMQ303CleanAir 1 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+//#define RatioMQ309CleanAir 11.1 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 unsigned long contador = 0;
 /**************************Object_Sensor********************************************/
 

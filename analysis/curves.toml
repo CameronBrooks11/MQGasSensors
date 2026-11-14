@@ -1209,3 +1209,119 @@ points = "points/mq-137-hanwei-2004/nh3-marked.csv"
 origin = "marked"
 recipe = "recipes/mq-137-hanwei-2004-nh3-marked.toml"
 note = "Read by eye from a JPEG. The MQ-136 datasheet draws the same figure, pixel for pixel, with this line labelled H2S. The sheet defines R0 at 10 ppm NH3, but this line reads Rs/R0 1.44 there."
+
+# Clean air: the Rs/R0 at which each datasheet draws its AIR line, read from the same
+# figure as the curves. See the Clean air section of docs/coefficients.md.
+
+[[air]]
+id = "mq-2-hanwei-2009-air-marked"
+sensor = "MQ-2"
+datasheet = "mq-2-hanwei-2009"
+points = "points/mq-2-hanwei-2009/air-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-2-hanwei-2009-air-marked.toml"
+
+[[air]]
+id = "mq-3-hanwei-2007-air-extracted"
+sensor = "MQ-3"
+datasheet = "mq-3-hanwei-2007"
+points = "points/mq-3-hanwei-2007/air-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-3-hanwei-2007-air-extracted.toml"
+
+[[air]]
+id = "mq-4-hanwei-2007-air-extracted"
+sensor = "MQ-4"
+datasheet = "mq-4-hanwei-2007"
+points = "points/mq-4-hanwei-2007/air-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-4-hanwei-2007-air-extracted.toml"
+
+[[air]]
+id = "mq-5-hanwei-2007-air-extracted"
+sensor = "MQ-5"
+datasheet = "mq-5-hanwei-2007"
+points = "points/mq-5-hanwei-2007/air-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-5-hanwei-2007-air-extracted.toml"
+
+[[air]]
+id = "mq-6-hanwei-2007-air-extracted"
+sensor = "MQ-6"
+datasheet = "mq-6-hanwei-2007"
+points = "points/mq-6-hanwei-2007/air-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-6-hanwei-2007-air-extracted.toml"
+
+[[air]]
+id = "mq-7-hanwei-2007-air-extracted"
+sensor = "MQ-7"
+datasheet = "mq-7-hanwei-2007"
+points = "points/mq-7-hanwei-2007/air-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-7-hanwei-2007-air-extracted.toml"
+
+[[air]]
+id = "mq-8-hanwei-2009-air-extracted"
+sensor = "MQ-8"
+datasheet = "mq-8-hanwei-2009"
+points = "points/mq-8-hanwei-2009/air-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-8-hanwei-2009-air-extracted.toml"
+
+[[air]]
+id = "mq-9-hanwei-2008-air-marked"
+sensor = "MQ-9"
+datasheet = "mq-9-hanwei-2008"
+points = "points/mq-9-hanwei-2008/air-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-9-hanwei-2008-air-marked.toml"
+
+[[air]]
+id = "mq-131-2009-air-marked"
+sensor = "MQ-131"
+datasheet = "mq-131-2009"
+points = "points/mq-131-2009/air-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-131-2009-air-marked.toml"
+axis = "R0/Rs"
+note = "The figure plots R0/Rs, so the examples calibrate with the inverse."
+
+[[air]]
+id = "mq-135-hanwei-air-extracted"
+sensor = "MQ-135"
+datasheet = "mq-135-hanwei"
+points = "points/mq-135-hanwei/air-extracted.csv"
+origin = "extracted"
+recipe = "recipes/mq-135-hanwei-air-extracted.toml"
+note = "The AIR line has no markers: the ends of its two straight segments."
+
+[[air]]
+id = "mq-136-hanwei-2004-air-marked"
+sensor = "MQ-136"
+datasheet = "mq-136-hanwei-2004"
+points = "points/mq-136-hanwei-2004/air-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-136-hanwei-2004-air-marked.toml"
+note = "The MQ-137 datasheet draws the same figure and the same AIR line."
+
+[[air]]
+id = "mq-303a-hanwei-2006-air-marked"
+sensor = "MQ-303A"
+datasheet = "mq-303a-hanwei-2006"
+points = "points/mq-303a-hanwei-2006/air-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-303a-hanwei-2006-air-marked.toml"
+axis = "Rs/Rs(air)"
+defined = 1.0
+note = "The axis is Rs over Rs in air, so clean air is 1 by definition; the marker the figure draws for it reads 0.991, within a pixel."
+
+[[air]]
+id = "mq-309a-hanwei-2004-air-marked"
+sensor = "MQ-309A"
+datasheet = "mq-309a-hanwei-2004"
+points = "points/mq-309a-hanwei-2004/air-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-309a-hanwei-2004-air-marked.toml"
+axis = "Rs/Rs(1000 ppm CH4)"
+note = "Fig. 3's axis is Rs over Rs at 1000 ppm CH4, which the example's R0 is therefore also measured against."

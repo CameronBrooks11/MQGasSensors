@@ -139,6 +139,20 @@ class VectorTests(unittest.TestCase):
         np.testing.assert_allclose(ppm, PPM, rtol=1e-4)
         np.testing.assert_allclose(ratio, [A * p**B for p in PPM], rtol=1e-4)
 
+    def test_line_without_markers_is_read_at_the_ends_of_its_segments(self):
+        # A flat green line in two segments, starting just outside the frame's left edge, and its legend sample.
+        y = float(Y.to_pixel(3.6))
+        green = "0 1 0 RG 1 1 1 rg"
+        self.write_pdf(figure() + f"{green} 49.97 {y:.4f} m 200 {y:.4f} l S\n{green} 200 {y:.4f} m 300 {y:.4f} l S\n"
+                       f"{green} 70 90 m 90 90 l S\n")
+        path = self.dir / "air.toml"
+        path.write_text(recipe_text(stroke="[0, 255, 0]", fill="[255, 255, 255]")
+                        .replace("[markers]\n", '[markers]\nshape = "line"\n'))
+        ppm, ratio, _, _ = self.extract(vector.load(path))
+        np.testing.assert_allclose(ppm, [10 ** (2 - 0.03 / 150), 1000, 10 ** (2 + 500 / 300)], rtol=1e-4)
+        np.testing.assert_allclose(ratio, [3.6] * 3, rtol=1e-4)
+        self.assertEqual(fit(ppm, ratio).A, ratio[0])
+
     def test_datasheet_must_match_the_manifest(self):
         r = self.recipe()
         self.pdf.write_bytes(self.pdf.read_bytes() + b"\n")

@@ -1,0 +1,24 @@
+id = "mq-136-hanwei-2004-air-marked"
+sensor = "MQ-136"
+gas = "air"
+
+# The thick navy AIR line, rows 227 to 229, no markers: its centre row at its two ends,
+# 10 and 200 ppm.
+# Positions read by eye, as [x, y] pixels of the image as stored.
+markers = [[54, 228], [278, 228]]
+
+[source]
+datasheet = "mq-136-hanwei-2004"
+page = 2
+pixels_sha256 = "0fe90c14ccce81666a634a71f199535c5387228de414d5f949ba8348de4ecd2e"
+
+# A JPEG stored upside down: Rs/R0 grows downwards. Fitted by least squares to
+# every labelled gridline, none more than 0.85 px off: 170.7 px a decade across,
+# 113.5 px a decade up.
+[x]
+pixels = [54.58, 396.0]
+values = [10, 1000]
+
+[y]
+pixels = [51.98, 279.06]
+values = [0.1, 10]

@@ -30,7 +30,7 @@
 #define         Type                    ("MQ-9") //MQ9
 #define         Voltage_Resolution      (5)
 #define         ADC_Bit_Resolution      (10) // For arduino UNO/MEGA/NANO
-#define         RatioMQ9CleanAir        (9.6) //RS / R0 = 60 ppm 
+#define         RatioMQ9CleanAir        (9.75) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 #define         PreaheatControlPin5      (3) // Preaheat pin to control with 5 volts
 #define         PreaheatControlPin14      (4) // Preaheat pin to control with 1.4 volts
 /*****************************Globals***********************************************/

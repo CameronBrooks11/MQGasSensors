@@ -232,3 +232,31 @@ Each pair is matched to the closest fit for its sensor, hand-read or re-derived,
 - **The fit, rounded coarsely**: equal at the precision written, but written to so few figures that `a` is off by the amount shown. The computed concentration is off by the same proportion.
 - **Near the fit, not equal**: within 5 % in `a` and 0.05 in `b` of a curve, without being that curve's fit. Its origin is not recorded.
 - **Does not match any curve**: no digitised curve for the sensor gives this pair.
+
+## Clean air
+
+Each example calibrates R0 with `calibrate(RatioMQxCleanAir)`, which sets R0 = Rs in clean air / that ratio, so the ratio scales every reading after it. The datasheets draw it as an AIR line, read here with the same tools as the curves; MQ-303A and MQ-309A draw it as a single marked level. The examples use each value to three significant figures, inverted where the figure plots R0/Rs.
+
+| Sensor | Datasheet | Axis | Clean air on the figure | Points from | Examples define | Sketches |
+|---|---|---|---|---|---|---|
+| MQ-2 | `mq-2-hanwei-2009` | Rs/R0 | 9.507 | [marked](../analysis/recipes/mq-2-hanwei-2009-air-marked.toml) | `9.51` | Calibration, ESP32_WROOM_32D, MQ-2, MQ-Board, UnitTesting |
+| MQ-3 | `mq-3-hanwei-2007` | Rs/R0 | 59.87 | [extracted](../analysis/recipes/mq-3-hanwei-2007-air-extracted.toml) | `59.9` | Alcoholimeter, Calibration, ESP32, ESP8266, MQ-3, MQ-Board, UnitTesting, external_A2D |
+| MQ-4 | `mq-4-hanwei-2007` | Rs/R0 | 4.433 | [extracted](../analysis/recipes/mq-4-hanwei-2007-air-extracted.toml) | `4.43` | Calibration, LinearVsExponential, MQ-4, MQ-4-ALL, MQ-4-LINEAR, MQ-Board, UnitTesting, smokeDetector |
+| MQ-5 | `mq-5-hanwei-2007` | Rs/R0 | 6.487 | [extracted](../analysis/recipes/mq-5-hanwei-2007-air-extracted.toml) | `6.49` | Calibration, MQ-5, MQ-Board, UnitTesting |
+| MQ-6 | `mq-6-hanwei-2007` | Rs/R0 | 9.856 | [extracted](../analysis/recipes/mq-6-hanwei-2007-air-extracted.toml) | `9.86` | Calibration, MQ-6, MQ-Board, UnitTesting |
+| MQ-7 | `mq-7-hanwei-2007` | Rs/R0 | 26.14 | [extracted](../analysis/recipes/mq-7-hanwei-2007-air-extracted.toml) | `26.1` | Calibration, MQ-7, MQ-Board, UnitTesting |
+| MQ-8 | `mq-8-hanwei-2009` | Rs/R0 | 69.52 | [extracted](../analysis/recipes/mq-8-hanwei-2009-air-extracted.toml) | `69.5` | Calibration, MQ-8, MQ-Board, UnitTesting |
+| MQ-9 | `mq-9-hanwei-2008` | Rs/R0 | 9.746 | [marked](../analysis/recipes/mq-9-hanwei-2008-air-marked.toml) | `9.75` | Calibration, MQ-9, MQ-9-ALL, MQ-Board, UnitTesting |
+| MQ-131 | `mq-131-2009` | R0/Rs | 12.05 | [marked](../analysis/recipes/mq-131-2009-air-marked.toml) | `1.0 / 12.0` | Calibration, MQ-131, UnitTesting |
+| MQ-135 | `mq-135-hanwei` | Rs/R0 | 3.596 | [extracted](../analysis/recipes/mq-135-hanwei-air-extracted.toml) | `3.60` | Calibration, MQ-135, MQ-135-ALL, MQ-135-CorrectionFactorDHT11, MQ135-ADS1115 |
+| MQ-136 | `mq-136-hanwei-2004` | Rs/R0 | 3.551 | [marked](../analysis/recipes/mq-136-hanwei-2004-air-marked.toml) | `3.55` | MQ-136, UnitTesting |
+| MQ-303A | `mq-303a-hanwei-2006` | Rs/Rs(air) | 0.9910 (1 by the axis's definition) | [marked](../analysis/recipes/mq-303a-hanwei-2006-air-marked.toml) | `1` | Calibration, MQ-303A |
+| MQ-309A | `mq-309a-hanwei-2004` | Rs/Rs(1000 ppm CH4) | 11.05 | [marked](../analysis/recipes/mq-309a-hanwei-2004-air-marked.toml) | `11.1` | Calibration, MQ-309A |
+
+Notes:
+
+- **MQ-131** (`mq-131-2009`): The figure plots R0/Rs, so the examples calibrate with the inverse.
+- **MQ-135** (`mq-135-hanwei`): The AIR line has no markers: the ends of its two straight segments.
+- **MQ-136** (`mq-136-hanwei-2004`): The MQ-137 datasheet draws the same figure and the same AIR line.
+- **MQ-303A** (`mq-303a-hanwei-2006`): The axis is Rs over Rs in air, so clean air is 1 by definition; the marker the figure draws for it reads 0.991, within a pixel.
+- **MQ-309A** (`mq-309a-hanwei-2004`): Fig. 3's axis is Rs over Rs at 1000 ppm CH4, which the example's R0 is therefore also measured against.

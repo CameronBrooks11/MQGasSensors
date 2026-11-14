@@ -1,0 +1,22 @@
+id = "mq-135-hanwei-air-extracted"
+sensor = "MQ-135"
+gas = "air"
+
+[source]
+datasheet = "mq-135-hanwei"
+page = 2
+
+[frame]
+x = [97.92, 360.24]
+y = [462.72, 688.56]
+ppm = [10, 1000]
+ratio = [0.1, 10]
+
+# Slate blue strokes: crosses. The white fill is unused.
+
+[markers]
+stroke = [0, 0, 128]
+fill = [255, 255, 255]
+shape = "line"
+count = 3
+exclude = [[313.92, 582.51, 354.96, 664.59]]

@@ -29,7 +29,7 @@
 #define         Type                    ("MQ-2") //MQ2
 #define         Voltage_Resolution      (5)
 #define         ADC_Bit_Resolution      (10) // For arduino UNO/MEGA/NANO
-#define         RatioMQ2CleanAir        (9.83) //RS / R0 = 9.83 ppm 
+#define         RatioMQ2CleanAir        (9.51) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 
 /*****************************Globals***********************************************/
 MQGasSensor MQ2(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);

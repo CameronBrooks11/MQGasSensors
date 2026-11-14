@@ -46,6 +46,10 @@ For each sensor the page also says whether its hand-read points were confirmed t
 
 The example sketches' values are the datasheet fits, the source fit for each gas on the coefficients page, and the analysis tests fail if one differs. Until #28 they were the hand-read fits, some rounded coarsely or matching no curve. The page matches each pair to the closest fit, hand-read or re-derived, and gives the largest difference in concentration between the example's pair and the datasheet fit for the same gas over that curve's range: what using the example costs, apart from the error of the power law itself.
 
+## Clean air
+
+A sketch calibrates R0 in clean air with `calibrate(RatioMQxCleanAir)`, which sets R0 = Rs / ratio, so that ratio scales every reading after it as much as `setA` does. The datasheets draw it as an AIR line: flat, one Rs/R0 at every concentration. It is read from the same figure as the curves, with the same tools, and recorded as an `[[air]]` entry in `analysis/curves.toml`; `just reproduce` reads it again. The examples use each value to three significant figures, and the analysis tests fail if one differs. Until #49 they were copied numbers: most matched their figure within a reading's precision, but MQ-7's 27.5 was 5 % off the 26.1 its figure draws, MQ-2's 9.83 was 3 % off, and the MQ-131 value was inverted (#46).
+
 ## Two editions of the datasheets
 
 Two makers publish datasheets for sensors with the same names, and their curves differ.

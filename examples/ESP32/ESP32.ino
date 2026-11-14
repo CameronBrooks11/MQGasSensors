@@ -29,7 +29,7 @@
 #define         Type                    ("MQ-3") //MQ3 or other MQ Sensor, if change this verify your a and b values.
 #define         Voltage_Resolution      (3.3) // 3V3 <- IMPORTANT. Source: https://randomnerdtutorials.com/esp32-adc-analog-read-arduino-ide/
 #define         ADC_Bit_Resolution      (12) // ESP-32 bit resolution. Source: https://randomnerdtutorials.com/esp32-adc-analog-read-arduino-ide/
-#define         RatioMQ3CleanAir        (60) // Ratio of your sensor, for this example an MQ-3
+#define         RatioMQ3CleanAir        (59.9) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 /*****************************Globals***********************************************/
 MQGasSensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 /*****************************Globals***********************************************/

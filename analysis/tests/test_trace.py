@@ -107,6 +107,18 @@ class MarkerTests(unittest.TestCase):
         np.testing.assert_array_equal(with_limit, without)
 
 
+class FlatLineTests(unittest.TestCase):
+    def test_flat_line_gives_its_ratio_and_no_power_law(self):
+        f = fit([200, 1000, 5000], [4.4, 4.4, 4.4])
+        self.assertEqual((f.A, f.B, f.ratio_min, f.ratio_max, f.n), (4.4, 0.0, 4.4, 4.4, 3))
+        self.assertTrue(np.isnan(f.a) and np.isnan(f.b))
+
+    def test_line_that_slopes_however_little_is_fitted(self):
+        f = fit([200, 1000, 5000], [4.4, 4.3, 4.2])
+        self.assertFalse(np.isnan(f.a))
+        self.assertLess(f.B, 0)
+
+
 class AxisTests(unittest.TestCase):
     def test_round_trip(self):
         ax = Axis(50, 100.0, 380, 10000.0)

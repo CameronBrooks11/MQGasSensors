@@ -29,7 +29,7 @@
 #define         Type                    ("MQ-3") //MQ3
 #define         Voltage_Resolution      (3.3) // 3V3 <- IMPORTANT
 #define         ADC_Bit_Resolution      (10) // For ESP8266
-#define         RatioMQ3CleanAir        (60)
+#define         RatioMQ3CleanAir        (59.9) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 /*****************************Globals***********************************************/
 MQGasSensor MQ3(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 /*****************************Globals***********************************************/

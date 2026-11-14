@@ -31,14 +31,14 @@
 #define         Pin9                     (A9)  //Analog input 9 of your arduino
 #define         PWMPin                   (5)   // Pin connected to mosfet
 /***********************Software Related Macros************************************/
-#define         RatioMQ2CleanAir          (9.83) //RS / R0 = 9.83 ppm 
-#define         RatioMQ3CleanAir          (60) //RS / R0 = 60 ppm 
-#define         RatioMQ4CleanAir          (4.4) //RS / R0 = 4.4 ppm 
-#define         RatioMQ5CleanAir          (6.5) //RS / R0 = 6.5 ppm 
-#define         RatioMQ6CleanAir          (10) //RS / R0 = 10 ppm 
-#define         RatioMQ7CleanAir          (27.5) //RS / R0 = 27.5 ppm  
-#define         RatioMQ8CleanAir          (70) //RS / R0 = 70 ppm   
-#define         RatioMQ9CleanAir          (9.6) //RS / R0 = 9.6 ppm 
+#define         RatioMQ2CleanAir          (9.51) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ3CleanAir          (59.9) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ4CleanAir          (4.43) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ5CleanAir          (6.49) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ6CleanAir          (9.86) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ7CleanAir          (26.1) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ8CleanAir          (69.5) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ9CleanAir          (9.75) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 #define         ADC_Bit_Resolution        (10) // 10 bit ADC 
 #define         Voltage_Resolution        (5) // Volt resolution to calc the voltage
 #define         Type                      ("Arduino Mega 2560") //Board used
@@ -128,24 +128,24 @@ void setup() {
     MQ9.update();
 
     MQ2calcR0 += MQ2.calibrate(RatioMQ2CleanAir);
-    MQ3calcR0 += MQ2.calibrate(RatioMQ3CleanAir);
-    MQ4calcR0 += MQ2.calibrate(RatioMQ4CleanAir);
-    MQ5calcR0 += MQ2.calibrate(RatioMQ5CleanAir);
-    MQ6calcR0 += MQ2.calibrate(RatioMQ6CleanAir);
-    MQ7calcR0 += MQ2.calibrate(RatioMQ7CleanAir);
-    MQ8calcR0 += MQ2.calibrate(RatioMQ8CleanAir);
-    MQ9calcR0 += MQ2.calibrate(RatioMQ9CleanAir);
+    MQ3calcR0 += MQ3.calibrate(RatioMQ3CleanAir);
+    MQ4calcR0 += MQ4.calibrate(RatioMQ4CleanAir);
+    MQ5calcR0 += MQ5.calibrate(RatioMQ5CleanAir);
+    MQ6calcR0 += MQ6.calibrate(RatioMQ6CleanAir);
+    MQ7calcR0 += MQ7.calibrate(RatioMQ7CleanAir);
+    MQ8calcR0 += MQ8.calibrate(RatioMQ8CleanAir);
+    MQ9calcR0 += MQ9.calibrate(RatioMQ9CleanAir);
 
     Serial.print(".");
   }
-  MQ2.setR0(MQ2calcR0/20);
-  MQ3.setR0(MQ3calcR0/20);
-  MQ4.setR0(MQ4calcR0/20);
-  MQ5.setR0(MQ5calcR0/20);
-  MQ6.setR0(MQ6calcR0/20);
-  MQ7.setR0(MQ7calcR0/20);
-  MQ8.setR0(MQ8calcR0/20);
-  MQ9.setR0(MQ9calcR0/20);
+  MQ2.setR0(MQ2calcR0/10);
+  MQ3.setR0(MQ3calcR0/10);
+  MQ4.setR0(MQ4calcR0/10);
+  MQ5.setR0(MQ5calcR0/10);
+  MQ6.setR0(MQ6calcR0/10);
+  MQ7.setR0(MQ7calcR0/10);
+  MQ8.setR0(MQ8calcR0/10);
+  MQ9.setR0(MQ9calcR0/10);
   Serial.println("  done!.");
   
   Serial.print("Valores de R0 para cada sensor (MQ2 - MQ9):");

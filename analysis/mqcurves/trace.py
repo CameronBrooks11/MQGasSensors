@@ -150,6 +150,12 @@ def fit(ppm, ratio):
     if np.any(ppm <= 0) or np.any(ratio <= 0):
         raise ValueError("ppm and ratio must be positive")
     lx, ly = np.log10(ppm), np.log10(ratio)
+    if np.all(ratio == ratio[0]):
+        # A flat line, such as clean air: Rs/R0 does not depend on ppm, so there is no power law.
+        nan = float("nan")
+        return Fit(A=float(ratio[0]), B=0.0, a=nan, b=nan, r_squared=nan, n=int(ppm.size),
+                   ppm_min=float(ppm.min()), ppm_max=float(ppm.max()),
+                   ratio_min=float(ratio[0]), ratio_max=float(ratio[0]), max_ppm_error=nan)
     B, logA = np.polyfit(lx, ly, 1)
     b, loga = np.polyfit(ly, lx, 1)
     r = np.corrcoef(lx, ly)[0, 1]
