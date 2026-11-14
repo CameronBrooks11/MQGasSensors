@@ -1,0 +1,20 @@
+id = "mq-8-hanwei-2009-air-extracted"
+sensor = "MQ-8"
+gas = "air"
+
+[source]
+datasheet = "mq-8-hanwei-2009"
+page = 2
+
+[frame]
+x = [95.7, 350.7]
+y = [430.76, 657.26]
+ppm = [100, 10000]
+ratio = [0.01, 100]
+
+[markers]
+stroke = [128, 0, 0]
+fill = [128, 0, 0]
+count = 9
+shape = "round"
+exclude = [[107.7, 441.32, 176.64, 544.04]]

@@ -1,0 +1,22 @@
+id = "mq-303a-hanwei-2006-air-marked"
+sensor = "MQ-303A"
+gas = "air"
+
+# The "air level" marker: a square, rows 80 to 82, on a bar, row 81, x 365 to 391. Its
+# centre row at the bar's two ends. The axis is Rs/Rs(air), so air is 1 by definition.
+# Positions read by eye, as [x, y] pixels of the image as stored.
+markers = [[365, 81], [391, 81]]
+
+[source]
+datasheet = "mq-303a-hanwei-2006"
+page = 2
+pixels_sha256 = "79262b8aea16a5149fe7b3622389815b55e4a4c8d2d058c2490b3f59ce8a6997"
+
+# The decade gridlines, at about 63 px a decade, by least squares.
+[x]
+pixels = [358.4, 610.4]
+values = [1, 10000]
+
+[y]
+pixels = [17, 272]
+values = [10, 0.001]

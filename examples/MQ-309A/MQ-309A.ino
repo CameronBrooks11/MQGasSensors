@@ -30,7 +30,7 @@
 #define pin A0 //Analog input 0 of your arduino
 #define type "MQ-309" //MQ309
 #define ADC_Bit_Resolution 10 // For arduino UNO/MEGA/NANO
-#define RatioMQ309CleanAir 11 //RS / R0 = 11 ppm 
+#define RatioMQ309CleanAir 11.1 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 #define PWMPin 5 // Pin connected to mosfet
 
 //Declare Sensor

@@ -34,7 +34,7 @@
 #define pin A0 //Analog input 0 of your arduino
 #define type "MQ-7" //MQ7
 #define ADC_Bit_Resolution 10 // For arduino UNO/MEGA/NANO
-#define RatioMQ7CleanAir 27.5 //RS / R0 = 27.5 ppm 
+#define RatioMQ7CleanAir 26.1 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 #define PWMPin 5 // Pin connected to mosfet
 
 //Declare Sensor

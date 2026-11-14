@@ -1,0 +1,20 @@
+id = "mq-5-hanwei-2007-air-extracted"
+sensor = "MQ-5"
+gas = "air"
+
+[source]
+datasheet = "mq-5-hanwei-2007"
+page = 2
+
+[frame]
+x = [95.04, 359.76]
+y = [449.76, 680.88]
+ppm = [100, 10000]
+ratio = [0.1, 10]
+
+[markers]
+stroke = [128, 0, 0]
+fill = [128, 0, 0]
+count = 9
+shape = "round"
+exclude = [[105.36, 453.6, 167.52, 541.92]]

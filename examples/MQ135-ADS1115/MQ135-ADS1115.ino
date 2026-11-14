@@ -22,7 +22,7 @@
 //Definitions
 #define placa "Arduino UNO"
 #define type "MQ-135" //MQ135
-#define RatioMQ135CleanAir 3.6//RS / R0 = 3.6 ppm  
+#define RatioMQ135CleanAir 3.60 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 float factorEscala = 0.1875F;
 //#define calibration_button 13 //Pin to calibrate your sensor
 //Declare Sensor

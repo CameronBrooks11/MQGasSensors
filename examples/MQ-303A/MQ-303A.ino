@@ -30,7 +30,7 @@
 #define pin A0 //Analog input 0 of your arduino
 #define type "MQ-303" //MQ303
 #define ADC_Bit_Resolution 10 // For arduino UNO/MEGA/NANO
-#define RatioMQ303CleanAir 1  //RS / R0 = 1 ppm    
+#define RatioMQ303CleanAir 1 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 //#define calibration_button 13 //Pin to calibrate your sensor
 
 //Declare Sensor

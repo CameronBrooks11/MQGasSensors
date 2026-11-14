@@ -30,7 +30,7 @@
 #define         Type                    ("MQ-4") //MQ4
 #define         Voltage_Resolution      (5)
 #define         ADC_Bit_Resolution      (10) // For arduino UNO/MEGA/NANO
-#define         RatioMQ4CleanAir        (4.4) //RS / R0 = 60 ppm 
+#define         RatioMQ4CleanAir        (4.43) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 /*****************************Globals***********************************************/
 //Declare Sensor
 MQGasSensor MQ4(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);

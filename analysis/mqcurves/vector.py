@@ -205,7 +205,7 @@ def _inside(p, box):
     return x0 <= p.x0 and p.x1 <= x1 and y0 <= p.y0 and p.y1 <= y1
 
 
-SHAPES = ("outline", "polygon", "round", "x", "star", "plus")
+SHAPES = ("outline", "polygon", "round", "x", "star", "plus", "line")
 
 
 def _shape(strokes):
@@ -264,6 +264,16 @@ def markers(paths, r):
     """Centres of the recipe's markers inside its frame, sorted by x, in points."""
     if not any(_same((p.x0, p.y0, p.x1, p.y1), r.frame) for p in paths):
         raise VectorError(f"{r.id}: no rectangle drawn at the frame {list(r.frame)} on page {r.page}")
+    if r.shape == "line":
+        # A line without markers, such as a flat AIR line: the ends of its straight segments.
+        edge = (r.frame[0] - 0.05, r.frame[1] - 0.05, r.frame[2] + 0.05, r.frame[3] + 0.05)  # a line may start on it
+        segments = [p for p in paths if p.stroke == r.stroke and p.fill == r.fill and p.is_stroke and not p.curved
+                    and _inside(p, edge) and not any(_inside(p, box) for box in r.exclude)]
+        centres = sorted({(round(x, 2), round(y, 2)) for p in segments for x, y in (p.start, p.end)})
+        if len(centres) != r.count:
+            raise VectorError(f"{r.id}: expected {r.count} line ends, found {len(centres)} at x "
+                              f"{[x for x, _ in centres]}")
+        return np.array([c[0] for c in centres]), np.array([c[1] for c in centres])
     frame = (r.frame[0] - MAX_MARKER, r.frame[1] - MAX_MARKER, r.frame[2] + MAX_MARKER, r.frame[3] + MAX_MARKER)
     # A subpath larger than a marker is a line, a legend sample or a box, whatever its colours.
     chosen = [p for p in paths if p.stroke == r.stroke and p.fill == r.fill

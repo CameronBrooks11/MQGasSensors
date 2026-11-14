@@ -34,15 +34,15 @@
 #define         Pin14                    (A14) //Analog input 14 of your arduino
 #define         PWMPin                   (5)   // Pin connected to mosfet
 /***********************Software Related Macros************************************/
-#define         RatioMQ2CleanAir          (9.83) //RS / R0 = 9.83 ppm 
-#define         RatioMQ3CleanAir          (60) //RS / R0 = 60 ppm 
-#define         RatioMQ4CleanAir          (4.4) //RS / R0 = 4.4 ppm 
-#define         RatioMQ5CleanAir          (6.5) //RS / R0 = 6.5 ppm 
-#define         RatioMQ6CleanAir          (10) //RS / R0 = 10 ppm 
-#define         RatioMQ7CleanAir          (27.5) //RS / R0 = 27.5 ppm  
-#define         RatioMQ8CleanAir          (70) //RS / R0 = 70 ppm   
-#define         RatioMQ9CleanAir          (9.6) //RS / R0 = 9.6 ppm 
-#define         RatioMQ136CleanAir        (3.6) //RS / R0 = 9.6 ppm 
+#define         RatioMQ2CleanAir          (9.51) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ3CleanAir          (59.9) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ4CleanAir          (4.43) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ5CleanAir          (6.49) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ6CleanAir          (9.86) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ7CleanAir          (26.1) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ8CleanAir          (69.5) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ9CleanAir          (9.75) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
+#define         RatioMQ136CleanAir        (3.55) // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 #define         RatioMQ131CleanAir        (1.0 / 12.0) // Rs/R0 in clean air: the MQ-131 figure gives R0/Rs 12.0
 #define         ADC_Bit_Resolution        (10) // 10 bit ADC 
 #define         Voltage_Resolution        (5) // Volt resolution to calc the voltage

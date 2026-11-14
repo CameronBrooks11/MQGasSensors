@@ -8,7 +8,7 @@
     fit <points.csv>                                   fit points already digitised
     mark <recipe.toml> ...                             mark a new figure by hand
     table [--check]                                    write docs/coefficients.md
-    reproduce                                          re-derive every curve that has a recipe and compare
+    reproduce                                          re-derive every curve and clean-air line that has a recipe and compare
 """
 import argparse
 import sys
@@ -20,6 +20,9 @@ from .trace import fit, trace
 
 def report(label, f):
     print(f"{label}: {f.n} points, {f.ppm_min:.4g} to {f.ppm_max:.4g} ppm, Rs/R0 {f.ratio_min:.4g} to {f.ratio_max:.4g}")
+    if f.ratio_min == f.ratio_max:
+        print(f"  a flat line, such as clean air: Rs/R0 = {f.A:.5g}, no power law to fit")
+        return
     print(f"  ratio = A * ppm^B     A = {f.A:.5g}   B = {f.B:.5g}")
     print(f"  ppm = a * ratio^b     a = {f.a:.5g}   b = {f.b:.5g}    (setA, setB)")
     print(f"  r^2 = {f.r_squared:.5f}   largest error against the points: {f.max_ppm_error * 100:.1f} % in ppm")
@@ -153,7 +156,8 @@ def cmd_reproduce(args):
     from . import table
 
     with open(table.ANALYSIS / "curves.toml", "rb") as fh:
-        traced = [c for c in tomllib.load(fh)["curve"] if c["origin"] != "upstream"]
+        doc = tomllib.load(fh)
+    traced = [c for c in doc["curve"] if c["origin"] != "upstream"] + doc.get("air", [])
     failed = 0
     for c in traced:
         if c["origin"] == "extracted":
@@ -179,7 +183,7 @@ def cmd_reproduce(args):
               f"{'identical to' if same else 'DIFFER from'} {c['points']}, {len(lines)} checks {'pass' if ok else 'FAIL'}")
         if not ok:
             print("\n".join(lines))
-    print(f"{len(traced) - failed} of {len(traced)} curves with recipes reproduced from their datasheets")
+    print(f"{len(traced) - failed} of {len(traced)} recipes reproduced from their datasheets, clean-air lines included")
     return 1 if failed else 0
 
 

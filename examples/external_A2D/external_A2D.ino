@@ -40,7 +40,7 @@
 #define pin A0 //Analog input 0 -> This value can have any number, we recommend use A0
 #define type "MQ-3 With A2D External connected" //MQ3
 #define ADC_Bit_Resolution 10 // Resolution of your external A2D
-#define RatioMQ3CleanAir 60   //RS / R0 = 60 ppm 
+#define RatioMQ3CleanAir 59.9 // Rs/R0 in clean air, from the datasheet's AIR line (docs/coefficients.md)
 //#define calibration_button 13 //Pin to calibrate your sensor
 
 //Declare Sensor
