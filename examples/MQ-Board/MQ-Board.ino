@@ -61,42 +61,42 @@ void setup() {
   //init the sensor
   MQ2.init();
   MQ2.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ2.setA(574.25); MQ2.setB(-2.222); // Configure the equation to to calculate LPG concentration
+  MQ2.setA(564.77); MQ2.setB(-2.151); // Configure the equation to to calculate LPG concentration
   MQ2.setR0(9.659574468);
 
   MQ3.init(); 
   MQ3.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ3.setA(0.3934); MQ3.setB(-1.504); //Configure the equation to calculate Alcohol concentration value
+  MQ3.setA(0.39304); MQ3.setB(-1.495); //Configure the equation to calculate alcohol concentration value
   MQ3.setR0(3.86018237);
 
   MQ4.init(); 
   MQ4.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ4.setA(1012.7); MQ4.setB(-2.786); // Configure the equation to to calculate CH4 concentration
+  MQ4.setA(990.22); MQ4.setB(-2.826); // Configure the equation to to calculate CH4 concentration
   MQ4.setR0(3.86018237);
 
   MQ5.init(); 
   MQ5.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ5.setA(97124); MQ5.setB(-4.918); //Configure the equation to calculate Alcohol concentration value
+  MQ5.setA(67573); MQ5.setB(-4.526); //Configure the equation to calculate alcohol concentration value
   MQ5.setR0(71.100304);
   
   MQ6.init(); 
   MQ6.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ6.setA(2127.2); MQ6.setB(-2.526); // Configure the equation to to calculate CH4 concentration
+  MQ6.setA(2195.3); MQ6.setB(-2.507); // Configure the equation to to calculate CH4 concentration
   MQ6.setR0(13.4285714);
   
   MQ7.init(); 
   MQ7.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ7.setA(99.042); MQ7.setB(-1.518); // Configure the equation to calculate CO concentration value
+  MQ7.setA(98.691); MQ7.setB(-1.528); // Configure the equation to calculate CO concentration value
   MQ7.setR0(4);
     
   MQ8.init(); 
   MQ8.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ8.setA(976.97); MQ8.setB(-0.688); // Configure the equation to to calculate H2 concentration
+  MQ8.setA(973.62); MQ8.setB(-0.6902); // Configure the equation to to calculate H2 concentration
   MQ8.setR0(1);
   
   MQ9.init(); 
   MQ9.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ9.setA(1000.5); MQ9.setB(-2.186); // Configure the equation to to calculate LPG concentration
+  MQ9.setA(971.09); MQ9.setB(-2.140); // Configure the equation to to calculate LPG concentration
   MQ9.setR0(9.42857143);
 
    /*****************************  MQ CAlibration ********************************************/ 
@@ -167,6 +167,7 @@ void setup() {
   Serial.println("*************************** Values from MQ-board ***************************");
   Serial.println("|    LPG   |  Alcohol |   CH4    |  Alcohol |   CH4    |    CO    |    H2    |    LPG   |");  
   Serial.println("|    MQ-2  |   MQ-3   |   MQ-4   |   MQ-5   |   MQ-6   |   MQ-7   |   MQ-8   |   MQ-9   |");  
+  Serial.println("MQ-3 in mg/L, the unit of its datasheet's figure; the others in ppm.");
   //pinMode(calibration_button, INPUT);
 }
 

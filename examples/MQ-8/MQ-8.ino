@@ -42,16 +42,17 @@ void setup() {
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ8.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ8.setA(976.97); MQ8.setB(-0.688); // Configure the equation to to calculate H2 concentration
+  MQ8.setA(973.62); MQ8.setB(-0.6902); // Configure the equation to to calculate H2 concentration
 
   /*
     Exponential regression:
-  GAS     | a      | b
-  H2      | 976.97  | -0.688
-  LPG     | 10000000 | -3.123
-  CH4     | 80000000000000 | -6.666
-  CO      | 2000000000000000000 | -8.074
-  Alcohol | 76101 | -1.86
+  Gas     | a          | b
+  alcohol | 48842      | -1.691
+  CH4     | 8.3559e+13 | -6.675
+  CO      | 2.0195e+16 | -7.606
+  H2      | 973.62     | -0.6902
+  LPG     | 8.3383e+07 | -3.767
+  From docs/coefficients.md, the fits to the mq-8-hanwei-2009 datasheet.
   */
   
   /*****************************  MQ Init ********************************************/ 

@@ -52,16 +52,18 @@ void setup() {
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ3.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ3.setA(4.8387); MQ3.setB(-2.68); // Configure the equation to to calculate Benzene concentration
+  MQ3.setA(4.7380); MQ3.setB(-2.688); // Configure the equation to to calculate benzene concentration
   /*
     Exponential regression:
-  Gas    | a      | b
-  LPG    | 44771  | -3.245
-  CH4    | 2*10^31| 19.01
-  CO     | 521853 | -3.821
-  Alcohol| 0.3934 | -1.504
-  Benzene| 4.8387 | -2.68
-  Hexane | 7585.3 | -2.849
+  Gas     | a          | b
+  alcohol | 0.39304    | -1.495
+  benzene | 4.7380     | -2.688
+  CH4     | 3.8391e+32 | -19.76
+  CO      | 715790     | -3.895
+  hexane  | 7121.4     | -2.825
+  LPG     | 55529      | -3.281
+  From docs/coefficients.md, the fits to the mq-3-hanwei-2007 datasheet.
+  Concentrations are in mg/L, not ppm, as on that datasheet's figure.
   */
 
   
@@ -100,6 +102,9 @@ void loop() {
   int yourA2DValue = random(0, 1024); // 10-bit emulation
   MQ3.setADC(yourA2DValue); // Update data, the arduino will read the voltage from the analog pin
   float correctionFactor = 0; // Optional environmental correction
+  // The MQ-3 coefficients return mg/L, the unit of its datasheet's figure, not ppm
+  // (0.4 mg/L of alcohol is about 200 ppm, per the datasheet). serialDebug() still
+  // heads that column PPM.
   MQ3.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
   MQ3.serialDebug(); // Will print the table on the serial port
   delay(500); //Sampling frequency

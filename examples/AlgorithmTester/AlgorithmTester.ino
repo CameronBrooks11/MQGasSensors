@@ -49,62 +49,62 @@ void loop()
     // Testing MQ2 LPG
     ratio[0] = 1.8; ratio[1] = 1.05; ratio[2] = 0.8; ratio[3] = 0.5;
     expectedValue[0] = 200; expectedValue[1] = 500; expectedValue[2] = 1000; expectedValue[3] = 3000;
-    testSensor("MQ-2", 574.25, -2.222);
+    testSensor("MQ-2", 564.77, -2.151);
 
     // Testing MQ3 Benzene
     ratio[0] = 4; ratio[1] = 3; ratio[2] = 1; ratio[3] = 0.8;
     expectedValue[0] = 0.1; expectedValue[1] = 0.21; expectedValue[2] = 4; expectedValue[3] = 10;
-    testSensor("MQ-3", 4.8387, -2.68);
+    testSensor("MQ-3", 4.7380, -2.688);
     
     // Testing MQ4 CH4
     ratio[0] = 1.9; ratio[1] = 1; ratio[2] = 0.6; ratio[3] = 0.42;
     expectedValue[0] = 200; expectedValue[1] = 1000; expectedValue[2] = 5000; expectedValue[3] = 10000;
-    testSensor("MQ-4", 1012.7, -2.786);
+    testSensor("MQ-4", 990.22, -2.826);
 
     // Testing MQ5 H2
     ratio[0] = 1.8; ratio[1] = 1.3; ratio[2] = 0.8; ratio[3] = 0.68;
     expectedValue[0] = 200; expectedValue[1] = 500; expectedValue[2] = 3000; expectedValue[3] = 10000;
-    testSensor("MQ-5", 1163.8, -3.874);
+    testSensor("MQ-5", 1163.2, -3.892);
 
     // Testing MQ6 CH4
     ratio[0] = 2.6; ratio[1] = 1.9; ratio[2] = 1; ratio[3] = 0.8;
     expectedValue[0] = 200; expectedValue[1] = 500; expectedValue[2] = 2000; expectedValue[3] = 5000;
-    testSensor("MQ-6", 2127.2, -2.526);
+    testSensor("MQ-6", 2195.3, -2.507);
 
     // Testing MQ7 CO
     ratio[0] = 1.8; ratio[1] = 1; ratio[2] = 0.4; ratio[3] = 0.25;
     expectedValue[0] = 50; expectedValue[1] = 100; expectedValue[2] = 400; expectedValue[3] = 1000;
-    testSensor("MQ-7", 99.042, -1.518);
+    testSensor("MQ-7", 98.691, -1.528);
 
     // Testing MQ8 H2
     ratio[0] = 2.6; ratio[1] = 1; ratio[2] = 0.21; ratio[3] = 0.03;
     expectedValue[0] = 500; expectedValue[1] = 1000; expectedValue[2] = 3000; expectedValue[3] = 10000;
-    testSensor("MQ-8", 976.97, -0.688);
+    testSensor("MQ-8", 973.62, -0.6902);
 
     // Testing MQ9 LPG
     ratio[0] = 2; ratio[1] = 1.4; ratio[2] = 0.7; ratio[3] = 0.23;
     expectedValue[0] = 200; expectedValue[1] = 500; expectedValue[2] = 2000; expectedValue[3] = 10000;
-    testSensor("MQ-9", 1000.5, -2.186);
+    testSensor("MQ-9", 971.09, -2.140);
 
     // Testing MQ131 O3
     ratio[0] = 5; ratio[1] = 2; ratio[2] = 0.7; ratio[3] = 0.5;
     expectedValue[0] = 5; expectedValue[1] = 20; expectedValue[2] = 70; expectedValue[3] = 100;
-    testSensor("MQ-131", 23.943, -1.11);
+    testSensor("MQ-131", 24.264, -1.117);
 
     // Testing MQ135 NH4
     ratio[0] = 2.6; ratio[1] = 1.9; ratio[2] = 1.1; ratio[3] = 0.75;
     expectedValue[0] = 10; expectedValue[1] = 20; expectedValue[2] = 100; expectedValue[3] = 200;
-    testSensor("MQ-135", 102.2, -2.473);
+    testSensor("MQ-135", 102.29, -2.484);
 
     // Testing MQ303 Isobutano
     ratio[0] = 0.4; ratio[1] = 0.3; ratio[2] = 0.19; ratio[3] = 0.08;
     expectedValue[0] = 100; expectedValue[1] = 300; expectedValue[2] = 1000; expectedValue[3] = 10000;
-    testSensor("MQ-303", 6.2144, -2.894);
+    testSensor("MQ-303", 5.3977, -3.001);
 
     // Testing MQ309 CO
     ratio[0] = 6; ratio[1] = 5; ratio[2] = 4.3; ratio[3] = 4;
     expectedValue[0] = 1000; expectedValue[1] = 3000; expectedValue[2] = 5000; expectedValue[3] = 7000;
-    testSensor("MQ-309", 1000000, -4.01);
+    testSensor("MQ-309", 1.6313e+06, -4.076);
 
     // Testing linear equation for MQ-4
     mySensor.setRegressionMethod(0); //_PPM =  pow(10, (log10(ratio)-b)/a)

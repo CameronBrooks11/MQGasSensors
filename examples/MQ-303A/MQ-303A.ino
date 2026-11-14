@@ -42,14 +42,15 @@ void setup() {
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ303.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ303.setA(6.2144); MQ303.setB(-2.894); // Configure the equation to to calculate Isobutano concentration
+  MQ303.setA(5.3977); MQ303.setB(-3.001); // Configure the equation to to calculate iso-butane concentration
 
   /*
     Exponential regression:
-  GAS        | a      | b
-  Iso_butano | 6.2144 | -2.894
-  Hydrogen   | 4.1487 | -2.716
-  Ethanol    | 3.4916 | -2.432
+  Gas        | a          | b
+  ethanol    | 3.5821     | -2.423
+  H2         | 4.3296     | -2.721
+  iso-butane | 5.3977     | -3.001
+  From docs/coefficients.md, the fits to the mq-303a-hanwei-2006 datasheet.
   */
 
   /*****************************  MQ Init ********************************************/ 

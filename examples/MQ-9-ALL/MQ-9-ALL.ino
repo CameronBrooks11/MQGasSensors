@@ -81,19 +81,20 @@ void loop() {
   float correctionFactor = 0; // Optional environmental correction
   /*
   Exponential regression:
-  GAS     | a      | b
-  LPG     | 1000.5 | -2.186
-  CH4     | 4269.6 | -2.648
-  CO      | 599.65 | -2.244
+  Gas | a          | b
+  CH4 | 4224.5     | -2.596
+  CO  | 580.02     | -2.220
+  LPG | 971.09     | -2.140
+  From docs/coefficients.md, the fits to the mq-9-hanwei-2008 datasheet.
   */
 
-  MQ9.setA(1000.5); MQ9.setB(-2.186); // Configure the equation to to calculate LPG concentration
+  MQ9.setA(971.09); MQ9.setB(-2.140); // Configure the equation to to calculate LPG concentration
   float LPG = MQ9.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
 
-  MQ9.setA(4269.6); MQ9.setB(-2.648); // Configure the equation to to calculate LPG concentration
+  MQ9.setA(4224.5); MQ9.setB(-2.596); // Configure the equation to to calculate CH4 concentration
   float CH4 = MQ9.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
 
-  MQ9.setA(599.65); MQ9.setB(-2.244); // Configure the equation to to calculate LPG concentration
+  MQ9.setA(580.02); MQ9.setB(-2.220); // Configure the equation to to calculate CO concentration
   float CO = MQ9.readSensor(false, correctionFactor); // Sensor will read PPM concentration using the model, a and b values set previously or from the setup
 
   Serial.print("|    "); Serial.print(LPG);

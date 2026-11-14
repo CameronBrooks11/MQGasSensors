@@ -186,49 +186,46 @@ For each sensor with hand-read points: how many of its hand-read curves have bee
 
 Every distinct `setA`/`setB` pair in `examples/`. The examples were written from the Hanwei-era datasheets, so only curves from those are compared; a Winsen manual for the same sensor is a different document with a different curve.
 
-Each pair is matched to the closest hand-read fit for its sensor, which is where the examples' values came from, and the verdict says how it relates to that fit. **Difference from the datasheet fit** then compares the pair with the fit of the same gas's source curve, re-derived where it has been: the biggest relative difference in the concentration the two return, over that curve's Rs/R0 range. It is what using the example's value costs against the best power law for the datasheet's curve; how far that power law is from the curve itself is the curve's **Largest error** above.
+Each pair is matched to the closest fit for its sensor, hand-read or re-derived, and the verdict says how it relates to that fit. Every pair the examples use is the datasheet fit for its gas, apart from the linear-model example and a placeholder in UnitTesting. **Difference from the datasheet fit** then compares the pair with the fit of the same gas's source curve, re-derived where it has been: the biggest relative difference in the concentration the two return, over that curve's Rs/R0 range. It is what using the example's value costs against the best power law for the datasheet's curve; how far that power law is from the curve itself is the curve's **Largest error** above.
 
 | Sensor | setA | setB | Gas | Matched fit a | Matched fit b | Difference in a | Verdict | Difference from the datasheet fit | Source of that curve | Sketches |
 |---|---|---|---|---|---|---|---|---|---|---|
-| MQ-2 | 574.25 | -2.222 | LPG | 578.68 | -2.135 | 0.8 % | does not match any curve | 12 % | marked | Calibration, MQ-2, MQ-Board, UnitTesting |
-| MQ-2 | 987.99 | -2.162 | H2 | 982.04 | -2.131 | 0.6 % | near the fit, not equal | 6 % | marked | ESP32_WROOM_32D |
-| MQ-3 | 0.3934 | -1.504 | alcohol | 0.39339 | -1.504 | 0.0 % | same as the fit | 2 % | extracted | Alcoholimeter, MQ-Board, UnitTesting |
-| MQ-3 | 4.8387 | -2.68 | benzene | 4.8387 | -2.680 | 0.0 % | same as the fit | 3 % | extracted | ESP32, ESP8266, MQ-3, external_A2D |
+| MQ-2 | 564.77 | -2.151 | LPG | 564.77 | -2.151 | 0.0 % | same as the fit | 0 % | marked | Calibration, MQ-2, MQ-Board, UnitTesting |
+| MQ-2 | 980.95 | -2.112 | H2 | 980.95 | -2.112 | 0.0 % | same as the fit | 0 % | marked | ESP32_WROOM_32D |
+| MQ-3 | 0.39304 | -1.495 | alcohol | 0.39304 | -1.495 | 0.0 % | same as the fit | 0 % | extracted | Alcoholimeter, MQ-Board, UnitTesting |
+| MQ-3 | 4.7380 | -2.688 | benzene | 4.7380 | -2.688 | 0.0 % | same as the fit | 0 % | extracted | ESP32, ESP8266, MQ-3, external_A2D |
 | MQ-4 | -0.318 | 1.133 |  | | | | linear-model example | |  | LinearVsExponential, MQ-4-LINEAR |
-| MQ-4 | 1012.7 | -2.786 | CH4 | 1012.7 | -2.786 | 0.0 % | same as the fit | 5 % | extracted | LinearVsExponential, MQ-4, MQ-4-ALL, MQ-Board |
-| MQ-4 | 3811.9 | -3.113 | LPG | 3811.9 | -3.113 | 0.0 % | same as the fit | 3 % | extracted | MQ-4-ALL |
-| MQ-4 | 30000000 | -8.308 | smoke | 2.7663e+07 | -8.308 | 8.4 % | the fit, rounded coarsely | 30 % | extracted | MQ-4-ALL, smokeDetector |
-| MQ-4 | 30000000 | -8.31 | smoke | 2.7663e+07 | -8.308 | 8.4 % | the fit, rounded coarsely | 30 % | extracted | UnitTesting |
-| MQ-4 | 60000000000 | -14.01 | alcohol | 6.4754e+10 | -14.01 | 7.3 % | the fit, rounded coarsely | 7 % | extracted | MQ-4-ALL |
-| MQ-4 | 200000000000000 | -19.05 | CO | 2.0828e+14 | -19.05 | 4.0 % | the fit, rounded coarsely | 13 % | extracted | MQ-4-ALL |
-| MQ-5 | 80.897 | -2.431 | LPG | 76.907 | -2.489 | 5.2 % | does not match any curve | 8 % | extracted | UnitTesting |
-| MQ-5 | 1163.8 | -3.874 | H2 | 1163.8 | -3.874 | 0.0 % | same as the fit | 1 % | extracted | MQ-5 |
-| MQ-5 | 97124 | -4.918 | alcohol | 68091 | -4.551 | 42.6 % | does not match any curve | 24 % | extracted | MQ-Board |
-| MQ-6 | 2127.2 | -2.526 | CH4 | 2127.2 | -2.526 | 0.0 % | same as the fit | 5 % | extracted | MQ-6, MQ-Board, UnitTesting |
-| MQ-7 | 99.042 | -1.518 | CO | 99.042 | -1.518 | 0.0 % | same as the fit | 2 % | extracted | MQ-7, MQ-Board, UnitTesting |
-| MQ-8 | 976.97 | -0.688 | H2 | 976.97 | -0.6879 | 0.0 % | same as the fit | 1 % | extracted | MQ-8, MQ-Board, UnitTesting |
-| MQ-9 | 599.65 | -2.244 | CO | 599.65 | -2.244 | 0.0 % | same as the fit | 4 % | marked | MQ-9-ALL, UnitTesting |
-| MQ-9 | 1000.5 | -2.186 | LPG | 993.68 | -2.147 | 0.7 % | near the fit, not equal | 8 % | marked | MQ-9, MQ-9-ALL, MQ-Board |
-| MQ-9 | 4269.6 | -2.648 | CH4 | 4269.6 | -2.648 | 0.0 % | same as the fit | 5 % | marked | MQ-9-ALL |
-| MQ-131 | 23.943 | -1.11 | O3 | 23.943 | -1.110 | 0.0 % | same as the fit | 2 % | marked | MQ-131, UnitTesting |
-| MQ-135 | 34.668 | -3.369 | acetone | 34.668 | -3.369 | 0.0 % | same as the fit | 2 % | extracted | MQ-135-ALL, MQ135-ADS1115 |
-| MQ-135 | 44.947 | -3.445 | toluene | 44.947 | -3.445 | 0.0 % | same as the fit | 0 % | extracted | MQ-135-ALL, MQ135-ADS1115 |
-| MQ-135 | 77.255 | -3.18 | alcohol | 77.255 | -3.180 | 0.0 % | same as the fit | 1 % | extracted | MQ-135-ALL, MQ135-ADS1115 |
-| MQ-135 | 102.2 | -2.473 | NH4 | 102.20 | -2.473 | 0.0 % | same as the fit | 1 % | extracted | MQ-135, MQ-135-ALL, MQ-135-CorrectionFactorDHT11, MQ135-ADS1115 |
-| MQ-135 | 110.47 | -2.862 | CO2 | 110.47 | -2.862 | 0.0 % | same as the fit | 1 % | extracted | MQ-135-ALL, MQ135-ADS1115, UnitTesting |
-| MQ-135 | 605.18 | -3.937 | CO | 605.18 | -3.937 | 0.0 % | same as the fit | 2 % | extracted | MQ-135-ALL, MQ135-ADS1115 |
-| MQ-136 | 36.737 | -3.536 | H2S | 36.716 | -3.481 | 0.1 % | does not match any curve | 3 % | marked | MQ-136, UnitTesting |
+| MQ-4 | 990.22 | -2.826 | CH4 | 990.22 | -2.826 | 0.0 % | same as the fit | 0 % | extracted | LinearVsExponential, MQ-4, MQ-4-ALL, MQ-Board |
+| MQ-4 | 3736.2 | -3.121 | LPG | 3736.2 | -3.121 | 0.0 % | same as the fit | 0 % | extracted | MQ-4-ALL |
+| MQ-4 | 4.7509e+07 | -8.836 | smoke | 4.7509e+07 | -8.836 | 0.0 % | same as the fit | 0 % | extracted | MQ-4-ALL, UnitTesting, smokeDetector |
+| MQ-4 | 4.7360e+10 | -13.79 | alcohol | 4.7360e+10 | -13.79 | 0.0 % | same as the fit | 0 % | extracted | MQ-4-ALL |
+| MQ-4 | 3.6362e+14 | -19.54 | CO | 3.6362e+14 | -19.54 | 0.0 % | same as the fit | 1 % | extracted | MQ-4-ALL |
+| MQ-5 | 77.016 | -2.501 | LPG | 77.016 | -2.501 | 0.0 % | same as the fit | 0 % | extracted | UnitTesting |
+| MQ-5 | 1163.2 | -3.892 | H2 | 1163.2 | -3.892 | 0.0 % | same as the fit | 0 % | extracted | MQ-5 |
+| MQ-5 | 67573 | -4.526 | alcohol | 67573 | -4.526 | 0.0 % | same as the fit | 0 % | extracted | MQ-Board |
+| MQ-6 | 2195.3 | -2.507 | CH4 | 2195.3 | -2.507 | 0.0 % | same as the fit | 0 % | extracted | MQ-6, MQ-Board, UnitTesting |
+| MQ-7 | 98.691 | -1.528 | CO | 98.691 | -1.528 | 0.0 % | same as the fit | 0 % | extracted | MQ-7, MQ-Board, UnitTesting |
+| MQ-8 | 973.62 | -0.6902 | H2 | 973.62 | -0.6902 | 0.0 % | same as the fit | 0 % | extracted | MQ-8, MQ-Board, UnitTesting |
+| MQ-9 | 580.02 | -2.220 | CO | 580.02 | -2.220 | 0.0 % | same as the fit | 0 % | marked | MQ-9-ALL, UnitTesting |
+| MQ-9 | 971.09 | -2.140 | LPG | 971.09 | -2.140 | 0.0 % | same as the fit | 0 % | marked | MQ-9, MQ-9-ALL, MQ-Board |
+| MQ-9 | 4224.5 | -2.596 | CH4 | 4224.5 | -2.596 | 0.0 % | same as the fit | 0 % | marked | MQ-9-ALL |
+| MQ-131 | 24.264 | -1.117 | O3 | 24.264 | -1.117 | 0.0 % | same as the fit | 0 % | marked | MQ-131, UnitTesting |
+| MQ-135 | 34.544 | -3.402 | acetone | 34.544 | -3.402 | 0.0 % | same as the fit | 0 % | extracted | MQ-135-ALL, MQ135-ADS1115 |
+| MQ-135 | 44.880 | -3.443 | toluene | 44.880 | -3.443 | 0.0 % | same as the fit | 0 % | extracted | MQ-135-ALL, MQ135-ADS1115 |
+| MQ-135 | 76.939 | -3.173 | alcohol | 76.939 | -3.173 | 0.0 % | same as the fit | 0 % | extracted | MQ-135-ALL, MQ135-ADS1115 |
+| MQ-135 | 102.29 | -2.484 | NH4 | 102.29 | -2.484 | 0.0 % | same as the fit | 0 % | extracted | MQ-135, MQ-135-ALL, MQ-135-CorrectionFactorDHT11, MQ135-ADS1115 |
+| MQ-135 | 109.66 | -2.856 | CO2 | 109.66 | -2.856 | 0.0 % | same as the fit | 0 % | extracted | MQ-135-ALL, MQ135-ADS1115, UnitTesting |
+| MQ-135 | 610.01 | -3.960 | CO | 610.01 | -3.960 | 0.0 % | same as the fit | 0 % | extracted | MQ-135-ALL, MQ135-ADS1115 |
+| MQ-136 | 36.716 | -3.481 | H2S | 36.716 | -3.481 | 0.0 % | same as the fit | 0 % | marked | MQ-136, UnitTesting |
 | MQ-303A | 1 | 1 | ethanol | 3.4916 | -2.432 | 71.4 % | does not match any curve | 100 % | located | UnitTesting |
-| MQ-303A | 3.4916 | -2.432 | ethanol | 3.4916 | -2.432 | 0.0 % | same as the fit | 2 % | located | UnitTesting |
-| MQ-303A | 6.2144 | -2.894 | iso-butane | 5.3977 | -3.001 | 15.1 % | does not match any curve | 12 % | read by hand upstream | MQ-303A |
-| MQ-309A | 1000000 | -4.01 | CO | 1.4136e+06 | -4.010 | 29.3 % | the fit, rounded coarsely | 33 % | located | MQ-309A, UnitTesting |
+| MQ-303A | 3.5821 | -2.423 | ethanol | 3.5821 | -2.423 | 0.0 % | same as the fit | 0 % | located | UnitTesting |
+| MQ-303A | 5.3977 | -3.001 | iso-butane | 5.3977 | -3.001 | 0.0 % | same as the fit | 0 % | read by hand upstream | MQ-303A |
+| MQ-309A | 1.6313e+06 | -4.076 | CO | 1.6313e+06 | -4.076 | 0.0 % | same as the fit | 0 % | located | MQ-309A, UnitTesting |
 
 | Verdict | Pairs |
 |---|---|
-| same as the fit | 18 |
-| the fit, rounded coarsely | 5 |
-| near the fit, not equal | 2 |
-| does not match any curve | 6 |
+| same as the fit | 29 |
+| does not match any curve | 1 |
 | linear-model example | 1 |
 
 - **Same as the fit**: the example's value equals the fitted value at the precision the example writes it.

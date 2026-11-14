@@ -1,6 +1,7 @@
 """The coefficients page: its numbers, its verdicts and its staleness check."""
 import contextlib
 import io
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -120,6 +121,13 @@ class ComparisonTests(unittest.TestCase):
         self.assertAlmostEqual(row[9], table.difference_from(1012.7, -2.786, again["fit"]))
         self.assertGreater(row[9], 0.01)
 
+    def test_example_written_from_the_re_derived_fit_is_matched_to_it(self):
+        hand, again = self.re_derived()
+        row = table.audit([hand, again], {("MQ-4", "990.22", "-2.826"): ["MQ-4"]})[0]
+        self.assertIs(row[4], again)
+        self.assertEqual(row[5], "same")
+        self.assertAlmostEqual(row[9], 0, places=3)
+
     def test_sensor_without_hand_read_points_is_matched_to_its_source_curve(self):
         marked = {"id": "m", "sensor": "MQ-136", "gas": "H2S", "origin": "marked", "fit": fitted(36.716, -3.481)}
         row = table.audit([marked], {("MQ-136", "36.737", "-3.536"): ["MQ-136"]})[0]
@@ -204,6 +212,45 @@ class RepositoryTests(unittest.TestCase):
         self.assertIn("| MQ-4 | `mq-4-hanwei-2007` | 6 | 6 | 2.1 % in Rs/R0 | read from this datasheet |", text)
         self.assertIn("| MQ-2 | `mq-2-hanwei-2009` | 6 | 6 | 3.7 % in Rs/R0 | read from this datasheet |", text)
         self.assertIn("| MQ-303A | `mq-303a-hanwei-2006` | 3 | 2 | 2.9 % in Rs/R0 | read from this datasheet, where checked |", text)
+
+    def hanwei_sources(self):
+        return {(c["sensor"], c["gas"]): c for c in table.source_curves(self.curves)
+                if c.get("sheet", {}).get("maker", "Hanwei").startswith("Hanwei")}
+
+    def test_every_example_pair_is_its_gas_datasheet_fit(self):
+        exceptions = {("MQ-303A", "1", "1")}  # a placeholder in UnitTesting's voltage offset test
+        checked = 0
+        for sensor, a, b, sketches, best, *_, source, _ in table.audit(self.curves, table.example_pairs()):
+            if best is None or (sensor, a, b) in exceptions:
+                continue
+            want = (table.sig(source["fit"].a), table.sig(source["fit"].b, 4))
+            self.assertEqual((a, b), want, f"{sensor} {source['gas']} in {', '.join(sketches)}")
+            checked += 1
+        self.assertGreater(checked, 25)
+
+    def test_every_example_coefficient_table_lists_its_sensors_datasheet_fits(self):
+        head = re.compile(r"^\s*(?:Gas|GAS)\s*\|\s*a\s*\|\s*b\s*$")
+        row = re.compile(r"^\s*(\S[^|]*?)\s*\|\s*(\S+)\s*\|\s*(\S+)\s*$")
+        sources = self.hanwei_sources()
+        tables = 0
+        for ino in sorted((table.ROOT / "examples").rglob("*.ino")):
+            lines = ino.read_text().splitlines()
+            for i, line in enumerate(lines):
+                if not head.match(line):
+                    continue
+                sensor = next(table.sensor_of(v) for v, *_ in table.SET_PAIR.findall("\n".join(lines))
+                              if table.sensor_of(v))
+                found = {}
+                for r in lines[i + 1:]:
+                    m = row.match(r)
+                    if not m:
+                        break
+                    found[m.group(1)] = (m.group(2), m.group(3))
+                want = {gas: (table.sig(c["fit"].a), table.sig(c["fit"].b, 4))
+                        for (s, gas), c in sources.items() if s == sensor}
+                self.assertEqual(found, want, ino.relative_to(table.ROOT))
+                tables += 1
+        self.assertGreater(tables, 20)
 
     def test_committed_page_is_up_to_date(self):
         self.assertEqual(table.OUTPUT.read_text(), table.generate(),

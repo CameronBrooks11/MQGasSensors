@@ -66,7 +66,7 @@ The values passed to `setA` and `setB` come from the sensor's datasheet. [docs/c
 MQGasSensor MQ4(Board, Voltage_Resolution, ADC_Bit_Resolution, Pin, Type);
 // Setup
 MQ4.setRegressionMethod(1); // 1 -> Exponential: _PPM =  a*ratio^b
-MQ4.setA(1012.7); MQ4.setB(-2.786); // Configure the equation to to calculate CH4 concentration
+MQ4.setA(990.22); MQ4.setB(-2.826); // CH4, from the MQ-4 datasheet fit in docs/coefficients.md
 MQ4.setR0(3.86018237); // Value getted on calibration
 // Loop
 MQ4.init();

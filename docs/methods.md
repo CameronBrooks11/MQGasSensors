@@ -44,7 +44,7 @@ Where a curve has been re-derived from its datasheet, the re-derived points are 
 
 For each sensor the page also says whether its hand-read points were confirmed to come from the datasheet named for them. A sensor counts as confirmed when its curves have been re-derived from that datasheet and the hand-read points lie on the re-derived lines, within a few percent in Rs/R0. Where some or none of its curves have been re-derived, the page says so.
 
-The example sketches' values were written from the hand-read fits. The page matches each one to the hand-read fit it came from, and gives the largest difference in concentration between the example's pair and the datasheet fit for the same gas over that curve's range: what using the example costs, apart from the error of the power law itself.
+The example sketches' values are the datasheet fits, the source fit for each gas on the coefficients page, and the analysis tests fail if one differs. Until #28 they were the hand-read fits, some rounded coarsely or matching no curve. The page matches each pair to the closest fit, hand-read or re-derived, and gives the largest difference in concentration between the example's pair and the datasheet fit for the same gas over that curve's range: what using the example costs, apart from the error of the power law itself.
 
 ## Two editions of the datasheets
 

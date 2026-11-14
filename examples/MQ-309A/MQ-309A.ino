@@ -44,15 +44,16 @@ void setup() {
 
   //Set math model to calculate the PPM concentration and the value of constants
   MQ309.setRegressionMethod(1); //_PPM =  a*ratio^b
-  MQ309.setA(1000000); MQ309.setB(-4.01); // Configure the equation to calculate CO concentration value
+  MQ309.setA(1.6313e+06); MQ309.setB(-4.076); // Configure the equation to calculate CO concentration value
 
   /*
     Exponential regression:
-  GAS     | a       | b
-  H2      | 1532.9  | -1.951
-  CH4     | 980.24  | -1.68
-  CO      | 1000000 | -4.01
-  ALCOHOL | 473622  | -3.647
+  Gas     | a          | b
+  alcohol | 505470     | -3.667
+  CH4     | 1017.0     | -1.680
+  CO      | 1.6313e+06 | -4.076
+  H2      | 1586.2     | -1.953
+  From docs/coefficients.md, the fits to the mq-309a-hanwei-2004 datasheet.
   */
 
   /*****************************  MQ Init ********************************************/ 

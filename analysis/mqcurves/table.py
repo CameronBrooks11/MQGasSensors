@@ -153,12 +153,11 @@ def audit(curves, pairs):
     those are candidates. A Winsen manual for the same sensor is a different
     document with a different curve, and comparing against it would mislead.
 
-    The pair is matched to the closest hand-read fit for its sensor, which is
-    where the examples' values came from, and judged against it. Where the
-    sensor has no hand-read curve, it is matched to the closest source curve
-    instead. The same gas's source curve, re-derived where it has been, then
-    gives the largest difference in concentration between the pair and that
-    curve's fit, over the curve's range.
+    The pair is matched to the closest fit for its sensor, hand-read or
+    re-derived, and judged against it: an example written from either is
+    recognised as such. The same gas's source curve, re-derived where it has
+    been, then gives the largest difference in concentration between the pair
+    and that curve's fit, over the curve's range.
 
     Each row is (sensor, a text, b text, sketches, matched curve, verdict,
     error in a, error in b, source curve, largest difference in concentration).
@@ -169,8 +168,7 @@ def audit(curves, pairs):
         if float(a_text) <= 0:
             rows.append((sensor, a_text, b_text, sketches, None, "not a power law", None, None, None, None))
             continue
-        hand = [c for c in curves if c["sensor"] == sensor and c["origin"] == "upstream"]
-        candidates = hand or [c for c in source_curves(curves) if c["sensor"] == sensor]
+        candidates = [c for c in curves if c["sensor"] == sensor]
         if not candidates:
             rows.append((sensor, a_text, b_text, sketches, None, "no points", None, None, None, None))
             continue
@@ -293,7 +291,7 @@ def render(curves, rows):
         "",
         "Every distinct `setA`/`setB` pair in `examples/`. The examples were written from the Hanwei-era datasheets, so only curves from those are compared; a Winsen manual for the same sensor is a different document with a different curve.",
         "",
-        "Each pair is matched to the closest hand-read fit for its sensor, which is where the examples' values came from, and the verdict says how it relates to that fit. **Difference from the datasheet fit** then compares the pair with the fit of the same gas's source curve, re-derived where it has been: the biggest relative difference in the concentration the two return, over that curve's Rs/R0 range. It is what using the example's value costs against the best power law for the datasheet's curve; how far that power law is from the curve itself is the curve's **Largest error** above.",
+        "Each pair is matched to the closest fit for its sensor, hand-read or re-derived, and the verdict says how it relates to that fit. Every pair the examples use is the datasheet fit for its gas, apart from the linear-model example and a placeholder in UnitTesting. **Difference from the datasheet fit** then compares the pair with the fit of the same gas's source curve, re-derived where it has been: the biggest relative difference in the concentration the two return, over that curve's Rs/R0 range. It is what using the example's value costs against the best power law for the datasheet's curve; how far that power law is from the curve itself is the curve's **Largest error** above.",
         "",
         "| Sensor | setA | setB | Gas | Matched fit a | Matched fit b | Difference in a | Verdict | Difference from the datasheet fit | Source of that curve | Sketches |",
         "|---|---|---|---|---|---|---|---|---|---|---|",
