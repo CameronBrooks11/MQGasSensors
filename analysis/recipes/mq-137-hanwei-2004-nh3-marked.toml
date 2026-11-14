@@ -1,0 +1,25 @@
+id = "mq-137-hanwei-2004-nh3-marked"
+sensor = "MQ-137"
+gas = "NH3"
+
+# The teal line's dashes. At 10 ppm rows 183 and 184, x 53 to 57; at 100 ppm
+# rows 152 and 153, x 224 to 228; at 200 ppm rows 140 and 141, x 275 to 279,
+# the second under the 0.6 gridline.
+# Marker centres read by eye, as [x, y] pixels of the image as stored.
+markers = [[55, 183.5], [226, 152.5], [277, 140.5]]
+
+[source]
+datasheet = "mq-137-hanwei-2004"
+page = 2
+pixels_sha256 = "54081a6f54271f613fbd077ed73256ae2f341bb0e1598477af6664a40f77ea1a"
+
+# A JPEG stored upside down: Rs/R0 grows downwards. Fitted by least squares to
+# every labelled gridline, none more than 0.85 px off: 170.7 px a decade across,
+# 113.5 px a decade up.
+[x]
+pixels = [54.58, 396.0]
+values = [10, 1000]
+
+[y]
+pixels = [51.98, 279.06]
+values = [0.1, 10]

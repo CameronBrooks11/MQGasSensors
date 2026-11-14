@@ -124,6 +124,22 @@ count = 7
 
 Marker outlines drawn as strokes, such as crosses and stars, enclose nothing and are not found this way.
 
+## Marker positions read by eye
+
+Where neither tracing nor `locate` can follow an image figure, a person reads each marker's centre off the pixels and writes it down, and
+
+```
+uv run python -m mqcurves marked recipes/<curve>.toml --points points.csv --overlay out/curve.png
+```
+
+converts those positions through the axes. The recipe holds the figure's `[source]`, `[x]` and `[y]` as for a traced curve, and the positions as `[x, y]` pixels of the image as stored:
+
+```toml
+markers = [[55, 183.5], [226, 152.5], [277, 140.5]]   # before the first [table]
+```
+
+The reading is a person's and no more precise than a pixel. What the recipe adds over a hand reading is that every position is tied to the exact figure by its pixel hash, can be checked on the overlay, and converts the same way every time.
+
 ## Commands
 
 | Command | What it does |
@@ -132,6 +148,7 @@ Marker outlines drawn as strokes, such as crosses and stars, enclose nothing and
 | `trace <recipe> [--points CSV] [--overlay PNG]` | Trace and fit a curve from its recipe |
 | `extract <recipe> [--points CSV] [--overlay PNG]` | Read a curve's markers from a figure drawn as vectors, and fit it |
 | `locate <recipe> [--points CSV] [--overlay PNG]` | Find a curve's hollow markers in a figure stored as an image, and fit it |
+| `marked <recipe> [--points CSV] [--overlay PNG]` | Convert marker positions read by eye from a figure stored as an image, and fit them |
 | `fit <points.csv>` | Fit points that are already digitised |
 | `mark <recipe> --id … --sensor … --gas … (--image F \| --datasheet ID --page N --pixels-sha256 H)` | Mark a new figure by clicking, and write its recipe |
 | `table [--check]` | Write `docs/coefficients.md`, or fail if it is out of date |
@@ -143,7 +160,7 @@ An overlay shows the traced points, the fitted line and the axis reference posit
 
 ## Points and the coefficients page
 
-[`curves.toml`](curves.toml) lists every curve that has digitised points: its sensor, gas, datasheet and the CSV under `points/` that holds them. A curve's points are read by hand by the authors of MQSensorsLib (a few marker positions each), traced from the figure's pixels by this tool, extracted from the figure's drawing commands, or located as the centres of hollow markers in the figure's pixels. A curve re-derived from a datasheet that also has hand-read points names them in `hand_read`, and the coefficients page compares the two.
+[`curves.toml`](curves.toml) lists every curve that has digitised points: its sensor, gas, datasheet and the CSV under `points/` that holds them. A curve's points are read by hand by the authors of MQSensorsLib (a few marker positions each), traced from the figure's pixels by this tool, extracted from the figure's drawing commands, located as the centres of hollow markers in the figure's pixels, or read by eye as pixel positions where neither tool can follow the figure. A curve re-derived from a datasheet that also has hand-read points names them in `hand_read`, and the coefficients page compares the two.
 
 ```
 just coefficients
@@ -161,7 +178,7 @@ The coefficients page also lists every `setA`/`setB` pair used in `examples/` be
 
 ## Limits
 
-- **Resolution.** A figure is only as precise as its pixels. In a 400 by 305 pixel figure spanning two decades vertically, one pixel is about 1.8 % in Rs/R0. A vector figure is as precise as its coordinates: the MQ-4 figure is drawn on a 0.24 pt grid. Its markers are plotted at 200, 1000, 5000 and 10000 ppm, and their centres sit up to 0.49 pt from where the frame puts those concentrations, 0.83 % in concentration. Rs/R0 is drawn to the same grid. Located markers are as precise as the image: in the MQ-303A figure one pixel is 3.7 % in Rs/R0, in the MQ-309A figure 2.2 %. Where one marker covers part of another, the covered one's centre can move by a pixel.
+- **Resolution.** A figure is only as precise as its pixels. In a 400 by 305 pixel figure spanning two decades vertically, one pixel is about 1.8 % in Rs/R0. A vector figure is as precise as its coordinates: the MQ-4 figure is drawn on a 0.24 pt grid. Its markers are plotted at 200, 1000, 5000 and 10000 ppm, and their centres sit up to 0.49 pt from where the frame puts those concentrations, 0.83 % in concentration. Rs/R0 is drawn to the same grid. Located markers are as precise as the image: in the MQ-303A figure one pixel is 3.7 % in Rs/R0, in the MQ-309A figure 2.2 %. Where one marker covers part of another, the covered one's centre can move by a pixel. Positions read by eye are good to about a pixel: in the MQ-136 and MQ-137 figure, 1.4 % in concentration and 2.1 % in Rs/R0.
 - **A power law is an approximation.** Some datasheet curves bend on log-log axes, and several are drawn as straight segments between a handful of plotted values. The fit is then a best straight line over the traced range. The coefficients page gives, for each curve, the largest difference between the fit and the points: up to 20 % in concentration for the curves traced so far. Coefficients should not be used outside the range of the points.
 - **Markers.** Where a line carries markers, their pixels are part of the trace. A symmetric marker does not move the centre of the stroke; a triangle shifts it slightly over the few columns it covers.
 - **A datasheet curve is typical, not individual.** It describes a nominal sensor under the conditions the datasheet states. No fit here has been validated against hardware.
@@ -172,4 +189,4 @@ The coefficients page also lists every `setA`/`setB` pair used in `examples/` be
 just test
 ```
 
-The tracer's tests draw a figure with a known curve that covers only part of the plot, trace it, and check that both coefficients come back. The extractor's tests write a PDF that draws a figure with known values, a legend and a marker made of strokes, and read the values back. The marker finder's tests draw squares and triangles of one colour, one over another, with gridlines and a legend, and find each centre. None needs a datasheet. Further tests read real datasheets and run only where `just datasheets` has been run.
+The tracer's tests draw a figure with a known curve that covers only part of the plot, trace it, and check that both coefficients come back. The extractor's tests write a PDF that draws a figure with known values, a legend and a marker made of strokes, and read the values back. The marker finder's tests draw squares and triangles of one colour, one over another, with gridlines and a legend, and find each centre. The tests for positions read by eye check their conversion, order and bounds, and that the figure must match its pixel hash. None needs a datasheet. Further tests read real datasheets and run only where `just datasheets` has been run.

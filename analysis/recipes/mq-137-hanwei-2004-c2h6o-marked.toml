@@ -1,0 +1,25 @@
+id = "mq-137-hanwei-2004-c2h6o-marked"
+sensor = "MQ-137"
+gas = "C2H6O"
+
+# The purple line's dashes. At 10 ppm rows 211 to 213; at 100 ppm rows 165
+# and 166, the first under the 1.0 gridline; at 200 ppm rows 152 and 153, x 273
+# to 278, which the JPEG compression has smudged.
+# Marker centres read by eye, as [x, y] pixels of the image as stored.
+markers = [[55, 212], [226, 165.5], [276, 153]]
+
+[source]
+datasheet = "mq-137-hanwei-2004"
+page = 2
+pixels_sha256 = "54081a6f54271f613fbd077ed73256ae2f341bb0e1598477af6664a40f77ea1a"
+
+# A JPEG stored upside down: Rs/R0 grows downwards. Fitted by least squares to
+# every labelled gridline, none more than 0.85 px off: 170.7 px a decade across,
+# 113.5 px a decade up.
+[x]
+pixels = [54.58, 396.0]
+values = [10, 1000]
+
+[y]
+pixels = [51.98, 279.06]
+values = [0.1, 10]

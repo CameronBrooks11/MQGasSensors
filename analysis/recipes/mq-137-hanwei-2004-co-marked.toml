@@ -1,0 +1,25 @@
+id = "mq-137-hanwei-2004-co-marked"
+sensor = "MQ-137"
+gas = "CO"
+
+# The black line's hollow squares. At 10 ppm the square is x 53 to 56,
+# rows 216 to 219; at 100 ppm x 224 to 227, rows 186 to 188; at 200 ppm x 275
+# to 278, rows 179 to 182.
+# Marker centres read by eye, as [x, y] pixels of the image as stored.
+markers = [[54.5, 217.5], [225.5, 187], [276.5, 180.5]]
+
+[source]
+datasheet = "mq-137-hanwei-2004"
+page = 2
+pixels_sha256 = "54081a6f54271f613fbd077ed73256ae2f341bb0e1598477af6664a40f77ea1a"
+
+# A JPEG stored upside down: Rs/R0 grows downwards. Fitted by least squares to
+# every labelled gridline, none more than 0.85 px off: 170.7 px a decade across,
+# 113.5 px a decade up.
+[x]
+pixels = [54.58, 396.0]
+values = [10, 1000]
+
+[y]
+pixels = [51.98, 279.06]
+values = [0.1, 10]

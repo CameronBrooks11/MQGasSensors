@@ -9,6 +9,8 @@
 #   `recipe`: the marker positions of a figure the PDF draws with vector commands.
 # origin = "located": produced by `mqcurves locate` from the recipe named in
 #   `recipe`: the centres of hollow markers in a figure stored as an image.
+# origin = "marked": produced by `mqcurves marked` from the recipe named in
+#   `recipe`: marker centres read by eye, recorded as pixel positions.
 # hand_read: for a curve re-derived from a datasheet that also has hand-read
 #   points for the gas, the id of that hand-read curve. The two are compared on
 #   the coefficients page.
@@ -1027,3 +1029,59 @@ points = "points/mq-137-winsen-v1.4/nh3.csv"
 origin = "traced"
 recipe = "recipes/mq-137-winsen-v1.4-nh3.toml"
 note = "The line the MQ137 manual prints for NH3 is identical, pixel for pixel along the curve, to the line the MQ136 manual prints for H2S; the two figures differ only in the legend and a CO line. The traced points and the fit are therefore the same as MQ-136 H2S. Whether the manufacturer measured the same response or reused the chart is not known."
+
+[[curve]]
+id = "mq-136-hanwei-2004-co-marked"
+sensor = "MQ-136"
+gas = "CO"
+datasheet = "mq-136-hanwei-2004"
+points = "points/mq-136-hanwei-2004/co-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-136-hanwei-2004-co-marked.toml"
+
+[[curve]]
+id = "mq-136-hanwei-2004-h2s-marked"
+sensor = "MQ-136"
+gas = "H2S"
+datasheet = "mq-136-hanwei-2004"
+points = "points/mq-136-hanwei-2004/h2s-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-136-hanwei-2004-h2s-marked.toml"
+note = "Read by eye from a JPEG. The MQ-137 datasheet draws the same figure, pixel for pixel, with this line labelled NH3. The sheet defines R0 at 10 ppm H2S, but this line reads Rs/R0 1.44 there."
+
+[[curve]]
+id = "mq-136-hanwei-2004-nh4-marked"
+sensor = "MQ-136"
+gas = "NH4"
+datasheet = "mq-136-hanwei-2004"
+points = "points/mq-136-hanwei-2004/nh4-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-136-hanwei-2004-nh4-marked.toml"
+
+[[curve]]
+id = "mq-137-hanwei-2004-c2h6o-marked"
+sensor = "MQ-137"
+gas = "C2H6O"
+datasheet = "mq-137-hanwei-2004"
+points = "points/mq-137-hanwei-2004/c2h6o-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-137-hanwei-2004-c2h6o-marked.toml"
+
+[[curve]]
+id = "mq-137-hanwei-2004-co-marked"
+sensor = "MQ-137"
+gas = "CO"
+datasheet = "mq-137-hanwei-2004"
+points = "points/mq-137-hanwei-2004/co-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-137-hanwei-2004-co-marked.toml"
+
+[[curve]]
+id = "mq-137-hanwei-2004-nh3-marked"
+sensor = "MQ-137"
+gas = "NH3"
+datasheet = "mq-137-hanwei-2004"
+points = "points/mq-137-hanwei-2004/nh3-marked.csv"
+origin = "marked"
+recipe = "recipes/mq-137-hanwei-2004-nh3-marked.toml"
+note = "Read by eye from a JPEG. The MQ-136 datasheet draws the same figure, pixel for pixel, with this line labelled H2S. The sheet defines R0 at 10 ppm NH3, but this line reads Rs/R0 1.44 there."
