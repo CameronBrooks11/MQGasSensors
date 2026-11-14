@@ -14,7 +14,7 @@
   by Miguel Califa 
 
   Wiring:
-  https://github.com/CameronBrooks11/MQGasSensors/blob/master/docs/img/MQ_Arduino.PNG
+  https://github.com/CameronBrooks11/MQGasSensors/blob/main/docs/img/MQ_Arduino.PNG
   Please make sure arduino A0 pin represents the analog input configured on #define pin
 
   Note: high concentration MQ-131 sensor.
