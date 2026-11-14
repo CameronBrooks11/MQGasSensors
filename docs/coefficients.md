@@ -12,12 +12,12 @@ One row per curve. Where a curve has been re-derived from its datasheet, that is
 
 | Sensor | Gas | a | b | Concentration range | Rs/R0 range | Points | r² | Largest error | Datasheet | Points from |
 |---|---|---|---|---|---|---|---|---|---|---|
-| MQ-2 | alcohol | 3616.1 | -2.675 | 203 to 10100 ppm | 0.659 to 2.87 | 9 | 0.9978 | 9 % | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-2 | CH4 | 4301.2 | -2.651 | 201 to 10200 ppm | 0.703 to 3.06 | 9 | 0.9977 | 10 % | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-2 | CO | 32721 | -3.014 | 203 to 10300 ppm | 1.45 to 5.23 | 9 | 0.9983 | 10 % | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-2 | H2 | 982.04 | -2.131 | 200 to 10000 ppm | 0.335 to 2.08 | 9 | 0.9997 | 3 % | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-2 | LPG | 578.68 | -2.135 | 198 to 9960 ppm | 0.256 to 1.59 | 9 | 0.9983 | 9 % | `mq-2-hanwei-2009` | read by hand upstream |
-| MQ-2 | propane | 658.71 | -2.168 | 200 to 10000 ppm | 0.277 to 1.72 | 8 | 0.9992 | 6 % | `mq-2-hanwei-2009` | read by hand upstream |
+| MQ-2 | alcohol | 3553.2 | -2.707 | 203 to 10000 ppm | 0.655 to 2.84 | 9 | 0.9974 | 11 % | `mq-2-hanwei-2009` | [marked](../analysis/recipes/mq-2-hanwei-2009-alcohol-marked.toml) |
+| MQ-2 | CH4 | 4189.7 | -2.628 | 203 to 10000 ppm | 0.694 to 3.03 | 9 | 0.9971 | 12 % | `mq-2-hanwei-2009` | [marked](../analysis/recipes/mq-2-hanwei-2009-ch4-marked.toml) |
+| MQ-2 | CO | 29571 | -2.974 | 203 to 10000 ppm | 1.41 to 5.24 | 9 | 0.9991 | 6 % | `mq-2-hanwei-2009` | [marked](../analysis/recipes/mq-2-hanwei-2009-co-marked.toml) |
+| MQ-2 | H2 | 980.95 | -2.112 | 203 to 10000 ppm | 0.332 to 2.09 | 9 | 0.9998 | 4 % | `mq-2-hanwei-2009` | [marked](../analysis/recipes/mq-2-hanwei-2009-h2-marked.toml) |
+| MQ-2 | LPG | 564.77 | -2.151 | 201 to 10000 ppm | 0.255 to 1.58 | 9 | 0.9990 | 7 % | `mq-2-hanwei-2009` | [marked](../analysis/recipes/mq-2-hanwei-2009-lpg-marked.toml) |
+| MQ-2 | propane | 645.86 | -2.166 | 203 to 10000 ppm | 0.274 to 1.70 | 9 | 0.9992 | 6 % | `mq-2-hanwei-2009` | [marked](../analysis/recipes/mq-2-hanwei-2009-propane-marked.toml) |
 | MQ-3 | alcohol | 0.39304 | -1.495 | 0.103 to 9.98 mg/L | 0.114 to 2.31 | 10 | 0.9991 | 9 % | `mq-3-hanwei-2007` | [extracted](../analysis/recipes/mq-3-hanwei-2007-alcohol-extracted.toml) |
 | MQ-3 | benzene | 4.7380 | -2.688 | 0.103 to 9.96 mg/L | 0.784 to 4.07 | 10 | 0.9982 | 11 % | `mq-3-hanwei-2007` | [extracted](../analysis/recipes/mq-3-hanwei-2007-benzene-extracted.toml) |
 | MQ-3 | CH4 | 3.8391e+32 | -19.76 | 0.103 to 9.98 mg/L | 39.8 to 49.8 | 10 | 0.9848 | 58 % | `mq-3-hanwei-2007` | [extracted](../analysis/recipes/mq-3-hanwei-2007-ch4-extracted.toml) |
@@ -83,6 +83,7 @@ One row per curve. Where a curve has been re-derived from its datasheet, that is
 
 Notes:
 
+- **MQ-2 propane** (`mq-2-hanwei-2009`): Read by eye from a JPEG. The plus-shaped markers are mostly hidden by the LPG squares drawn over them.
 - **MQ-303A iso-butane** (`mq-303a-hanwei-2006`): Kept as read by hand. The figure draws its grey gridlines over this line and its star markers, breaking both at every gridline, so neither can be followed automatically.
 - **MQ-137 NH3** (`mq-137-winsen-v1.4`): The line the MQ137 manual prints for NH3 is identical, pixel for pixel along the curve, to the line the MQ136 manual prints for H2S; the two figures differ only in the legend and a CO line. The traced points and the fit are therefore the same as MQ-136 H2S. Whether the manufacturer measured the same response or reused the chart is not known.
 - **MQ-136 H2S** (`mq-136-hanwei-2004`): Read by eye from a JPEG. The MQ-137 datasheet draws the same figure, pixel for pixel, with this line labelled NH3. The sheet defines R0 at 10 ppm H2S, but this line reads Rs/R0 1.44 there.
@@ -102,6 +103,12 @@ Curves re-derived from a datasheet that also has hand-read points for the same g
 
 | Sensor | Gas | Datasheet | Hand-read a | Re-derived a | Hand-read b | Re-derived b | Hand-read points off the re-derived line |
 |---|---|---|---|---|---|---|---|
+| MQ-2 | alcohol | `mq-2-hanwei-2009` | 3616.1 | 3553.2 | -2.675 | -2.707 | +1.2 % at 203, +3.7 % at 494, +0.2 % at 789, +1.7 % at 1010, +1.2 % at 1480, +0.0 % at 2000, +0.4 % at 3050, -0.0 % at 4980, +1.1 % at 10100 ppm |
+| MQ-2 | CH4 | `mq-2-hanwei-2009` | 4301.2 | 4189.7 | -2.651 | -2.628 | +0.7 % at 201, -0.0 % at 494, +0.2 % at 795, +1.5 % at 1020, -1.4 % at 1470, +1.3 % at 2010, +1.2 % at 3020, +0.7 % at 4950, +1.9 % at 10200 ppm |
+| MQ-2 | CO | `mq-2-hanwei-2009` | 32721 | 29571 | -3.014 | -2.974 | -0.1 % at 203, +2.5 % at 492, +2.8 % at 811, +2.2 % at 994, +2.7 % at 1480, +0.3 % at 2030, +2.8 % at 3050, +1.7 % at 4980, +3.6 % at 10300 ppm |
+| MQ-2 | H2 | `mq-2-hanwei-2009` | 982.04 | 980.95 | -2.131 | -2.112 | -1.2 % at 200, +0.4 % at 496, -0.2 % at 792, -0.4 % at 998, +1.1 % at 1480, +0.5 % at 2030, +0.6 % at 2980, +0.3 % at 4910, +0.9 % at 10000 ppm |
+| MQ-2 | LPG | `mq-2-hanwei-2009` | 578.68 | 564.77 | -2.135 | -2.151 | +0.1 % at 198, +2.4 % at 497, +0.8 % at 798, +0.8 % at 1010, +2.9 % at 1460, +0.6 % at 1960, +0.6 % at 2960, -1.1 % at 4910, +0.3 % at 9960 ppm |
+| MQ-2 | propane | `mq-2-hanwei-2009` | 658.71 | 645.86 | -2.168 | -2.166 | +0.5 % at 200, +1.6 % at 505, +1.3 % at 805, +0.9 % at 1480, +1.7 % at 1960, -0.5 % at 2980, +1.9 % at 5000, +1.0 % at 10000 ppm |
 | MQ-3 | alcohol | `mq-3-hanwei-2007` | 0.39339 | 0.39304 | -1.504 | -1.495 | +0.0 % at 0.104, -0.3 % at 0.217, -1.1 % at 0.412, +1.1 % at 1.04, -0.6 % at 1.63, +1.9 % at 2.53, +3.1 % at 4.09, +0.9 % at 6.15, -1.0 % at 8.05, +2.5 % at 10.1 mg/L |
 | MQ-3 | benzene | `mq-3-hanwei-2007` | 4.8387 | 4.7380 | -2.680 | -2.688 | +2.0 % at 0.103, +0.8 % at 0.215, +0.1 % at 0.409, +0.5 % at 1.03, +0.8 % at 1.64, +2.1 % at 2.51, +0.4 % at 4.05, +2.3 % at 6.15, +1.7 % at 7.98, -1.5 % at 9.91 mg/L |
 | MQ-3 | CH4 | `mq-3-hanwei-2007` | 1.8807e+31 | 3.8391e+32 | -19.01 | -19.76 | -1.8 % at 9.91, -2.4 % at 7.91, -1.0 % at 6.15, -0.1 % at 4.09, -0.7 % at 2.51, -0.7 % at 1.66, -0.9 % at 1.02, -2.5 % at 0.412, +0.8 % at 0.217, -1.5 % at 0.102 mg/L |
@@ -153,7 +160,7 @@ For each sensor with hand-read points: how many of its hand-read curves have bee
 
 | Sensor | Datasheet | Hand-read curves | Re-derived | Largest difference | Finding |
 |---|---|---|---|---|---|
-| MQ-2 | `mq-2-hanwei-2009` | 6 | 0 |  | not checked |
+| MQ-2 | `mq-2-hanwei-2009` | 6 | 6 | 3.7 % in Rs/R0 | read from this datasheet |
 | MQ-3 | `mq-3-hanwei-2007` | 6 | 6 | 3.1 % in Rs/R0 | read from this datasheet |
 | MQ-4 | `mq-4-hanwei-2007` | 6 | 6 | 2.1 % in Rs/R0 | read from this datasheet |
 | MQ-5 | `mq-5-hanwei-2007` | 5 | 5 | 2.2 % in Rs/R0 | read from this datasheet |
@@ -174,8 +181,8 @@ Each pair is matched to the closest hand-read fit for its sensor, which is where
 
 | Sensor | setA | setB | Gas | Matched fit a | Matched fit b | Difference in a | Verdict | Difference from the datasheet fit | Source of that curve | Sketches |
 |---|---|---|---|---|---|---|---|---|---|---|
-| MQ-2 | 574.25 | -2.222 | LPG | 578.68 | -2.135 | 0.8 % | does not match any curve | 12 % | read by hand upstream | Calibration, MQ-2, MQ-Board, UnitTesting |
-| MQ-2 | 987.99 | -2.162 | H2 | 982.04 | -2.131 | 0.6 % | near the fit, not equal | 4 % | read by hand upstream | ESP32_WROOM_32D |
+| MQ-2 | 574.25 | -2.222 | LPG | 578.68 | -2.135 | 0.8 % | does not match any curve | 12 % | marked | Calibration, MQ-2, MQ-Board, UnitTesting |
+| MQ-2 | 987.99 | -2.162 | H2 | 982.04 | -2.131 | 0.6 % | near the fit, not equal | 6 % | marked | ESP32_WROOM_32D |
 | MQ-3 | 0.3934 | -1.504 | alcohol | 0.39339 | -1.504 | 0.0 % | same as the fit | 2 % | extracted | Alcoholimeter, MQ-Board, UnitTesting |
 | MQ-3 | 4.8387 | -2.68 | benzene | 4.8387 | -2.680 | 0.0 % | same as the fit | 3 % | extracted | ESP32, ESP8266, MQ-3, external_A2D |
 | MQ-4 | -0.318 | 1.133 |  | | | | linear-model example | |  | LinearVsExponential, MQ-4-LINEAR |

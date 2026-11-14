@@ -1,0 +1,24 @@
+id = "mq-2-hanwei-2009-h2-marked"
+sensor = "MQ-2"
+gas = "H2"
+
+# Navy line, filled diamonds.
+# Marker centres read by eye, as [x, y] pixels of the image as stored, at
+# 200, 500, 800, 1000, 1500, 2000, 3000, 5000 and 10000 ppm.
+markers = [[95, 103.5], [156.5, 129], [188.5, 142], [204.5, 148], [230, 160], [250.5, 168], [278, 180], [312, 195], [359.5, 214.5]]
+
+[source]
+datasheet = "mq-2-hanwei-2009"
+page = 2
+pixels_sha256 = "cbcf51bb5d8a6c268253dbb4d2b74b540e90366a20fd86d1e07aa0d49f9d0c92"
+
+# A JPEG. Fitted by least squares to every gridline clear of the legend, none
+# more than 0.9 px off: 156.1 px a decade across, 139.0 px a decade up. The
+# frame's right and top edges fall at the fit's 10000 ppm and Rs/R0 10.
+[x]
+pixels = [47.10, 359.35]
+values = [100, 10000]
+
+[y]
+pixels = [8.95, 286.95]
+values = [10, 0.1]

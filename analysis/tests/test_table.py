@@ -165,7 +165,7 @@ class RepositoryTests(unittest.TestCase):
         self.assertEqual(sum(c["origin"] == "traced" for c in self.curves), 5)
         self.assertEqual(sum(c["origin"] == "extracted" for c in self.curves), 38)
         self.assertEqual(sum(c["origin"] == "located" for c in self.curves), 6)
-        self.assertEqual(sum(c["origin"] == "marked" for c in self.curves), 6)
+        self.assertEqual(sum(c["origin"] == "marked" for c in self.curves), 12)
         for c in self.curves:
             self.assertGreaterEqual(c["fit"].n, 3, c["id"])
             self.assertLess(c["fit"].b, 0, c["id"])
@@ -189,7 +189,8 @@ class RepositoryTests(unittest.TestCase):
     def test_provenance_says_which_hand_read_points_were_confirmed(self):
         text = "\n".join(table.provenance(self.curves))
         self.assertIn("| MQ-4 | `mq-4-hanwei-2007` | 6 | 6 | 2.1 % in Rs/R0 | read from this datasheet |", text)
-        self.assertIn("| MQ-2 | `mq-2-hanwei-2009` | 6 | 0 |  | not checked |", text)
+        self.assertIn("| MQ-2 | `mq-2-hanwei-2009` | 6 | 6 | 3.7 % in Rs/R0 | read from this datasheet |", text)
+        self.assertIn("| MQ-9 | `mq-9-hanwei-2008` | 3 | 0 |  | not checked |", text)
         self.assertIn("| MQ-303A | `mq-303a-hanwei-2006` | 3 | 2 | 2.9 % in Rs/R0 | read from this datasheet, where checked |", text)
 
     def test_committed_page_is_up_to_date(self):
@@ -219,7 +220,7 @@ class RepositoryTests(unittest.TestCase):
         with contextlib.redirect_stdout(out):
             code = cli.main(["reproduce"])
         self.assertEqual(code, 0, out.getvalue())
-        self.assertIn("55 of 55", out.getvalue())
+        self.assertIn("61 of 61", out.getvalue())
 
     def test_check_passes_on_the_committed_page(self):
         out = io.StringIO()
